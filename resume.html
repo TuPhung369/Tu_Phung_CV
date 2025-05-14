@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Phung - Professional Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* A4 page setup */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            border-radius: 8px;
+        }
+
+        /* Print optimization */
+        @media print {
+            body {
+                background-color: white;
+                margin: 0;
+                padding: 0;
+            }
+
+            .a4-page {
+                width: 210mm;
+                min-height: 297mm;
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                page-break-after: always;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+            
+            /* Banner print styles */
+            .header {
+                background: white !important;
+                color: black !important;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .profile-img-container {
+                border: 4px solid #1a3a5f !important;
+            }
+            
+            .header-social-link {
+                background-color: #f0f0f0 !important;
+                color: #333 !important;
+            }
+            
+            .header-right {
+                border-left: 1px solid #ddd !important;
+            }
+            
+            .header-qr-code {
+                border: 2px solid #1a3a5f !important;
+            }
+            
+            .title {
+                color: #333 !important;
+            }
+            
+            .contact-item i {
+                color: #1a3a5f !important;
+            }
+            
+            .name {
+                color: #1a3a5f !important;
+            }
+        }
+
+        /* Header section */
+        .header {
+            background: linear-gradient(135deg, #1a3a5f 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        /* Add decorative elements to header */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 25%;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-img-container {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .profile-img-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .header-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 25px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 25%;
+            flex-shrink: 0;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 25px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-qr-code {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+            border: 3px solid white;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 4px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .header-qr-code:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .header-social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 5px;
+        }
+        
+        .header-social-link {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-social-link:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .name::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 3px;
+        }
+
+        .title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-top: 5px;
+            letter-spacing: 1px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Contact info */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+            align-items: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-2px);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-item i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Main content */
+        .content {
+            display: flex;
+            min-height: 0;
+            flex: 1;
+        }
+
+        .left-column {
+            width: 35%;
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-right: 1px solid #eee;
+        }
+
+        .right-column {
+            width: 65%;
+            padding: 25px;
+        }
+
+        /* Section styling */
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #1a3a5f;
+            border-bottom: 2px solid #1a3a5f;
+            padding-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+        
+        .skills-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .skills-column {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 46%;
+        }
+        
+        .skills-column:last-child {
+            width: 52%;
+        }
+
+        .skill-item {
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            white-space: nowrap;
+        }
+        
+        .skill-item.frontend {
+            background-color: #e3f2fd;
+        }
+        
+        .skill-item.backend {
+            background-color: #e8f5e9;
+        }
+        
+        .skill-item.other {
+            background-color: #f3e5f5;
+        }
+        
+        .skill-item.left {
+            justify-content: flex-start;
+        }
+        
+        .skill-item.right {
+            justify-content: flex-start;
+        }
+
+        .skill-item i {
+            margin-right: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .skill-item.frontend i {
+            color: #1565c0;
+        }
+        
+        .skill-item.backend i {
+            color: #2e7d32;
+        }
+        
+        .skill-item.other i {
+            color: #7b1fa2;
+        }
+
+        /* Experience */
+        .experience-item {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid #1a3a5f;
+        }
+
+        .experience-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #1a3a5f;
+            border-radius: 50%;
+            left: -6px;
+            top: 5px;
+        }
+
+        .experience-title {
+            font-weight: 500;
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+
+        .experience-company {
+            font-style: italic;
+            margin-bottom: 3px;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .experience-date {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 5px;
+        }
+        
+        .experience-item ul {
+            margin: 5px 0;
+            padding-left: 15px;
+        }
+        
+        .experience-item li {
+            font-size: 0.9rem;
+            margin-bottom: 3px;
+        }
+        
+        .experience-item p {
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transform: scale(0.7);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            position: relative;
+            z-index: 100000;
+        }
+        
+        .modal.show .modal-img {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #1a3a5f;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 100000;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-close:hover {
+            background-color: #2a5298;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Education */
+        .education-item {
+            margin-bottom: 12px;
+        }
+
+        .education-degree {
+            font-weight: 500;
+            margin-bottom: 2px;
+            font-size: 0.95rem;
+        }
+
+        .education-school {
+            font-style: italic;
+            margin-bottom: 2px;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .education-date {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        /* Languages */
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .language-name {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .language-level {
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        /* Key Projects */
+        .project-item {
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .project-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .project-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #1a3a5f;
+            margin-bottom: 2px;
+        }
+        
+        .project-date {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 4px;
+        }
+        
+        .project-description {
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            color: #444;
+            line-height: 1.4;
+        }
+        
+        .project-description ul {
+            margin: 5px 0;
+            padding-left: 18px;
+        }
+        
+        .project-description li {
+            font-size: 0.85rem;
+            margin-bottom: 3px;
+        }
+        
+        .project-link a {
+            font-size: 0.8rem;
+            color: #1a3a5f;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.2s;
+        }
+        
+        .project-link a i {
+            margin-right: 4px;
+            font-size: 0.75rem;
+        }
+        
+        .project-link a:hover {
+            color: #2a5298;
+            text-decoration: underline;
+        }
+
+        /* Print button */
+        .print-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #1a3a5f;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .print-btn:hover {
+            background-color: #2a5298;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        }
+        
+        .print-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Background styles */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1; /* Behind main content */
+            background: radial-gradient(circle at center, #1e1e1e, #121212);
+        }
+
+        /* Circle styles */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffffff, #3498db, #1a3a5f);
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.4),
+                inset 0 2px 5px rgba(255, 255, 255, 0.3),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+            opacity: 0.6;
+            animation: float 8s ease-in-out infinite, scale 4s ease-in-out infinite alternate;
+            transition: transform 0.3s ease;
+        }
+
+        /* Scale animation */
+        @keyframes scale {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        /* Float animation */
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-10px) translateX(5px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        /* Circle sizes */
+        .size-tiny { width: 50px; height: 50px; }
+        .size-small { width: 100px; height: 100px; }
+        .size-medium { width: 150px; height: 150px; }
+        .size-large { width: 200px; height: 200px; }
+        .size-xlarge { width: 300px; height: 300px; }
+
+        /* Opacity variations */
+        .opacity-low { opacity: 0.2; }
+        .opacity-medium { opacity: 0.4; }
+        .opacity-high { opacity: 0.6; }
+
+        /* Circle positions */
+        .left-1 { top: 10%; left: 5%; }
+        .left-2 { top: 30%; left: 2%; }
+        .left-3 { top: 50%; left: 8%; }
+        .left-4 { top: 70%; left: 3%; }
+        .left-5 { top: 90%; left: 7%; }
+
+        /* Hide background when printing */
+        @media print {
+            .background {
+                display: none !important;
+            }
+            body {
+                background-color: white !important;
+            }
+            .a4-page {
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background circles -->
+    <div class="background">
+        <div class="circle size-tiny opacity-low left-1"></div>
+        <div class="circle size-small opacity-medium left-2"></div>
+        <div class="circle size-medium opacity-high left-3"></div>
+        <div class="circle size-large opacity-low left-4"></div>
+        <div class="circle size-small opacity-medium left-5"></div>
+        <div class="circle size-tiny opacity-high" style="top: 15%; left: 88%;"></div>
+        <div class="circle size-medium opacity-low" style="top: 35%; left: 92%;"></div>
+        <div class="circle size-small opacity-medium" style="top: 55%; left: 85%;"></div>
+        <div class="circle size-large opacity-high" style="top: 75%; left: 90%;"></div>
+        <div class="circle size-medium opacity-low" style="top: 40%; left: 25%;"></div>
+        <div class="circle size-small opacity-high" style="top: 60%; left: 75%;"></div>
+    </div>
+    <button class="print-btn no-print" onclick="window.print()">
+        <i class="fas fa-print"></i> Print Resume
+    </button>
+
+    <div class="a4-page">
+        <header class="header">
+            <div class="profile-section">
+                <div class="profile-img-container">
+                    <img src="avatar.jpg" alt="Tu Phung" class="profile-img">
+                </div>
+                <p class="title">Full-Stack Developer</p>
+            </div>
+            <div class="header-info">
+                <h1 class="name">TU PHUNG</h1>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>tuphung010787@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+358 45 234 9495</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Helsinki, Finland</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://tuphung369.github.io/Haaga_Backend_Programming/" class="header-qr-code" alt="Project QR Code" style="cursor: pointer;" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">
+                <span style="font-size: 0.85rem; margin-bottom: 10px; text-align: center; background-color: rgba(255, 255, 255, 0.1); padding: 4px 12px; border-radius: 15px; cursor: pointer;" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">My Project</span>
+                <div class="header-social-links">
+                    <a href="https://www.linkedin.com/in/tuphung010787" target="_blank" class="header-social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/TuPhung369" target="_blank" class="header-social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="left-column">
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-laptop-code"></i> Technical Skills
+                    </h2>
+                    <div class="skills-container">
+                        <div class="skills-row">
+                            <div class="skills-column">
+                                <div class="skill-item left frontend">
+                                    <i class="fab fa-react"></i> React
+                                </div>
+                                <div class="skill-item left frontend">
+                                    <i class="fab fa-vuejs"></i> Vue.js
+                                </div>
+                                <div class="skill-item left backend">
+                                    <i class="fab fa-node-js"></i> Node.js
+                                </div>
+                                <div class="skill-item left other">
+                                    <i class="fas fa-shield-alt"></i> OAuth2
+                                </div>
+                            </div>
+                            <div class="skills-column">
+                                <div class="skill-item right frontend">
+                                    <i class="fab fa-js"></i> TypeScript
+                                </div>
+                                <div class="skill-item right backend">
+                                    <i class="fab fa-java"></i> SpringBoot
+                                </div>
+                                <div class="skill-item right backend">
+                                    <i class="fas fa-database"></i> MySQL
+                                </div>
+                                <div class="skill-item right other">
+                                    <i class="fas fa-robot"></i> AI Tools
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-project-diagram"></i> Key Projects
+                    </h2>
+                    <div class="project-item">
+                        <div class="project-title">Enterprise Nexus</div>
+                        <div class="project-date">2024 - Present</div>
+                        <div class="project-description">
+                            <p>Full-stack React/TypeScript platform with Spring Boot, OAuth2 & Kanban</p>
+                        </div>
+                        <div class="project-link">
+                            <a href="https://tuphung369.github.io/Haaga_Backend_Programming/" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> View Project
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-title">VVNST System</div>
+                        <div class="project-date">Apr 2024 - Feb 2025</div>
+                        <div class="project-description">
+                            <ul>
+                                <li>Micro frontend architecture with Vue.js</li>
+                                <li>RESTful microservices with Spring Boot</li>
+                                <li>Large-scale team collaboration (50+ members)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-title">HR Management System</div>
+                        <div class="project-date">Apr 2024 - Jun 2024</div>
+                        <div class="project-description">
+                            <ul>
+                                <li>Vue.js UI and Node.js backend</li>
+                                <li>Spring Boot microservices design</li>
+                                <li>40% performance boost with Bun</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-graduation-cap"></i> Education
+                    </h2>
+                    <div class="education-item">
+                        <div class="education-degree">Business Information Technology</div>
+                        <div class="education-school">Haaga-Helia University of Applied Sciences</div>
+                        <div class="education-date">2024 - Present</div>
+                    </div>
+                    <div class="education-item">
+                        <div class="education-degree">Bachelor of Electrical & Electronic Engineering</div>
+                        <div class="education-school">University of Technology HCMC</div>
+                        <div class="education-date">2005 - 2010</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-language"></i> Languages
+                    </h2>
+                    <div class="language-item">
+                        <span class="language-name">English</span>
+                        <span class="language-level">Professional</span>
+                    </div>
+
+                    <div class="language-item">
+                        <span class="language-name">Finnish</span>
+                        <span class="language-level">Basic</span>
+                    </div>
+                    <div class="language-item">
+                      <span class="language-name">Vietnamese</span>
+                      <span class="language-level">Native</span>
+                  </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-tools"></i> Others
+                    </h2>
+                    <div class="skills-container">
+                        <div class="skills-row">
+                            <div class="skills-column">
+                                <div class="skill-item left frontend">
+                                    <i class="fas fa-laptop-code"></i> TypeScript
+                                </div>
+                                <div class="skill-item left frontend">
+                                    <i class="fas fa-code"></i> HTML
+                                </div>
+                                <div class="skill-item left backend">
+                                    <i class="fas fa-server"></i> Python
+                                </div>
+                            </div>
+                            <div class="skills-column">
+                                <div class="skill-item right frontend">
+                                    <i class="fas fa-paint-brush"></i> Tailwind
+                                </div>
+                                <div class="skill-item right frontend">
+                                    <i class="fas fa-book"></i> Docusaurus
+                                </div>
+                                <div class="skill-item right backend">
+                                    <i class="fas fa-database"></i> Supabase
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skills-row">
+                            <div class="skills-column">
+                                <div class="skill-item left other">
+                                    <i class="fas fa-wrench"></i> Postman
+                                </div>
+                            </div>
+                            <div class="skills-column">
+                                <div class="skill-item right other">
+                                    <i class="fas fa-pencil-ruler"></i> Figma
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-user"></i> Professional Summary
+                    </h2>
+                    <p style="font-size: 0.95rem; line-height: 1.5;">
+                        Business Information Technology student at Haaga-Helia UAS with expertise in full-stack development. 
+                        Experienced in React.js, TypeScript, Spring Boot, and Node.js. Creator of Enterprise Nexus, a comprehensive 
+                        platform showcasing advanced authentication, Kanban boards, and AI-powered productivity tools.
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-briefcase"></i> Professional Experience
+                    </h2>
+                    <div class="experience-item">
+                        <div class="experience-title">Intern & Full Stack Developer</div>
+                        <div class="experience-company">LTV</div>
+                        <div class="experience-date">Apr 2024 - Feb 2025</div>
+                        <ul>
+                            <li><strong>Internship (Apr 24 – Jul 24):</strong> Developed an HR Management System using Vue.js and Node.js, contributing to front-end and back-end features for employee data management and payroll processing.</li>
+                            <li><strong>On-the-Job Training (Jul 24 – Dec 24):</strong> Worked on a large-scale project with microservices architecture, building Micro Front-Ends with Vue.js and back-end services using Spring Boot.</li>
+                            <li><strong>Website Improvement (Dec 24 – Jan 25):</strong> Enhanced the company's local website performance and functionality using Bun, optimizing load times and user experience.</li>
+                            <li><strong>AI Team Support (Jan 25 – Feb 25):</strong> Collaborated with the AI team, focusing on UI/UX design in Figma and front-end development with React.js to support AI-driven features.</li>
+                        </ul>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-title">Warehouse Management</div>
+                        <div class="experience-company">TTI Industries</div>
+                        <div class="experience-date">Mar 2016 - Aug 2023</div>
+                        <ul>
+                            <li>Managed inventory tracking systems and warehouse operations</li>
+                            <li>Created automated reporting systems for inventory management</li>
+                            <li>Optimized warehouse logistics and supply chain processes</li>
+                            <li>Oct 2020 to May 2023: Cleaner Worker (During COVID-19)</li>
+                        </ul>
+                    </div>
+                    <div class="experience-item">
+                      <div class="experience-title">Technical Specialist</div>
+                      <div class="experience-company">Halliburton</div>
+                      <div class="experience-date">Sep 2012 - Apr 2015</div>
+                      <ul>
+                          <li>Provided technical support for oil field operations</li>
+                          <li>Implemented data management solutions for field operations</li>
+                          <li>Trained staff on technical procedures and safety protocols</li>
+                      </ul>
+                  </div>
+                    <div class="experience-item">
+                        <div class="experience-title">Engineer</div>
+                        <div class="experience-company">eSilicon Corporation</div>
+                        <div class="experience-date">Jun 2010 - Aug 2015</div>
+                        <ul>
+                            <li>Developed and maintained semiconductor design systems</li>
+                            <li>Collaborated with cross-functional teams on chip design projects</li>
+                            <li>Implemented quality control processes for manufacturing</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Print functionality is handled by the print button
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+P or Command+P
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+    </script>
+    
+    <!-- Modal for profile image -->
+    <div class="modal" id="profileModal">
+        <button class="modal-close" id="closeModal">&times;</button>
+        <img src="avatar.jpg" alt="Tu Phung" class="modal-img">
+    </div>
+    
+    <script>
+        // Profile image modal functionality
+        const profileImg = document.querySelector('.profile-img');
+        const modal = document.getElementById('profileModal');
+        const closeModal = document.getElementById('closeModal');
+        
+        // Open modal when clicking on profile image
+        if (profileImg && modal) {
+            profileImg.addEventListener('click', () => {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            });
+            
+            // Close modal when clicking outside the image
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = ''; // Restore scrolling
+                }
+            });
+            
+            // Add keyboard event to close modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('show')) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = ''; // Restore scrolling
+                }
+            });
+        }
+        
+        // Close modal when clicking on close button
+        if (closeModal) {
+            closeModal.addEventListener('click', () => {
+                modal.classList.remove('show');
+                document.body.style.overflow = ''; // Restore scrolling
+            });
+        }
+    </script>
+</body>
+</html>

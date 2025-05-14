@@ -179,17 +179,47 @@ function renderMermaidDiagrams() {
       }
     });
 
-    // Initialize Mermaid diagrams
+    // For Mermaid 10.x, use run() instead of init()
     try {
-      mermaid.init(undefined, diagrams);
-      console.log("Mermaid diagrams rendered with theme:", theme);
+      // Use the new API for Mermaid 10.x
+      if (typeof mermaid.run === "function") {
+        mermaid
+          .run({
+            nodes: diagrams,
+          })
+          .then(() => {
+            console.log("Mermaid diagrams rendered with theme:", theme);
+          })
+          .catch((runError) => {
+            console.error("Error running Mermaid diagrams:", runError);
+
+            // Try the old API as fallback
+            if (typeof mermaid.init === "function") {
+              mermaid.init(undefined, diagrams);
+            }
+          });
+      }
+      // Fallback to the old API for Mermaid 9.x
+      else if (typeof mermaid.init === "function") {
+        mermaid.init(undefined, diagrams);
+        console.log(
+          "Mermaid diagrams rendered with theme (legacy mode):",
+          theme
+        );
+      }
     } catch (initError) {
       console.error("Error initializing Mermaid diagrams:", initError);
 
       // If initialization fails, try rendering each diagram individually
       diagrams.forEach((diagram, index) => {
         try {
-          mermaid.init(undefined, [diagram]);
+          if (typeof mermaid.run === "function") {
+            mermaid.run({
+              nodes: [diagram],
+            });
+          } else if (typeof mermaid.init === "function") {
+            mermaid.init(undefined, [diagram]);
+          }
         } catch (singleError) {
           console.warn(`Error rendering diagram ${index}:`, singleError);
         }
@@ -278,21 +308,38 @@ function setupEventListeners() {
   const modal = document.getElementById("avatarModal");
   const closeModal = document.getElementById("closeModal");
 
-  // open modal when click on
-  avatar.addEventListener("click", () => {
-    modal.classList.add("show");
-  });
+  // Only add event listeners if elements exist
+  if (avatar && modal) {
+    // open modal when click on
+    avatar.addEventListener("click", () => {
+      modal.classList.add("show");
+      document.body.style.overflow = "hidden"; // Prevent scrolling when modal is open
+    });
 
-  // close modal when click on close button
-  closeModal.addEventListener("click", () => {
-    modal.classList.remove("show");
-  });
+    // close modal when click outside the image
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.remove("show");
+        document.body.style.overflow = ""; // Restore scrolling
+      }
+    });
 
-  // close modal when click outside the image
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
+    // Add keyboard event to close modal with Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("show")) {
+        modal.classList.remove("show");
+        document.body.style.overflow = ""; // Restore scrolling
+      }
+    });
+  }
+
+  // Only add event listener if closeModal exists
+  if (closeModal) {
+    // close modal when click on close button
+    closeModal.addEventListener("click", () => {
       modal.classList.remove("show");
-    }
-  });
+      document.body.style.overflow = ""; // Restore scrolling
+    });
+  }
 }
 

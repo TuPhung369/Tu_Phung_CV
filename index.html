@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phung Thanh Tu - Professional CV</title>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@9.4.0/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
     <script>
         // Store the original Mermaid content for each diagram
         window.originalMermaidContent = [];
@@ -25,10 +25,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     <link rel="stylesheet" href="cv.css">
     <!-- No JavaScript needed for simple mailto: and tel: links -->
-    <div>
-        <a href="./Phung_Thanh_Tu_CV.pdf" class="download-btn" download>
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/adobeacrobatreader.svg" alt="Download" class="download-icon">
-            Download CV (PDF)
+    <div class="action-buttons">
+        <a href="javascript:void(0)" class="download-btn" onclick="window.print()">
+            <i class="fas fa-print" style="margin-right: 8px; font-size: 1.2em;"></i>
+            Print CV
+        </a>
+        <a href="./resume.html" class="resume-btn" target="_blank">
+            <i class="fas fa-file-alt" style="margin-right: 8px; font-size: 1.2em;"></i>
+            Resume
         </a>
     </div>
     
@@ -41,37 +45,34 @@
             <div class="avatar-container">
                 <img src="avatar.jpg" alt="Phung Thanh Tu" class="avatar" id="avatar">
                 <!-- Modal cho ảnh lớn -->
-                <div class="modal" id="avatarModal">
-                    <button class="modal-close" id="closeModal">&times;</button>
-                    <img src="avatar.jpg" alt="Tu Phung" class="modal-img">
-                </div>
+                <p class="title" style="font-size: 1.1rem; font-weight: 500; margin-top: 10px; letter-spacing: 1px; text-align: center; color: rgba(255, 255, 255, 0.9); background-color: rgba(255, 255, 255, 0.1); padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">Full-Stack Developer</p>
             </div>
             <div class="header-info">
-                <h1>PHUNG THANH TU</h1>
+                <h1>TU PHUNG</h1>
                 <div class="contact-info">
-                    <p>
-                        <span class="contact-item">
-                            <i class="fas fa-envelope"></i> Email: 
-                            <a href="mailto:tuphung010787@gmail.com" class="contact-text-link">&nbsp;tuphung010787@gmail.com</a>
-                        </span>
-                    </p>
-                    <p>
-                        <span class="contact-item">
-                            <i class="fas fa-phone"></i> Phone: 
-                            <a href="tel:+358452349495" class="contact-text-link">&nbsp;+358 45 234 9495</a>
-                        </span>
-                    </p>
-                    <p><i class="fas fa-map-marker-alt"></i> Address: Juustenintie 3E, 00410, Helsinki</p>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:tuphung010787@gmail.com" class="contact-text-link">tuphung010787@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:+358452349495" class="contact-text-link">+358 45 234 9495</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Helsinki, Finland</span>
+                    </div>
                 </div>
-                <div class="social-links">
-                    <a href="https://www.linkedin.com/in/tuphung010787" target="_blank">
-                        <i class="fab fa-linkedin social-icon-fa"></i> LinkedIn
+            </div>
+            <div class="header-right" style="display: flex; flex-direction: column; align-items: center; width: 25%; flex-shrink: 0; border-left: 1px solid rgba(255, 255, 255, 0.2); padding-left: 25px; position: relative; z-index: 1;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://tuphung369.github.io/Haaga_Backend_Programming/" style="width: 100px; height: 100px; margin-bottom: 10px; border: 3px solid white; border-radius: 8px; background-color: white; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); padding: 4px; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;" alt="Project QR Code" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 8px 20px rgba(0, 0, 0, 0.4)';" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 5px 15px rgba(0, 0, 0, 0.3)';" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">
+                <span style="font-size: 0.85rem; margin-bottom: 10px; text-align: center; background-color: rgba(255, 255, 255, 0.1); padding: 4px 12px; border-radius: 15px; cursor: pointer;" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">My Project</span>
+                <div style="display: flex; gap: 12px; margin-top: 5px;">
+                    <a href="https://www.linkedin.com/in/tuphung010787" target="_blank" style="width: 38px; height: 38px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.15); color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; font-size: 1.2rem; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);" onmouseover="this.style.transform='translateY(-3px)';this.style.backgroundColor='rgba(255, 255, 255, 0.25)';this.style.boxShadow='0 5px 12px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='translateY(0)';this.style.backgroundColor='rgba(255, 255, 255, 0.15)';this.style.boxShadow='0 3px 8px rgba(0, 0, 0, 0.2)';">
+                        <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="https://tuphung369.github.io/Haaga_Backend_Programming/" target="_blank">
-                        <i class="fas fa-code-branch social-icon-fa"></i> Projects
-                    </a>
-                    <a href="https://github.com/TuPhung369/Haaga_Backend_Programming/" target="_blank">
-                        <i class="fab fa-github social-icon-fa"></i> GitHub
+                    <a href="https://github.com/TuPhung369" target="_blank" style="width: 38px; height: 38px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.15); color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; font-size: 1.2rem; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);" onmouseover="this.style.transform='translateY(-3px)';this.style.backgroundColor='rgba(255, 255, 255, 0.25)';this.style.boxShadow='0 5px 12px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='translateY(0)';this.style.backgroundColor='rgba(255, 255, 255, 0.15)';this.style.boxShadow='0 3px 8px rgba(0, 0, 0, 0.2)';">
+                        <i class="fab fa-github"></i>
                     </a>
                 </div>
             </div>
@@ -1146,24 +1147,42 @@ timeline
 
     <footer>
         <div class="footer-container">
-            <div class="footer-contact">
-                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:tuphung010787@gmail.com">&nbsp;tuphung010787@gmail.com</a></p>
-                <p><i class="fas fa-phone"></i> Phone: <a href="tel:+358452349495">&nbsp;+358 45 234 9495</a></p>
-                <p><i class="fas fa-map-marker-alt"></i> Address: Juustenintie 3E, 00410, Helsinki</p>
-            </div>
-            <div class="footer-social">
-                <a href="https://www.linkedin.com/in/tuphung010787" target="_blank">
-                    <i class="fab fa-linkedin"></i> LinkedIn
-                </a>
-                <a href="https://tuphung369.github.io/Haaga_Backend_Programming/" target="_blank">
-                    <i class="fas fa-code-branch"></i> Projects
-                </a>
-                <a href="https://github.com/TuPhung369/Haaga_Backend_Programming/" target="_blank">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
+            <!-- Contact and QR Codes Combined -->
+            <div class="footer-content">
+                <div class="footer-contact">
+                    <p><i class="fas fa-envelope"></i> Email: <a href="mailto:tuphung010787@gmail.com">&nbsp;tuphung010787@gmail.com</a></p>
+                    <p><i class="fas fa-phone"></i> Phone: <a href="tel:+358452349495">&nbsp;+358 45 234 9495</a></p>
+                    <p><i class="fas fa-map-marker-alt"></i> Address: Juustenintie 3E, 00410, Helsinki</p>
+                </div>
+                
+                <!-- QR Codes Section -->
+                <div class="footer-qr-codes">
+                    <div class="qr-code-item">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.linkedin.com/in/tuphung010787" 
+                             alt="LinkedIn QR Code" 
+                             class="footer-qr" 
+                             onclick="window.open('https://www.linkedin.com/in/tuphung010787', '_blank')">
+                        <span class="qr-label"><i class="fab fa-linkedin"></i> LinkedIn</span>
+                    </div>
+                    <div class="qr-code-item">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://tuphung369.github.io/Haaga_Backend_Programming/" 
+                             alt="Projects QR Code" 
+                             class="footer-qr" 
+                             onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">
+                        <span class="qr-label"><i class="fas fa-code-branch"></i> Projects</span>
+                    </div>
+                    <div class="qr-code-item">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://github.com/TuPhung369/Haaga_Backend_Programming/" 
+                             alt="GitHub QR Code" 
+                             class="footer-qr" 
+                             onclick="window.open('https://github.com/TuPhung369/Haaga_Backend_Programming/', '_blank')">
+                        <span class="qr-label"><i class="fab fa-github"></i> GitHub</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <p class="footer-note">&copy; 2025 Phung Thanh Tu. All rights reserved.</p>
+        
+        <p class="footer-note">&copy; 2025 Tu Phung. All rights reserved.</p>
     </footer>
 
     <div class="background">
@@ -1184,6 +1203,12 @@ timeline
     </div>
     <script src="cv.js">
     </script>
+    
+    <!-- Modal for avatar image -->
+    <div class="modal" id="avatarModal">
+        <button class="modal-close" id="closeModal">&times;</button>
+        <img src="avatar.jpg" alt="Tu Phung" class="modal-img">
+    </div>
 </body>
 </html>
 
