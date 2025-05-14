@@ -246,6 +246,7 @@
             position: relative;
         }
         
+        /* Removed underline as requested
         .name::after {
             content: '';
             position: absolute;
@@ -257,6 +258,7 @@
             background: rgba(255, 255, 255, 0.7);
             border-radius: 3px;
         }
+        */
 
         .title {
             font-size: 1.1rem;
@@ -655,21 +657,21 @@
         /* Print button */
         .print-btn {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            top: 20px;
+            left: calc(50% + 210mm/2 + 10px); /* Position to the right of a4-page */
             background-color: #1a3a5f;
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 10px 16px;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .print-btn:hover {
@@ -771,7 +773,7 @@
         <div class="circle size-small opacity-high" style="top: 60%; left: 75%;"></div>
     </div>
     <button class="print-btn no-print" onclick="printResume()">
-        <i class="fas fa-print"></i> Print Resume
+        <i class="fas fa-print"></i> Print
     </button>
 
     <div class="a4-page">
