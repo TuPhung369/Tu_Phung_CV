@@ -24,9 +24,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     <link rel="stylesheet" href="cv.css">
+    <link rel="stylesheet" href="print-new.css" media="print">
+    <style>
+        /* Remove underline from name */
+        h1::after, .name::after {
+            display: none !important;
+        }
+    </style>
     <!-- No JavaScript needed for simple mailto: and tel: links -->
     <div class="action-buttons">
-        <a href="javascript:void(0)" class="download-btn" onclick="window.print()">
+        <a href="javascript:void(0)" class="download-btn" onclick="printCV()">
             <i class="fas fa-print" style="margin-right: 8px; font-size: 1.2em;"></i>
             Print CV
         </a>
@@ -35,6 +42,35 @@
             Resume
         </a>
     </div>
+    
+    <script>
+        // Function to handle printing with A4 page size
+        function printCV() {
+            // Create a style element for print settings
+            const printStyle = document.createElement('style');
+            printStyle.setAttribute('type', 'text/css');
+            printStyle.setAttribute('media', 'print');
+            
+            // Set A4 page size and other print settings
+            printStyle.innerHTML = `
+                @page {
+                    size: A4;
+                    margin: 0;
+                }
+            `;
+            
+            // Add the style to the document
+            document.head.appendChild(printStyle);
+            
+            // Trigger print dialog
+            window.print();
+            
+            // Remove the style after printing (setTimeout to ensure it's applied during printing)
+            setTimeout(() => {
+                document.head.removeChild(printStyle);
+            }, 1000);
+        }
+    </script>
     
     <!-- No hidden links or extra JavaScript needed -->
 </head>
@@ -45,10 +81,10 @@
             <div class="avatar-container">
                 <img src="avatar.jpg" alt="Phung Thanh Tu" class="avatar" id="avatar">
                 <!-- Modal cho ảnh lớn -->
-                <p class="title" style="font-size: 1.1rem; font-weight: 500; margin-top: 10px; letter-spacing: 1px; text-align: center; color: rgba(255, 255, 255, 0.9); background-color: rgba(255, 255, 255, 0.1); padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">Full-Stack Developer</p>
+                <p class="title" style="font-size: 1.1rem; font-weight: 500; margin-top: 10px; letter-spacing: 1px; text-align: center; color: rgba(255, 255, 255, 0.9); background-color: rgba(255, 255, 255, 0.1); padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); white-space: nowrap;">Fullstack Developer</p>
             </div>
             <div class="header-info">
-                <h1>TU PHUNG</h1>
+                <h1 style="position: relative;">TU PHUNG</h1>
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
@@ -64,7 +100,7 @@
                     </div>
                 </div>
             </div>
-            <div class="header-right" style="display: flex; flex-direction: column; align-items: center; width: 25%; flex-shrink: 0; border-left: 1px solid rgba(255, 255, 255, 0.2); padding-left: 25px; position: relative; z-index: 1;">
+            <div class="header-right" style="display: flex; flex-direction: column; align-items: center; width: 25%; flex-shrink: 0; padding-left: 25px; position: relative; z-index: 1;">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://tuphung369.github.io/Haaga_Backend_Programming/" style="width: 100px; height: 100px; margin-bottom: 10px; border: 3px solid white; border-radius: 8px; background-color: white; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); padding: 4px; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;" alt="Project QR Code" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 8px 20px rgba(0, 0, 0, 0.4)';" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 5px 15px rgba(0, 0, 0, 0.3)';" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">
                 <span style="font-size: 0.85rem; margin-bottom: 10px; text-align: center; background-color: rgba(255, 255, 255, 0.1); padding: 4px 12px; border-radius: 15px; cursor: pointer;" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">My Project</span>
                 <div style="display: flex; gap: 12px; margin-top: 5px;">
@@ -105,8 +141,6 @@
         <h2>CURRENT POSITION & RECENT EXPERIENCE</h2>
         <div class="mermaid">
 timeline
-    title CURRENT POSITION & RECENT EXPERIENCE
-
     section Current Position
         2023-Present : BIT Student @ Haaga Helia UAS
             : Personal Assistant Application Development
@@ -138,8 +172,6 @@ timeline
         <h2>PREVIOUS CAREER JOURNEY</h2>
         <div class="mermaid">
 timeline
-    title PREVIOUS CAREER JOURNEY
-
     section Previous Experience
         2019 : Warehouse Supervisor @ BLUM Vietnam
             : SAP & LMS integration
@@ -170,8 +202,6 @@ timeline
         <h2>EDUCATION & CERTIFICATIONS</h2>
         <div class="mermaid">
 timeline
-    title EDUCATION & CERTIFICATIONS
-
     section Recent Education
         2023-Present : Business Information Technology
             : Haaga Helia University of Applied Sciences
@@ -1150,9 +1180,18 @@ timeline
             <!-- Contact and QR Codes Combined -->
             <div class="footer-content">
                 <div class="footer-contact">
-                    <p><i class="fas fa-envelope"></i> Email: <a href="mailto:tuphung010787@gmail.com">&nbsp;tuphung010787@gmail.com</a></p>
-                    <p><i class="fas fa-phone"></i> Phone: <a href="tel:+358452349495">&nbsp;+358 45 234 9495</a></p>
-                    <p><i class="fas fa-map-marker-alt"></i> Address: Juustenintie 3E, 00410, Helsinki</p>
+                    <p>
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:tuphung010787@gmail.com" class="contact-text-link">tuphung010787@gmail.com</a>
+                    </p>
+                    <p>
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:+358452349495" class="contact-text-link">+358 45 234 9495</a>
+                    </p>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Helsinki, Finland</span>
+                    </p>
                 </div>
                 
                 <!-- QR Codes Section -->
@@ -1203,12 +1242,25 @@ timeline
     </div>
     <script src="cv.js">
     </script>
+    <script src="print-layout.js">
+    </script>
     
     <!-- Modal for avatar image -->
     <div class="modal" id="avatarModal">
         <button class="modal-close" id="closeModal">&times;</button>
         <img src="avatar.jpg" alt="Tu Phung" class="modal-img">
     </div>
+    
+    <script>
+        // Handle keyboard shortcut for printing (Ctrl+P or Cmd+P)
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+P or Command+P
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                printCV(); // Use our custom print function with A4 size
+            }
+        });
+    </script>
 </body>
 </html>
 

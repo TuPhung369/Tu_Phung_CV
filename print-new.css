@@ -1,0 +1,464 @@
+/* Simple Print Styles - Black and White */
+@media print {
+    /* Optimize SKILLS & LANGUAGES section - 2x2 grid without progress bars */
+    .skills-grid-container {
+        width: 100% !important;
+    }
+    
+    .skills-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-rows: auto auto !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+    
+    .skill-card {
+        border: 1px solid #ddd !important;
+        padding: 5px !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+    
+    .skill-card-header {
+        display: flex !important;
+        align-items: center !important;
+        margin-bottom: 3px !important;
+        border-bottom: 1px solid #eee !important;
+    }
+    
+    .skill-card-header h3 {
+        font-size: 10pt !important;
+        margin: 0 0 0 5px !important;
+        font-weight: bold !important;
+    }
+    
+    .skill-icon {
+        font-size: 10pt !important;
+    }
+    
+    .skill-card-content {
+        font-size: 8pt !important;
+    }
+    
+    /* Hide progress bars and percentages */
+    .progress-container, .skill-percent {
+        display: none !important;
+    }
+    
+    /* Optimize skill items */
+    .skill-item {
+        margin-bottom: 2px !important;
+    }
+    
+    .skill-name-container {
+        display: block !important;
+    }
+    
+    .skill-name {
+        display: block !important;
+        font-size: 8pt !important;
+    }
+    /* Basic page setup - reduced margins */
+    @page {
+        size: A4;
+        margin: 0.3cm;
+    }
+    
+    /* Reset all styles to simple black and white */
+    * {
+        background-color: white !important;
+        color: black !important;
+        border-color: black !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        background-image: none !important;
+    }
+    
+    /* Hide elements not needed for print */
+    .no-print, .theme-toggle, .action-buttons, .background,
+    .social-links, .theme-toggle-container {
+        display: none !important;
+    }
+    
+    /* Show QR codes in footer - more compact */
+    .footer-qr-codes {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        margin-top: 10px !important;
+        margin-bottom: 0 !important;
+    }
+    
+    /* Basic structure - more compact */
+    body {
+        font-family: Arial, sans-serif !important;
+        font-size: 10pt !important;
+        line-height: 1.3 !important;
+    }
+    
+    /* Header styling - more compact */
+    .header {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px !important;
+        border-bottom: 1px solid black !important;
+        margin-bottom: 10px !important;
+        page-break-after: avoid !important;
+    }
+    
+    .header-left {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 8px !important;
+        width: 75% !important;
+    }
+    
+    .profile-info {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    .avatar {
+        width: 80px !important;
+        height: 80px !important;
+        border: 1px solid black !important;
+        border-radius: 0 !important;
+    }
+    
+    /* Headers - more compact */
+    h1, h2, h3, h4 {
+        color: black !important;
+        page-break-after: avoid !important;
+        margin-top: 5px !important;
+        margin-bottom: 3px !important;
+    }
+    
+    /* Header QR code styling - smaller */
+    .header-right {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 25% !important;
+        padding-left: 8px !important;
+    }
+    
+    .header-right img {
+        width: 60px !important;
+        height: 60px !important;
+        margin-bottom: 3px !important;
+        border: 1px solid black !important;
+        border-radius: 0 !important;
+        background-color: white !important;
+        box-shadow: none !important;
+        padding: 2px !important;
+        display: block !important;
+    }
+    
+    /* Sections - more compact */
+    .section {
+        border: 1px solid black !important;
+        margin-bottom: 8px !important;
+        padding: 6px !important;
+        page-break-inside: avoid !important;
+    }
+    
+    /* Create a wrapper for the first two sections to keep them together */
+    @media print {
+        .section:nth-of-type(1),
+        .section:nth-of-type(2) {
+            page-break-inside: avoid !important;
+            page-break-after: auto !important;
+            page-break-before: auto !important;
+            break-inside: avoid !important;
+        }
+        
+        /* Add a container effect */
+        .section:nth-of-type(1) {
+            margin-bottom: 4px !important;
+        }
+        
+        .section:nth-of-type(2) {
+            margin-top: 0 !important;
+        }
+    }
+    
+    /* Compact styling for all section headers */
+    .section h2 {
+        margin-top: 3px !important;
+        margin-bottom: 3px !important;
+        font-size: 12pt !important;
+        padding: 0 !important;
+    }
+    
+    /* Compact styling for CURRENT POSITION section */
+    .section:nth-of-type(2) {
+        padding-bottom: 8px !important;
+    }
+    
+    /* Force PREVIOUS CAREER JOURNEY to start on a new page */
+    .section:nth-of-type(3) {
+        page-break-before: always !important;
+    }
+    
+    /* Links */
+    a {
+        text-decoration: none !important;
+        color: black !important;
+        font-weight: bold !important;
+    }
+    
+    /* Footer styling */
+    footer, .footer {
+        border-top: 1px solid black !important;
+        padding: 15px !important;
+        margin-top: 20px !important;
+        text-align: center !important;
+        page-break-inside: avoid !important;
+    }
+    
+    .footer-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    
+    .footer-contact {
+        margin-bottom: 10px !important;
+        text-align: center !important;
+        font-size: 9pt !important;
+    }
+    
+    /* Tech expertise container - single column layout */
+    .tech-expertise-container {
+        width: 100% !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Each category takes full width */
+    .tech-expertise-container .tech-category {
+        width: 100% !important;
+        margin-right: 0 !important;
+    }
+    
+    .tech-category {
+        margin-bottom: 8px !important;
+    }
+    
+    .tech-category h3 {
+        border-bottom: 1px solid black !important;
+        padding-bottom: 3px !important;
+        margin-bottom: 5px !important;
+        font-size: 10pt !important;
+    }
+    
+    /* Multi-column layout for skills within each category */
+    .tech-skills {
+        width: 100% !important;
+        column-count: 3 !important;
+        column-gap: 10px !important;
+        margin-bottom: 5px !important;
+    }
+    
+    .tech-skill {
+        display: block !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        margin-bottom: 3px !important;
+        overflow: hidden !important;
+    }
+    
+    /* Icon cell */
+    .tech-skill-icon {
+        display: block !important; /* Changed from inline-block to block since float is used */
+        text-align: center !important;
+        font-size: 10pt !important;
+        padding-right: 5px !important;
+        width: 15px !important;
+        float: left !important;
+    }
+    
+    .tech-skill-icon i, .tech-skill-icon span {
+        display: inline-block !important;
+        color: black !important;
+    }
+    
+    /* Content cell */
+    .tech-skill-content {
+        display: block !important;
+        margin-left: 20px !important;
+        padding-bottom: 3px !important;
+    }
+    
+    /* Name and details inline */
+    .tech-skill-name {
+        display: inline !important;
+        font-weight: bold !important;
+        font-size: 8pt !important;
+    }
+    
+    .tech-skill-details {
+        display: inline !important;
+        font-size: 7pt !important;
+        margin-left: 5px !important;
+    }
+    
+    /* Hide skill level dots when printing */
+    .tech-skill-level {
+        display: none !important;
+    }
+    
+    .level-dot {
+        display: none !important;
+    }
+    
+    .level-dot.filled {
+        display: none !important;
+    }
+    
+    /* Force all elements to be visible */
+    .tech-expertise-container, .tech-category, .tech-skills, .tech-skill,
+    .tech-skill-icon, .tech-skill-content, .tech-skill-name, 
+    .tech-skill-details, .tech-skill-level {
+        visibility: visible !important;
+        opacity: 1 !important;
+        overflow: visible !important;
+    }
+    
+    /* Add clearfix to tech-skills */
+    .tech-skills::after {
+        content: "" !important;
+        display: table !important;
+        clear: both !important;
+    }
+    
+    /* No need for clearing in table layout */
+    
+    /* Ensure tech-category doesn't break across pages */
+    .tech-category {
+        page-break-inside: avoid !important;
+    }
+    
+    /* No need for multi-column layouts */
+    
+    /* QR code styling for print */
+    .qr-code-item {
+        display: inline-block !important;
+        text-align: center !important;
+        margin: 0 5px !important;
+    }
+    
+    .footer-qr {
+        width: 60px !important;
+        height: 60px !important;
+        border: 1px solid black !important;
+        padding: 2px !important;
+        background-color: white !important;
+        display: block !important;
+        margin: 0 auto 3px auto !important;
+    }
+    
+    .qr-label {
+        display: block !important;
+        font-size: 8pt !important;
+        margin-top: 3px !important;
+    }
+    
+    /* STRENGTHS section - 4 items per row - more compact */
+    .strengths-container {
+        display: block !important;
+        width: 100% !important;
+        overflow: hidden !important; /* Clearfix */
+        text-align: center !important;
+        margin-bottom: 3px !important;
+    }
+    
+    .strength-item {
+        float: left !important;
+        width: 22% !important;
+        margin: 0 1.5% 3px 1.5% !important;
+        padding: 2px !important;
+        border: 1px solid black !important;
+        display: block !important;
+        min-height: 45px !important;
+        page-break-inside: avoid !important;
+        overflow: visible !important;
+        text-align: center !important;
+    }
+    
+    /* Clear after every 4 items */
+    .strength-item:nth-child(4n+1) {
+        clear: left !important;
+    }
+    
+    .strength-icon {
+        display: block !important;
+        font-size: 16pt !important;
+        margin: 0 auto 3px auto !important;
+        text-align: center !important;
+    }
+    
+    .strength-text {
+        display: block !important;
+        font-size: 8pt !important;
+        font-weight: bold !important;
+        text-align: center !important;
+        line-height: 1.1 !important;
+    }
+    
+    /* Add clearfix to strengths-container */
+    .strengths-container::after {
+        content: "" !important;
+        display: table !important;
+        clear: both !important;
+    }
+    
+    /* Mermaid timeline styling for print - ultra compact */
+    .mermaid {
+        font-size: 7pt !important;
+        line-height: 1.2 !important;
+        margin-top: 3px !important;
+        overflow: visible !important;
+        transform: scale(0.9) !important;
+        transform-origin: top left !important;
+    }
+    
+    /* Force all mermaid elements to be visible and properly spaced */
+    .mermaid svg {
+        height: auto !important;
+        width: 100% !important;
+    }
+    
+    /* Reduce vertical spacing between timeline items */
+    .mermaid .section {
+        padding: 2px 1px !important;
+        margin: 2px 1px !important;
+        border: none !important;
+    }
+    
+    /* Make timeline text smaller */
+    .mermaid text {
+        font-size: 7pt !important;
+        line-height: 1.1 !important;
+    }
+    
+    /* Reduce spacing between timeline items */
+    .mermaid .task {
+        margin: 4px 0 !important;
+    }
+    
+    /* Ensure timeline labels don't overlap */
+    .mermaid .taskText {
+        fill: black !important;
+        font-size: 6pt !important;
+    }
+    
+    /* Reduce spacing between timeline sections */
+    .mermaid .sectionTitle {
+        font-weight: bold !important;
+        margin-bottom: 5px !important;
+    }
+}
