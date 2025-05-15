@@ -587,12 +587,19 @@
     <script>
         // Function to handle printing with A4 page size and zero margins
         function printCV() {
+            // Save current scroll position
+            const scrollPos = window.scrollY;
+            
+            // Store original overflow settings
+            const originalHtmlOverflow = document.documentElement.style.overflow;
+            const originalBodyOverflow = document.body.style.overflow;
+            
             // Create a style element for print settings
             const printStyle = document.createElement('style');
             printStyle.setAttribute('type', 'text/css');
             printStyle.setAttribute('media', 'print');
             
-            // Set A4 page size and force zero margins on all sides
+            // Set A4 page size and force zero margins on all sides - ONLY FOR ACTUAL PRINTING
             printStyle.innerHTML = `
                 @page {
                     size: A4;
@@ -600,22 +607,22 @@
                     padding: 0mm !important;
                 }
                 
-                body {
-                    margin: 0mm !important;
-                    padding: 0mm !important;
-                }
-                
-                .a4-page {
-                    margin: 0 !important;
-                    padding: 0 !important;
-                    border: none !important;
-                }
-                
-                /* Force all content to stay within A4 dimensions */
-                html, body {
-                    width: 210mm !important;
-                    height: 297mm !important;
-                    overflow: hidden !important;
+                @media print {
+                    body {
+                        margin: 0mm !important;
+                        padding: 0mm !important;
+                    }
+                    
+                    .a4-page {
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        border: none !important;
+                    }
+                    
+                    html, body {
+                        width: 210mm !important;
+                        height: 297mm !important;
+                    }
                 }
             `;
             
@@ -628,7 +635,6 @@
             marginReminder.style.top = '0';
             marginReminder.style.left = '0';
             marginReminder.style.width = '100%';
-            marginReminder.style.backgroundColor = '#ffeb3b';
             marginReminder.style.color = '#000';
             marginReminder.style.padding = '10px';
             marginReminder.style.textAlign = 'center';
@@ -636,7 +642,6 @@
             marginReminder.style.zIndex = '9999';
             marginReminder.style.fontSize = '16px';
             marginReminder.className = 'print-reminder no-print';
-            marginReminder.innerHTML = 'Vui lòng chọn "Margins: None" trong hộp thoại in để tránh CV bị chia thành nhiều trang';
             document.body.appendChild(marginReminder);
             
             // Ensure all QR codes are loaded before printing
@@ -655,6 +660,24 @@
                 }
             });
             
+            // Function to restore everything after printing
+            const restoreAfterPrinting = () => {
+                // Remove the style and reminder
+                if (document.head.contains(printStyle)) {
+                    document.head.removeChild(printStyle);
+                }
+                if (document.body.contains(marginReminder)) {
+                    document.body.removeChild(marginReminder);
+                }
+                
+                // Restore original overflow settings
+                document.documentElement.style.overflow = originalHtmlOverflow;
+                document.body.style.overflow = originalBodyOverflow;
+                
+                // Restore scroll position
+                window.scrollTo(0, scrollPos);
+            };
+            
             // Wait for all QR codes to load, then print
             if (loadPromises.length > 0) {
                 Promise.all(loadPromises).then(() => {
@@ -664,13 +687,8 @@
                         setTimeout(() => {
                             window.print();
                             
-                            // Remove the style and reminder after printing
-                            setTimeout(() => {
-                                document.head.removeChild(printStyle);
-                                if (document.body.contains(marginReminder)) {
-                                    document.body.removeChild(marginReminder);
-                                }
-                            }, 1000);
+                            // Restore everything after printing
+                            setTimeout(restoreAfterPrinting, 1000);
                         }, 2000);
                     }, 200);
                 });
@@ -679,13 +697,8 @@
                 setTimeout(() => {
                     window.print();
                     
-                    // Remove the style and reminder after printing
-                    setTimeout(() => {
-                        document.head.removeChild(printStyle);
-                        if (document.body.contains(marginReminder)) {
-                            document.body.removeChild(marginReminder);
-                        }
-                    }, 1000);
+                    // Restore everything after printing
+                    setTimeout(restoreAfterPrinting, 1000);
                 }, 2000);
             }
         }
