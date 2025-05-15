@@ -537,8 +537,11 @@ footer::after {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.1);
     text-align: center;
-    width: 100%;
+    width: 120px; /* Fixed width as requested */
     box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Responsive design for QR codes */
@@ -556,6 +559,7 @@ footer::after {
     .qr-label {
         font-size: 0.85rem;
         padding: 5px 12px;
+        width: 120px; /* Maintain fixed width */
     }
     
     /* 2 QR codes per row for medium screens */
@@ -582,6 +586,7 @@ footer::after {
     .qr-label {
         font-size: 0.75rem;
         padding: 4px 10px;
+        width: 120px; /* Maintain fixed width */
     }
     
     /* 1 QR code per row for mobile */
