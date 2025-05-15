@@ -603,13 +603,44 @@
             // Add the style to the document
             document.head.appendChild(printStyle);
             
-            // Trigger print dialog
-            window.print();
+            // Ensure all QR codes are loaded before printing
+            const lazyQRs = document.querySelectorAll('.lazy-qr');
+            const loadPromises = [];
             
-            // Remove the style after printing (setTimeout to ensure it's applied during printing)
-            setTimeout(() => {
-                document.head.removeChild(printStyle);
-            }, 1000);
+            lazyQRs.forEach(img => {
+                if (img.getAttribute('data-src') && !img.src) {
+                    const loadPromise = new Promise(resolve => {
+                        const src = img.getAttribute('data-src');
+                        img.onload = resolve;
+                        img.src = src;
+                        img.removeAttribute('data-src');
+                    });
+                    loadPromises.push(loadPromise);
+                }
+            });
+            
+            // Wait for all QR codes to load, then print
+            if (loadPromises.length > 0) {
+                Promise.all(loadPromises).then(() => {
+                    // Small delay to ensure images are rendered
+                    setTimeout(() => {
+                        window.print();
+                        
+                        // Remove the style after printing
+                        setTimeout(() => {
+                            document.head.removeChild(printStyle);
+                        }, 1000);
+                    }, 200);
+                });
+            } else {
+                // If no QR codes need loading, print immediately
+                window.print();
+                
+                // Remove the style after printing
+                setTimeout(() => {
+                    document.head.removeChild(printStyle);
+                }, 1000);
+            }
         }
     </script>
     
