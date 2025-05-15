@@ -76,7 +76,7 @@
     }
     
     /* Hide elements not needed for print */
-    .no-print, .theme-toggle, .action-buttons, .background,
+    .no-print, .print-reminder, .theme-toggle, .action-buttons, .background,
     .social-links, .theme-toggle-container {
         display: none !important;
     }
