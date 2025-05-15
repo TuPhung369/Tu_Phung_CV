@@ -111,17 +111,41 @@
         }
         
         /* Background Styles matching resume.html */
+        html, body {
+            min-height: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+        }
+        
         html {
-            height: 100%;
             background: linear-gradient(135deg, #1a3a5f 0%, #2a5298 100%);
         }
         
+        body {
+            position: relative;
+            padding: 0 !important; /* Override padding from cv.css */
+        }
+        
+        /* Remove padding and margin from header */
+        header {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        
+        /* Adjust theme toggle button position */
+        .theme-toggle {
+            top: 10px !important;
+            right: 10px !important;
+        }
+        
         .background {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100vw;
-            height: 100vh;
+            height: 100%;
+            min-height: 100vh;
             overflow: hidden;
             z-index: -1; /* Behind main content */
             background: radial-gradient(circle at center, #1e1e1e, #121212);
@@ -432,6 +456,17 @@
                 transform-origin: 0 0;
                 max-width: 1200px;
                 margin: 0 auto;
+                position: relative; /* Ensure positioning context */
+                z-index: 1; /* Above background */
+            }
+            
+            /* Ensure background is properly centered */
+            .background {
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100vw;
+                height: 100%;
+                min-height: 100vh;
             }
         }
         
@@ -545,7 +580,7 @@
 </head>
 <body>
     <!-- Ultra-enhanced background circles with stunning 3D layered effect -->
-    <div class="background" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden;">
+    <div class="background">
         <!-- Furthest layer (7 layers deep) - Very blurry, small, slow-moving -->
         <div class="circle size-medium opacity-ultra-low color-blue depth-furthest anim-slow" style="top: 5%; left: 3%;"></div>
         <div class="circle size-large opacity-very-low color-purple depth-furthest anim-normal" style="top: 25%; left: 8%;"></div>
