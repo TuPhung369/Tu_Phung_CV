@@ -6,8 +6,24 @@ document.addEventListener("DOMContentLoaded", function () {
   // Set up theme toggle
   setupThemeToggle();
 
-  // Render Mermaid diagrams
-  renderMermaidDiagrams();
+  // Lazy load Mermaid diagrams
+  if (typeof mermaid !== "undefined") {
+    // Only load Mermaid if diagrams are in viewport
+    const mermaidObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          renderMermaidDiagrams();
+          mermaidObserver.disconnect(); // Only need to initialize once
+        }
+      });
+    });
+
+    // Observe mermaid containers
+    const mermaidDiagrams = document.querySelectorAll(".mermaid");
+    if (mermaidDiagrams.length > 0) {
+      mermaidDiagrams.forEach((diagram) => mermaidObserver.observe(diagram));
+    }
+  }
 
   // Set up other event listeners
   setupEventListeners();
@@ -15,80 +31,32 @@ document.addEventListener("DOMContentLoaded", function () {
   // Apply dynamic grid layout
   applyDynamicGridLayout();
 
-  // Add hover effect to strength items
+  // Simplified hover effect for strength items
   const strengthItems = document.querySelectorAll(".strength-item");
   strengthItems.forEach((item) => {
-    item.addEventListener("mouseenter", () => {
-      item.style.transform = "translateY(-5px)";
-      item.style.boxShadow = "0 5px 15px rgba(0, 0, 0, 0.2)";
-    });
-
-    item.addEventListener("mouseleave", () => {
-      item.style.transform = "translateY(0)";
-      item.style.boxShadow = "0 3px 10px rgba(0, 0, 0, 0.1)";
-    });
+    item.classList.add("hover-effect"); // Use CSS classes instead of inline styles
   });
 
-  // Animate technical skills when they come into view
+  // Simplified technical skills animation
   const techSkills = document.querySelectorAll(".tech-skill");
 
-  // Create an intersection observer for tech skills
+  // Create a single intersection observer for all tech skills
   const techObserver = new IntersectionObserver(
     (entries) => {
-      entries.forEach((entry, index) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Add staggered animation with delay based on index
-          setTimeout(() => {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-          }, index * 100);
-
-          // Stop observing once animation is triggered
+          entry.target.classList.add("visible");
           techObserver.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.1 }
+    { threshold: 0.1, rootMargin: "50px" }
   );
 
-  // Set initial styles and observe each tech skill
-  techSkills.forEach((skill, index) => {
-    // Initially set opacity to 0 and move down
-    skill.style.opacity = "0";
-    skill.style.transform = "translateY(20px)";
-    skill.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-
-    // Add hover effect for icon color change
-    const icon = skill.querySelector(".tech-skill-icon");
-    if (icon) {
-      // Generate a random color for each skill on hover
-      const colors = [
-        "#2196F3", // Blue
-        "#4CAF50", // Green
-        "#FF9800", // Orange
-        "#9C27B0", // Purple
-        "#E91E63", // Pink
-        "#00BCD4", // Cyan
-        "#3F51B5", // Indigo
-        "#009688", // Teal
-      ];
-
-      const randomColor = colors[index % colors.length];
-
-      skill.addEventListener("mouseenter", () => {
-        icon.style.backgroundColor = randomColor;
-        icon.style.transition = "background-color 0.3s ease";
-      });
-
-      skill.addEventListener("mouseleave", () => {
-        icon.style.backgroundColor = "var(--header-bg)";
-      });
-    }
-
-    // After a small delay, start observing
-    setTimeout(() => {
-      techObserver.observe(skill);
-    }, 100);
+  // Set initial styles with CSS classes
+  techSkills.forEach((skill) => {
+    skill.classList.add("tech-skill-animate");
+    techObserver.observe(skill);
   });
 });
 
@@ -142,88 +110,51 @@ function setupThemeToggle() {
   });
 }
 
-// Render all Mermaid diagrams
+// Render all Mermaid diagrams - simplified and optimized
 function renderMermaidDiagrams() {
   try {
-    console.log("Rendering Mermaid diagrams...");
-
     // Get current theme
     const isLight = document.body.classList.contains("light-mode");
     const theme = isLight ? "default" : "dark";
 
-    // Configure Mermaid with the current theme
+    // Configure Mermaid with minimal settings
     mermaid.initialize({
       startOnLoad: false,
       theme: theme,
       securityLevel: "loose",
-      logLevel: 1,
+      logLevel: 3, // Reduce logging (0=debug, 1=info, 2=warn, 3=error, 4=fatal)
     });
 
     // Get all Mermaid diagrams
     const diagrams = document.querySelectorAll(".mermaid");
+    if (diagrams.length === 0) return;
 
     // Reset and restore original content for each diagram
     diagrams.forEach((diagram, index) => {
-      // Clear the diagram
-      diagram.innerHTML = "";
-
-      // Reset the diagram
-      diagram.removeAttribute("data-processed");
-
-      // Restore the original content from our saved array
-      if (
-        window.originalMermaidContent &&
-        window.originalMermaidContent[index]
-      ) {
-        diagram.textContent = window.originalMermaidContent[index];
+      // Only process diagrams that haven't been rendered yet
+      if (!diagram.hasAttribute("data-processed")) {
+        // Restore the original content from our saved array if needed
+        if (
+          window.originalMermaidContent &&
+          window.originalMermaidContent[index]
+        ) {
+          diagram.textContent = window.originalMermaidContent[index];
+        }
       }
     });
 
-    // For Mermaid 10.x, use run() instead of init()
-    try {
-      // Use the new API for Mermaid 10.x
-      if (typeof mermaid.run === "function") {
-        mermaid
-          .run({
-            nodes: diagrams,
-          })
-          .then(() => {
-            console.log("Mermaid diagrams rendered with theme:", theme);
-          })
-          .catch((runError) => {
-            console.error("Error running Mermaid diagrams:", runError);
-
-            // Try the old API as fallback
-            if (typeof mermaid.init === "function") {
-              mermaid.init(undefined, diagrams);
-            }
-          });
-      }
-      // Fallback to the old API for Mermaid 9.x
-      else if (typeof mermaid.init === "function") {
-        mermaid.init(undefined, diagrams);
-        console.log(
-          "Mermaid diagrams rendered with theme (legacy mode):",
-          theme
-        );
-      }
-    } catch (initError) {
-      console.error("Error initializing Mermaid diagrams:", initError);
-
-      // If initialization fails, try rendering each diagram individually
-      diagrams.forEach((diagram, index) => {
-        try {
-          if (typeof mermaid.run === "function") {
-            mermaid.run({
-              nodes: [diagram],
-            });
-          } else if (typeof mermaid.init === "function") {
-            mermaid.init(undefined, [diagram]);
-          }
-        } catch (singleError) {
-          console.warn(`Error rendering diagram ${index}:`, singleError);
+    // Use the appropriate API based on Mermaid version
+    if (typeof mermaid.run === "function") {
+      // Mermaid 10.x API
+      mermaid.run({ nodes: diagrams }).catch(() => {
+        // Fallback to old API if needed
+        if (typeof mermaid.init === "function") {
+          mermaid.init(undefined, diagrams);
         }
       });
+    } else if (typeof mermaid.init === "function") {
+      // Mermaid 9.x API
+      mermaid.init(undefined, diagrams);
     }
   } catch (error) {
     console.error("Error rendering Mermaid diagrams:", error);
