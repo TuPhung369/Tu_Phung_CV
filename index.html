@@ -337,7 +337,7 @@
             </div>
             <div class="header-right" style="display: flex; flex-direction: column; align-items: center; width: 25%; flex-shrink: 0; padding-left: 25px; position: relative; z-index: 1;">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://tuphung369.github.io/Haaga_Backend_Programming/" style="width: 100px; height: 100px; margin-bottom: 10px; border: 3px solid white; border-radius: 8px; background-color: white; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); padding: 4px; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;" alt="Project QR Code" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 8px 20px rgba(0, 0, 0, 0.4)';" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 5px 15px rgba(0, 0, 0, 0.3)';" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">
-                <span style="font-size: 0.85rem; margin-bottom: 10px; text-align: center; background-color: rgba(255, 255, 255, 0.1); padding: 4px 12px; border-radius: 15px; cursor: pointer;" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">My Project</span>
+                <span style="font-size: 0.85rem; margin-bottom: 10px; text-align: center; background-color: rgba(255, 255, 255, 0.1); padding: 4px 12px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.25)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">My Project</span>
                 <div style="display: flex; gap: 12px; margin-top: 5px;">
                     <a href="https://www.linkedin.com/in/tuphung010787" target="_blank" style="width: 38px; height: 38px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.15); color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; font-size: 1.2rem; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);" onmouseover="this.style.transform='translateY(-3px)';this.style.backgroundColor='rgba(255, 255, 255, 0.25)';this.style.boxShadow='0 5px 12px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='translateY(0)';this.style.backgroundColor='rgba(255, 255, 255, 0.15)';this.style.boxShadow='0 3px 8px rgba(0, 0, 0, 0.2)';">
                         <i class="fab fa-linkedin-in"></i>
@@ -1439,28 +1439,28 @@ timeline
                              alt="LinkedIn QR Code" 
                              class="footer-qr lazy-qr" 
                              onclick="window.open('https://www.linkedin.com/in/tuphung010787', '_blank')">
-                        <span class="qr-label"><i class="fab fa-linkedin"></i> LinkedIn</span>
+                        <span class="qr-label" onclick="window.open('https://www.linkedin.com/in/tuphung010787', '_blank')" style="cursor: pointer;"><i class="fab fa-linkedin"></i> LinkedIn</span>
                     </div>
                     <div class="qr-code-item">
                         <img data-src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://tuphung369.github.io/professional-cv/resume.html" 
                              alt="Resume QR Code" 
                              class="footer-qr lazy-qr" 
                              onclick="window.open('https://tuphung369.github.io/professional-cv/resume.html', '_blank')">
-                        <span class="qr-label"><i class="fas fa-file-alt"></i> Resume</span>
+                        <span class="qr-label" onclick="window.open('https://tuphung369.github.io/professional-cv/resume.html', '_blank')" style="cursor: pointer;"><i class="fas fa-file-alt"></i> Resume</span>
                     </div>
                     <div class="qr-code-item">
                         <img data-src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://tuphung369.github.io/Haaga_Backend_Programming/" 
                              alt="Projects QR Code" 
                              class="footer-qr lazy-qr" 
                              onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">
-                        <span class="qr-label"><i class="fas fa-code-branch"></i> Projects</span>
+                        <span class="qr-label" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')" style="cursor: pointer;"><i class="fas fa-code-branch"></i> Projects</span>
                     </div>
                     <div class="qr-code-item">
                         <img data-src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://github.com/TuPhung369/Haaga_Backend_Programming/" 
                              alt="GitHub QR Code" 
                              class="footer-qr lazy-qr" 
                              onclick="window.open('https://github.com/TuPhung369/Haaga_Backend_Programming/', '_blank')">
-                        <span class="qr-label"><i class="fab fa-github"></i> GitHub</span>
+                        <span class="qr-label" onclick="window.open('https://github.com/TuPhung369/Haaga_Backend_Programming/', '_blank')" style="cursor: pointer;"><i class="fab fa-github"></i> GitHub</span>
                     </div>
                 </div>
             </div>
