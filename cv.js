@@ -234,6 +234,9 @@ function setupEventListeners() {
     applyDynamicGridLayout();
   });
 
+  // Setup lazy loading for QR codes
+  setupLazyLoadQRCodes();
+
   // processing for the avatar image
   const avatar = document.getElementById("avatar");
   const modal = document.getElementById("avatarModal");
@@ -272,5 +275,45 @@ function setupEventListeners() {
       document.body.style.overflow = ""; // Restore scrolling
     });
   }
+}
+
+// Setup lazy loading for QR codes
+function setupLazyLoadQRCodes() {
+  // Only load QR codes when they come into view
+  const qrObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          const src = img.getAttribute("data-src");
+
+          if (src) {
+            // Check if we're on mobile
+            const isMobile = window.innerWidth <= 768;
+
+            // On mobile, use a smaller size for QR codes
+            if (isMobile) {
+              // Replace size parameter in URL
+              const smallerSrc = src.replace("size=150x150", "size=100x100");
+              img.src = smallerSrc;
+            } else {
+              img.src = src;
+            }
+
+            // Remove data-src to prevent loading again
+            img.removeAttribute("data-src");
+
+            // Stop observing this image
+            qrObserver.unobserve(img);
+          }
+        }
+      });
+    },
+    { rootMargin: "200px" }
+  ); // Start loading when QR codes are 200px from viewport
+
+  // Observe all lazy QR codes
+  const lazyQRs = document.querySelectorAll(".lazy-qr");
+  lazyQRs.forEach((qr) => qrObserver.observe(qr));
 }
 

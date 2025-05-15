@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Performance optimization meta tags -->
+    <meta name="description" content="Professional CV of Phung Thanh Tu - Software Developer">
+    <meta name="theme-color" content="#1a3a5f">
     <title>Phung Thanh Tu - Professional CV</title>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="cv.css" as="style">
+    
+    <!-- Defer non-critical JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js" defer></script>
     <script>
         // Store the original Mermaid content for each diagram
         window.originalMermaidContent = [];
@@ -16,15 +25,15 @@
             });
         });
     </script>
-    <script>
-        // Mermaid initialization is now handled in cv.js
-        // This prevents duplicate initialization
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    
+    <!-- Load critical CSS first -->
     <link rel="stylesheet" href="cv.css">
     <link rel="stylesheet" href="print-new.css" media="print">
+    
+    <!-- Load non-critical CSS with lower priority -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" media="print" onload="this.media='all'">
     <style>
         /* Remove underline from name */
         h1::after, .name::after {
@@ -91,6 +100,49 @@
         @media print {
             .background {
                 display: none !important;
+            }
+        }
+        
+        /* Mobile optimization - simplify or hide background on small screens */
+        @media (max-width: 768px) {
+            .background {
+                /* Simplified static background */
+                background: linear-gradient(135deg, #121212, #1a3a5f);
+            }
+            
+            /* Hide desktop-only circles on mobile */
+            .desktop-only {
+                display: none !important;
+            }
+            
+            /* Reduce size and opacity of remaining circles for better performance */
+            .circle:not(.desktop-only) {
+                opacity: 0.3 !important;
+                transform: scale(0.7) !important;
+                box-shadow: none !important;
+                filter: blur(1px);
+            }
+            
+            /* Reduce other animations and effects */
+            .hover-effect:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+            
+            /* Optimize transitions */
+            * {
+                transition-duration: 0.2s !important;
+            }
+            
+            /* Reduce footer QR code size */
+            .footer-qr {
+                width: 70px !important;
+                height: 70px !important;
+            }
+            
+            /* Optimize font loading */
+            body {
+                font-display: swap;
             }
         }
     </style>
@@ -1377,26 +1429,26 @@ timeline
                     </p>
                 </div>
                 
-                <!-- QR Codes Section -->
+                <!-- QR Codes Section - Lazy loaded for better performance -->
                 <div class="footer-qr-codes">
                     <div class="qr-code-item">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.linkedin.com/in/tuphung010787" 
+                        <img data-src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.linkedin.com/in/tuphung010787" 
                              alt="LinkedIn QR Code" 
-                             class="footer-qr" 
+                             class="footer-qr lazy-qr" 
                              onclick="window.open('https://www.linkedin.com/in/tuphung010787', '_blank')">
                         <span class="qr-label"><i class="fab fa-linkedin"></i> LinkedIn</span>
                     </div>
                     <div class="qr-code-item">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://tuphung369.github.io/Haaga_Backend_Programming/" 
+                        <img data-src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://tuphung369.github.io/Haaga_Backend_Programming/" 
                              alt="Projects QR Code" 
-                             class="footer-qr" 
+                             class="footer-qr lazy-qr" 
                              onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">
                         <span class="qr-label"><i class="fas fa-code-branch"></i> Projects</span>
                     </div>
                     <div class="qr-code-item">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://github.com/TuPhung369/Haaga_Backend_Programming/" 
+                        <img data-src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://github.com/TuPhung369/Haaga_Backend_Programming/" 
                              alt="GitHub QR Code" 
-                             class="footer-qr" 
+                             class="footer-qr lazy-qr" 
                              onclick="window.open('https://github.com/TuPhung369/Haaga_Backend_Programming/', '_blank')">
                         <span class="qr-label"><i class="fab fa-github"></i> GitHub</span>
                     </div>
@@ -1408,31 +1460,33 @@ timeline
     </footer>
 
     <div class="background">
-        <div class="circle size-tiny opacity-low left-1"></div>
-        <div class="circle size-small opacity-medium left-2"></div>
+        <!-- Reduced number of circles for better performance -->
         <div class="circle size-medium opacity-high left-3"></div>
         <div class="circle size-large opacity-low left-4"></div>
-        <div class="circle size-small opacity-medium left-5"></div>
-        <div class="circle size-medium opacity-high left-6"></div>
-        <div class="circle size-tiny opacity-low right-1"></div>
-        <div class="circle size-small opacity-medium right-2"></div>
         <div class="circle size-medium opacity-high right-3"></div>
         <div class="circle size-large opacity-low right-4"></div>
-        <div class="circle size-small opacity-medium right-5"></div>
-        <div class="circle size-medium opacity-high right-6"></div>
-        <div class="circle size-tiny opacity-medium right-7"></div>
-        <div class="circle size-small opacity-high right-8"></div>
-        <div class="circle size-medium opacity-low right-9"></div>
-        <div class="circle size-small opacity-high right-10"></div>
-        <div class="circle size-tiny opacity-medium right-11"></div>
-        <div class="circle size-medium opacity-low right-12"></div>
-        <div class="circle size-extra-large opacity-low middle-1"></div>
         <div class="circle size-large opacity-medium middle-2"></div>
+        
+        <!-- Desktop-only circles (will be hidden on mobile via CSS) -->
+        <div class="circle desktop-only size-tiny opacity-low left-1"></div>
+        <div class="circle desktop-only size-small opacity-medium left-2"></div>
+        <div class="circle desktop-only size-small opacity-medium left-5"></div>
+        <div class="circle desktop-only size-medium opacity-high left-6"></div>
+        <div class="circle desktop-only size-tiny opacity-low right-1"></div>
+        <div class="circle desktop-only size-small opacity-medium right-2"></div>
+        <div class="circle desktop-only size-small opacity-medium right-5"></div>
+        <div class="circle desktop-only size-medium opacity-high right-6"></div>
+        <div class="circle desktop-only size-tiny opacity-medium right-7"></div>
+        <div class="circle desktop-only size-small opacity-high right-8"></div>
+        <div class="circle desktop-only size-medium opacity-low right-9"></div>
+        <div class="circle desktop-only size-small opacity-high right-10"></div>
+        <div class="circle desktop-only size-tiny opacity-medium right-11"></div>
+        <div class="circle desktop-only size-medium opacity-low right-12"></div>
+        <div class="circle desktop-only size-extra-large opacity-low middle-1"></div>
     </div>
-    <script src="cv.js">
-    </script>
-    <script src="print-layout.js">
-    </script>
+    <!-- Load JavaScript with defer to improve page load performance -->
+    <script src="cv.js" defer></script>
+    <script src="print-layout.js" defer></script>
     
     <!-- Modal for avatar image -->
     <div class="modal" id="avatarModal">
