@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tu Phung - Professional Profile</title>
     
     <!-- Preconnect to external domains -->
@@ -56,85 +56,18 @@
             flex-direction: column;
             overflow: visible;
             border-radius: 8px;
-        }
-
-        /* Desktop optimization - ensure proper scaling */
-        @media (min-width: 769px) {
-            body {
-                zoom: 1.0;
-                -ms-zoom: 1.0;
-                -webkit-zoom: 1.0;
-                transform: scale(1.0);
-                transform-origin: 0 0;
-                margin: 0 auto;
-            }
-            
-            .a4-page {
-                width: 210mm;
-                min-height: 297mm;
-            }
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
         
-        /* Mobile optimization */
-        @media (max-width: 768px) {
-            body {
-                font-display: swap;
-            }
-            
-            .a4-page {
-                width: 100%;
-                min-height: auto;
-                margin: 0;
-                box-shadow: none;
-                border-radius: 0;
-            }
-            
-            .header {
-                padding: 20px 15px;
-            }
-            
-            .profile-section {
-                width: 100%;
-                margin-bottom: 20px;
-            }
-            
-            .profile-img-container {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .header-info {
-                width: 100%;
-                padding: 0;
-            }
-            
-            .header-right {
-                width: 100%;
-                padding-left: 0;
-            }
-            
-            .header-qr-code {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .content {
-                flex-direction: column;
-            }
-            
-            .left-column, .right-column {
-                width: 100%;
-                padding: 15px;
-            }
-            
-            /* Disable animations for better performance */
-            * {
-                animation: none !important;
-                transition: none !important;
-                transform: none !important;
-                box-shadow: none !important;
-                filter: none !important;
-            }
+        /* Basic scaling for all devices */
+        body {
+            margin: 0 auto;
+        }
+        
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
         }
         
         /* Print optimization */
@@ -1755,5 +1688,7 @@
             }, 250);
         });
     </script>
+    
+
 </body>
 </html>
