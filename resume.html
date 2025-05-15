@@ -194,6 +194,29 @@
             .name {
                 color: #1a3a5f !important;
             }
+            
+            /* Optimize content for fewer pages */
+            .content {
+                display: flex;
+                flex-wrap: nowrap;
+            }
+            
+            /* Only prevent orphaned section titles */
+            .section-title {
+                page-break-after: avoid;
+            }
+            
+            /* Allow content to flow more naturally between pages */
+            .section {
+                page-break-inside: auto;
+            }
+            
+            /* Ensure the Professional Summary section stays with its title */
+            .right-column .section:first-child h2,
+            .right-column .section:first-child p {
+                page-break-inside: avoid;
+                page-break-after: avoid;
+            }
         }
 
         /* Header section */
@@ -1564,12 +1587,50 @@
             printStyle.setAttribute('type', 'text/css');
             printStyle.setAttribute('media', 'print');
             
-            // Set A4 page size and other print settings
+            // Set A4 page size and other print settings with optimized page break handling
             printStyle.innerHTML = `
                 @page {
                     size: A4;
                     margin: 0;
                     padding: 0;
+                }
+                
+                /* Optimize for fewer pages */
+                .content {
+                    display: flex !important;
+                    flex-wrap: nowrap !important;
+                }
+                
+                /* Allow content to flow naturally between pages */
+                .section {
+                    page-break-inside: auto !important;
+                }
+                
+                /* Only prevent orphaned section titles */
+                .section-title {
+                    page-break-after: avoid !important;
+                }
+                
+                /* Ensure the Professional Summary section stays with its title */
+                .right-column .section:first-child h2,
+                .right-column .section:first-child p {
+                    page-break-inside: avoid !important;
+                    page-break-after: avoid !important;
+                }
+                
+                /* Reduce some spacing to fit more content per page */
+                .section {
+                    margin-bottom: 15px !important;
+                }
+                
+                .experience-item, .project-item, .education-item {
+                    margin-bottom: 10px !important;
+                    padding-bottom: 10px !important;
+                }
+                
+                /* Ensure proper column layout */
+                .left-column, .right-column {
+                    height: auto !important;
                 }
             `;
             
@@ -1598,7 +1659,7 @@
     <!-- Modal for profile image -->
     <div class="modal" id="profileModal">
         <button class="modal-close" id="closeModal">&times;</button>
-        <img src="avatar.jpg" alt="Tu Phung" class="modal-img" loading="lazy">
+        <img src="avatar.webp" alt="Tu Phung" class="modal-img" loading="lazy">
     </div>
     
     <script>
