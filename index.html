@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Performance optimization meta tags -->
     <meta name="description" content="Professional CV of Phung Thanh Tu - Software Developer">
@@ -170,6 +170,19 @@
         @media print {
             .background {
                 display: none !important;
+            }
+        }
+        
+        /* Desktop optimization - ensure proper scaling */
+        @media (min-width: 769px) {
+            body {
+                zoom: 1.0;
+                -ms-zoom: 1.0;
+                -webkit-zoom: 1.0;
+                transform: scale(1.0);
+                transform-origin: 0 0;
+                width: 100%;
+                max-width: 100%;
             }
         }
         
