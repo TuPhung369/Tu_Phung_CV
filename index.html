@@ -585,23 +585,59 @@
     </div>
     
     <script>
-        // Function to handle printing with A4 page size
+        // Function to handle printing with A4 page size and zero margins
         function printCV() {
             // Create a style element for print settings
             const printStyle = document.createElement('style');
             printStyle.setAttribute('type', 'text/css');
             printStyle.setAttribute('media', 'print');
             
-            // Set A4 page size and other print settings
+            // Set A4 page size and force zero margins on all sides
             printStyle.innerHTML = `
                 @page {
                     size: A4;
-                    margin: 0;
+                    margin: 0mm !important;
+                    padding: 0mm !important;
+                }
+                
+                body {
+                    margin: 0mm !important;
+                    padding: 0mm !important;
+                }
+                
+                .a4-page {
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    border: none !important;
+                }
+                
+                /* Force all content to stay within A4 dimensions */
+                html, body {
+                    width: 210mm !important;
+                    height: 297mm !important;
+                    overflow: hidden !important;
                 }
             `;
             
             // Add the style to the document
             document.head.appendChild(printStyle);
+            
+            // Add a message to remind user to set margins to "None"
+            const marginReminder = document.createElement('div');
+            marginReminder.style.position = 'fixed';
+            marginReminder.style.top = '0';
+            marginReminder.style.left = '0';
+            marginReminder.style.width = '100%';
+            marginReminder.style.backgroundColor = '#ffeb3b';
+            marginReminder.style.color = '#000';
+            marginReminder.style.padding = '10px';
+            marginReminder.style.textAlign = 'center';
+            marginReminder.style.fontWeight = 'bold';
+            marginReminder.style.zIndex = '9999';
+            marginReminder.style.fontSize = '16px';
+            marginReminder.className = 'print-reminder no-print';
+            marginReminder.innerHTML = 'Vui lòng chọn "Margins: None" trong hộp thoại in để tránh CV bị chia thành nhiều trang';
+            document.body.appendChild(marginReminder);
             
             // Ensure all QR codes are loaded before printing
             const lazyQRs = document.querySelectorAll('.lazy-qr');
@@ -624,22 +660,33 @@
                 Promise.all(loadPromises).then(() => {
                     // Small delay to ensure images are rendered
                     setTimeout(() => {
-                        window.print();
-                        
-                        // Remove the style after printing
+                        // Show reminder for 2 seconds before printing
                         setTimeout(() => {
-                            document.head.removeChild(printStyle);
-                        }, 1000);
+                            window.print();
+                            
+                            // Remove the style and reminder after printing
+                            setTimeout(() => {
+                                document.head.removeChild(printStyle);
+                                if (document.body.contains(marginReminder)) {
+                                    document.body.removeChild(marginReminder);
+                                }
+                            }, 1000);
+                        }, 2000);
                     }, 200);
                 });
             } else {
-                // If no QR codes need loading, print immediately
-                window.print();
-                
-                // Remove the style after printing
+                // If no QR codes need loading, show reminder and print
                 setTimeout(() => {
-                    document.head.removeChild(printStyle);
-                }, 1000);
+                    window.print();
+                    
+                    // Remove the style and reminder after printing
+                    setTimeout(() => {
+                        document.head.removeChild(printStyle);
+                        if (document.body.contains(marginReminder)) {
+                            document.body.removeChild(marginReminder);
+                        }
+                    }, 1000);
+                }, 2000);
             }
         }
     </script>
@@ -774,7 +821,7 @@
             <div class="avatar-container">
                 <picture>
                     <!-- Desktop WebP image -->
-                    <source srcset="avatar.jpg" type="image/jpeg">
+                    <source srcset="avatar.webp" type="image/webp">
                     <!-- Final fallback with absolute path to ensure it works -->
                     <img src="avatar.webp" alt="Phung Thanh Tu" class="avatar" id="avatar" width="140" height="140" loading="eager" fetchpriority="high" decoding="async">
                 </picture>
