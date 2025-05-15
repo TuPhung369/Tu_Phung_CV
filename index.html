@@ -9,8 +9,23 @@
     <meta name="theme-color" content="#1a3a5f">
     <title>Phung Thanh Tu - Professional CV</title>
     
-    <!-- Preload critical CSS -->
+    <!-- Preload critical resources -->
     <link rel="preload" href="cv.css" as="style">
+    <link rel="preload" href="avatar.jpg" as="image" fetchpriority="high">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- Load critical CSS first -->
+    <link rel="stylesheet" href="cv.css">
+    <link rel="stylesheet" href="print-new.css" media="print">
+    
+    <!-- Load non-critical CSS with lower priority -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" media="print" onload="this.media='all'">
     
     <!-- Defer non-critical JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js" defer></script>
@@ -25,15 +40,6 @@
             });
         });
     </script>
-    
-    <!-- Load critical CSS first -->
-    <link rel="stylesheet" href="cv.css">
-    <link rel="stylesheet" href="print-new.css" media="print">
-    
-    <!-- Load non-critical CSS with lower priority -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" media="print" onload="this.media='all'">
     <style>
         /* Remove underline from name */
         h1::after, .name::after {
