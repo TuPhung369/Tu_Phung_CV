@@ -104,6 +104,18 @@
             observer.observe(mermaidDiagrams[0]);
         });
     </script>
+    <!-- Fix for print preview scrolling -->
+    <style id="print-preview-fix">
+        /* Ensure scrolling always works in print preview */
+        @media screen {
+            html, body {
+                overflow: auto !important;
+                height: auto !important;
+                min-height: 100% !important;
+            }
+        }
+    </style>
+    
     <style>
         /* Remove underline from name */
         h1::after, .name::after {
@@ -607,6 +619,14 @@
                     padding: 0mm !important;
                 }
                 
+                /* Special style for print preview - ensure scrolling works */
+                @media screen {
+                    html, body {
+                        overflow: auto !important;
+                        height: auto !important;
+                    }
+                }
+                
                 @media print {
                     body {
                         margin: 0mm !important;
@@ -662,6 +682,7 @@
             
             // Function to restore everything after printing
             const restoreAfterPrinting = () => {
+                console.log("Restoring after printing...");
                 // Remove the style and reminder
                 if (document.head.contains(printStyle)) {
                     document.head.removeChild(printStyle);
@@ -670,36 +691,58 @@
                     document.body.removeChild(marginReminder);
                 }
                 
-                // Restore original overflow settings
-                document.documentElement.style.overflow = originalHtmlOverflow;
-                document.body.style.overflow = originalBodyOverflow;
+                // Explicitly enable scrolling on both html and body
+                document.documentElement.style.overflow = "auto";
+                document.body.style.overflow = "auto";
+                document.documentElement.style.height = "auto";
+                document.body.style.height = "auto";
                 
-                // Restore scroll position
-                window.scrollTo(0, scrollPos);
+                // Remove any afterprint event listener to avoid duplicates
+                window.removeEventListener('afterprint', restoreAfterPrinting);
+                
+                // Restore scroll position - reduced from 100ms to 50ms
+                setTimeout(() => {
+                    window.scrollTo(0, scrollPos);
+                }, 50);
             };
+            
+            // Add an event listener for the afterprint event
+            window.addEventListener('afterprint', restoreAfterPrinting);
             
             // Wait for all QR codes to load, then print
             if (loadPromises.length > 0) {
                 Promise.all(loadPromises).then(() => {
-                    // Small delay to ensure images are rendered
+                    // Small delay to ensure images are rendered - reduced from 200ms to 100ms
                     setTimeout(() => {
-                        // Show reminder for 2 seconds before printing
+                        // Show reminder briefly before printing - reduced from 2000ms to 300ms
                         setTimeout(() => {
                             window.print();
                             
-                            // Restore everything after printing
-                            setTimeout(restoreAfterPrinting, 1000);
-                        }, 2000);
-                    }, 200);
+                            // Also set a backup timeout in case afterprint doesn't fire - reduced from 2000ms to 1000ms
+                            setTimeout(() => {
+                                // Check if scrolling is still disabled
+                                if (document.documentElement.style.overflow === "hidden" || 
+                                    document.body.style.overflow === "hidden") {
+                                    restoreAfterPrinting();
+                                }
+                            }, 1000);
+                        }, 300);
+                    }, 100);
                 });
             } else {
-                // If no QR codes need loading, show reminder and print
+                // If no QR codes need loading, show reminder and print - reduced from 2000ms to 300ms
                 setTimeout(() => {
                     window.print();
                     
-                    // Restore everything after printing
-                    setTimeout(restoreAfterPrinting, 1000);
-                }, 2000);
+                    // Also set a backup timeout in case afterprint doesn't fire - reduced from 2000ms to 1000ms
+                    setTimeout(() => {
+                        // Check if scrolling is still disabled
+                        if (document.documentElement.style.overflow === "hidden" || 
+                            document.body.style.overflow === "hidden") {
+                            restoreAfterPrinting();
+                        }
+                    }, 1000);
+                }, 300);
             }
         }
     </script>
