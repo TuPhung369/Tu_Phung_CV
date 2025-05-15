@@ -472,22 +472,52 @@
             }
         }
         
-        /* Mobile optimization - simplify or hide background on small screens */
-        @media (max-width: 768px) {
+        /* Medium screens - hide background circles */
+        @media (max-width: 992px) {
             html {
-                /* Keep the same gradient as desktop for consistency */
-                background: linear-gradient(135deg, #1a3a5f 0%, #2a5298 100%);
+                /* Dark background to match the desktop theme */
+                background: radial-gradient(ellipse at center, #101010 0%, #050505 100%);
             }
             
             .background {
                 will-change: auto; /* Reset will-change to avoid memory consumption */
             }
             
-            /* Hide all decorative circles on mobile for better performance */
+            /* Hide all decorative circles on medium screens and below */
             .circle {
                 display: none !important;
             }
             
+            /* Fix icon alignment on touch screens */
+            .tech-skill-icon i,
+            .tech-skill-icon span {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+            
+            /* Ensure avatar displays properly */
+            .avatar-container {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                flex-direction: column !important;
+            }
+            
+            .avatar {
+                display: block !important;
+                margin: 0 auto !important;
+            }
+        }
+        
+        /* Mobile optimization - additional simplifications for small screens */
+        @media (max-width: 768px) {
             /* Disable all animations for better performance */
             * {
                 animation: none !important;
@@ -517,12 +547,17 @@
             /* Optimize avatar size for mobile */
             .avatar-container {
                 width: 100%;
+                display: flex !important;
+                justify-content: center !important;
             }
             
             .avatar {
                 width: 120px !important;
                 height: 120px !important;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) !important;
+                display: block !important;
+                object-fit: cover !important;
+                object-position: center 75% !important;
             }
             
             /* Simplify header info for mobile */
@@ -700,10 +735,6 @@
         <div class="circle size-tiny opacity-full color-teal depth-closest anim-normal" style="top: 80%; left: -1%;"></div>
         <div class="circle size-tiny opacity-full color-blue depth-closest anim-fast" style="top: 95%; left: 102%;"></div>
         
-
-        
-
-
     </div>
     
     <button class="theme-toggle" id="themeToggle">�</button>
@@ -711,14 +742,10 @@
         <div class="header-container">
             <div class="avatar-container">
                 <picture>
-                    <!-- Mobile-specific image for better performance -->
-                    <source media="(max-width: 768px)" srcset="avatar-mobile.webp" type="image/webp">
                     <!-- Desktop WebP image -->
-                    <source srcset="avatar.webp" type="image/webp">
-                    <!-- Fallback JPEG image -->
                     <source srcset="avatar.jpg" type="image/jpeg">
-                    <!-- Final fallback -->
-                    <img src="avatar.jpg" alt="Phung Thanh Tu" class="avatar" id="avatar" width="140" height="140" loading="eager" fetchpriority="high" decoding="async">
+                    <!-- Final fallback with absolute path to ensure it works -->
+                    <img src="avatar.webp" alt="Phung Thanh Tu" class="avatar" id="avatar" width="140" height="140" loading="eager" fetchpriority="high" decoding="async">
                 </picture>
                 <!-- Modal cho ảnh lớn -->
                 <p class="title" style="font-size: 1.1rem; font-weight: 500; margin-top: 10px; letter-spacing: 1px; text-align: center; color: rgba(255, 255, 255, 0.9); background-color: rgba(255, 255, 255, 0.1); padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); white-space: nowrap;">Fullstack Developer</p>
@@ -1882,7 +1909,7 @@ timeline
     <!-- Modal for avatar image -->
     <div class="modal" id="avatarModal">
         <button class="modal-close" id="closeModal">&times;</button>
-        <img src="avatar.jpg" alt="Tu Phung" class="modal-img">
+        <img src="avatar.webp" alt="Tu Phung" class="modal-img">
     </div>
     
     <script>

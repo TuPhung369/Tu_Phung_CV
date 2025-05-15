@@ -222,6 +222,8 @@ header::after {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    display: block; /* Ensure it's displayed as block */
+    max-width: 100%; /* Ensure it doesn't overflow */
 }
 
 .avatar:hover {
@@ -377,6 +379,15 @@ footer::after {
     justify-content: center;
     border-radius: 50%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Ensure icon is centered */
+.footer-contact i::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .footer-contact a {
@@ -832,18 +843,36 @@ footer::after {
     align-items: center;
     justify-content: center;
     margin-right: 15px;
-    font-size: 1.5em;
     color: white;
     flex-shrink: 0;
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    overflow: visible; /* Allow icons to overflow if needed */
+    text-align: center; /* Ensure text is centered */
+    line-height: 1; /* Reset line height */
+    font-size: 0; /* Reset font size to prevent any text issues */
 }
 
-.tech-skill-icon i {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/* Comprehensive fix for all icon types */
+.tech-skill-icon i,
+.tech-skill-icon span,
+.tech-skill-icon i.fab,
+.tech-skill-icon i.fas,
+.tech-skill-icon i.far,
+.tech-skill-icon i.material-icons,
+.tech-skill-icon i[class*="devicon-"] {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    font-size: 22px !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
 }
 
 .tech-skill-content {
@@ -1003,6 +1032,9 @@ footer::after {
 .skill-icon {
     font-size: 1.5em;
     margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .skill-card-content {
@@ -1176,6 +1208,8 @@ footer::after {
     .tech-skills {
         grid-template-columns: 1fr;
     }
+    
+    /* Tablet-specific styles */
 
     .header-container {
         flex-direction: column;
@@ -1479,6 +1513,8 @@ footer::after {
         flex: 1 1 100%; /* 1 item per row */
         max-width: 100%;
     }
+    
+    /* Mobile-specific styles */
 }
 
  /* Đảm bảo box-sizing toàn cục */
