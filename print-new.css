@@ -76,8 +76,13 @@
     }
     
     /* Hide elements not needed for print */
-    .no-print, .print-reminder, .theme-toggle, .action-buttons, .background,
+    .no-print, .print-reminder, .theme-toggle, .action-buttons,
     .social-links, .theme-toggle-container {
+        display: none !important;
+    }
+    
+    /* Hide background only when printing */
+    .background {
         display: none !important;
     }
     
@@ -416,49 +421,109 @@
         clear: both !important;
     }
     
-    /* Mermaid timeline styling for print - ultra compact */
-    .mermaid {
+    /* Timeline card styling for print - ultra compact */
+    .timeline-container {
         font-size: 7pt !important;
         line-height: 1.2 !important;
         margin-top: 3px !important;
         overflow: visible !important;
-        transform: scale(0.9) !important;
-        transform-origin: top left !important;
+        position: relative !important;
     }
     
-    /* Force all mermaid elements to be visible and properly spaced */
-    .mermaid svg {
-        height: auto !important;
+    .timeline-container::before,
+    .timeline-container::after {
+        display: none !important; /* Hide vertical line and clearfix in print */
+    }
+    
+    .timeline-section {
+        margin-bottom: 10px !important;
+        page-break-inside: avoid !important;
+    }
+    
+    .timeline-section-title {
+        font-size: 8pt !important;
+        font-weight: bold !important;
+        margin-bottom: 5px !important;
+        padding: 0 !important;
+        text-align: left !important;
+        color: black !important;
+    }
+    
+    .timeline-section-title::before,
+    .timeline-section-title::after {
+        display: none !important; /* Hide decorative elements in print */
+    }
+    
+    .timeline-item {
+        float: none !important;
         width: 100% !important;
+        margin: 0 0 8px 0 !important;
+        page-break-inside: avoid !important;
+        box-shadow: none !important;
+        border: 1px solid #000 !important;
+        border-radius: 0 !important;
+        background-color: transparent !important;
+        transform: none !important;
     }
     
-    /* Reduce vertical spacing between timeline items */
-    .mermaid .section {
-        padding: 2px 1px !important;
-        margin: 2px 1px !important;
+    .timeline-item::before {
+        display: none !important; /* Hide dots in print */
+    }
+    
+    .timeline-item-header {
+        background: none !important;
+        border-bottom: 1px solid #000 !important;
+        padding: 2px 5px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        margin-bottom: 0 !important;
+    }
+    
+    .timeline-item-title {
+        font-weight: bold !important;
+        font-size: 7pt !important;
+        color: black !important;
+        margin: 0 !important;
+    }
+    
+    .timeline-item-period {
+        font-size: 7pt !important;
+        color: black !important;
+        font-weight: normal !important;
+        margin-left: 5px !important;
+    }
+    
+    .timeline-item-content {
+        padding: 2px 5px !important;
+    }
+    
+    .timeline-item-subtitle {
+        font-style: italic !important;
+        font-size: 7pt !important;
+        margin: 2px 0 !important;
+        padding: 0 !important;
+        color: black !important;
         border: none !important;
     }
     
-    /* Make timeline text smaller */
-    .mermaid text {
+    .timeline-item-details {
+        margin-top: 2px !important;
+    }
+    
+    .timeline-detail {
+        padding-left: 8px !important;
+        margin-bottom: 1px !important;
         font-size: 7pt !important;
-        line-height: 1.1 !important;
+        position: relative !important;
+        color: black !important;
     }
     
-    /* Reduce spacing between timeline items */
-    .mermaid .task {
-        margin: 4px 0 !important;
-    }
-    
-    /* Ensure timeline labels don't overlap */
-    .mermaid .taskText {
-        fill: black !important;
-        font-size: 6pt !important;
-    }
-    
-    /* Reduce spacing between timeline sections */
-    .mermaid .sectionTitle {
-        font-weight: bold !important;
-        margin-bottom: 5px !important;
+    .timeline-detail::before {
+        content: '•' !important;
+        position: absolute !important;
+        left: 0 !important;
+        color: black !important;
+        font-size: 7pt !important;
     }
 }

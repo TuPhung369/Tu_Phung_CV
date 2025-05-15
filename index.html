@@ -21,6 +21,7 @@
     <!-- Load critical CSS directly -->
     <link rel="stylesheet" href="cv.css">
     <link rel="stylesheet" href="print-new.css" media="print">
+    <link rel="stylesheet" href="background-fix.css">
     
     <!-- Load only essential Font Awesome icons to reduce CSS size -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" media="print" onload="this.media='all'">
@@ -54,56 +55,223 @@
         });
     </script>
     
-    <!-- Lazy load Mermaid only when needed -->
-    <script>
-        // Function to load Mermaid only when needed
-        function loadMermaid() {
-            if (window.mermaid) return Promise.resolve(); // Already loaded
-            
-            return new Promise((resolve) => {
-                const script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js';
-                script.onload = () => {
-                    // Initialize mermaid
-                    mermaid.initialize({
-                        startOnLoad: true,
-                        theme: document.body.classList.contains('light-mode') ? 'default' : 'dark'
-                    });
-                    resolve();
-                };
-                document.head.appendChild(script);
-            });
+    <!-- Timeline styles -->
+    <style>
+        /* Modern Timeline Card Styles */
+        .timeline-container {
+            position: relative;
+            margin: 20px 0;
+            padding: 0;
         }
         
-        // Store the original Mermaid content for each diagram
-        window.originalMermaidContent = [];
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--accent-color), rgba(52, 152, 219, 0.3));
+            border-radius: 2px;
+            transform: translateX(-50%);
+        }
         
-        // Use Intersection Observer to load Mermaid only when diagrams are visible
-        document.addEventListener('DOMContentLoaded', function() {
-            // Save the original content of all Mermaid diagrams
-            const mermaidDiagrams = document.querySelectorAll('.mermaid');
+        .timeline-section {
+            margin-bottom: 40px;
+        }
+        
+        .timeline-section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding: 10px 0;
+        }
+        
+        .timeline-section-title::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3);
+            z-index: 1;
+        }
+        
+        .timeline-section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            width: 45%;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: var(--section-bg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.2);
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            float: left;
+            clear: left;
+        }
+        
+        .timeline-item:nth-child(even) {
+            float: right;
+            clear: right;
+        }
+        
+        .timeline-item:nth-child(odd)::before {
+            right: -60px;
+        }
+        
+        .timeline-item:nth-child(even)::before {
+            left: -60px;
+        }
+        
+        .timeline-item-header {
+            background: linear-gradient(135deg, var(--accent-color) 0%, rgba(52, 152, 219, 0.8) 100%);
+            color: white;
+            padding: 15px 20px;
+            position: relative;
+        }
+        
+        .timeline-item-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+        
+        .timeline-item-period {
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.9;
+            color: white;
+        }
+        
+        .timeline-item-content {
+            padding: 15px 20px;
+        }
+        
+        .timeline-item-subtitle {
+            font-style: italic;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            opacity: 0.9;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(52, 152, 219, 0.2);
+            padding-bottom: 8px;
+        }
+        
+        .timeline-item-details {
+            margin-top: 10px;
+        }
+        
+        .timeline-detail {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .timeline-detail::before {
+            content: '•';
+            position: absolute;
+            left: 5px;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+        
+        /* Clear floats */
+        .timeline-container::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .timeline-container::before {
+                left: 20px;
+                transform: none;
+            }
             
-            if (mermaidDiagrams.length === 0) return; // No diagrams on page
+            .timeline-section-title {
+                text-align: left;
+                padding-left: 50px;
+            }
             
-            mermaidDiagrams.forEach((diagram, index) => {
-                window.originalMermaidContent[index] = diagram.textContent;
-            });
+            .timeline-section-title::before {
+                left: 20px;
+                transform: translateY(-50%);
+            }
             
-            // Create observer for mermaid diagrams
-            const observer = new IntersectionObserver((entries) => {
-                if (entries.some(entry => entry.isIntersecting)) {
-                    loadMermaid().then(() => {
-                        observer.disconnect(); // No need to observe anymore
-                    });
-                }
-            }, {
-                rootMargin: '200px' // Load when diagram is within 200px of viewport
-            });
+            .timeline-section-title::after {
+                left: 70px;
+                transform: none;
+                width: 60px;
+            }
             
-            // Observe the first mermaid diagram
-            observer.observe(mermaidDiagrams[0]);
-        });
-    </script>
+            .timeline-item {
+                width: calc(100% - 50px);
+                float: right;
+                clear: both;
+                margin-left: 50px;
+            }
+            
+            .timeline-item::before {
+                left: -40px;
+            }
+            
+            .timeline-item:nth-child(odd)::before,
+            .timeline-item:nth-child(even)::before {
+                left: -40px;
+            }
+            
+            .timeline-item-header {
+                flex-direction: column;
+            }
+            
+            .timeline-item-period {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+    </style>
     <!-- Fix for print preview scrolling -->
     <style id="print-preview-fix">
         /* Ensure scrolling always works in print preview */
@@ -468,7 +636,7 @@
                 -webkit-zoom: 1.0;
                 transform: scale(1.0);
                 transform-origin: 0 0;
-                max-width: 1200px;
+                max-width: 100vw;
                 margin: 0 auto;
                 position: relative; /* Ensure positioning context */
                 z-index: 1; /* Above background */
@@ -478,7 +646,7 @@
             .background {
                 left: 50%;
                 transform: translateX(-50%);
-                width: 100vw;
+                width: 100%;
                 height: 100%;
                 min-height: 100vh;
             }
@@ -750,129 +918,16 @@
     <!-- No hidden links or extra JavaScript needed -->
 </head>
 <body>
-    <!-- Ultra-enhanced background circles with stunning 3D layered effect -->
+    <!-- Ultra-enhanced background circles with stunning 3D layered effect - Generated by JavaScript -->
     <div class="background">
-        <!-- Furthest layer (7 layers deep) - Very blurry, small, slow-moving -->
-        <div class="circle size-medium opacity-ultra-low color-blue depth-furthest anim-slow" style="top: 5%; left: 3%;"></div>
-        <div class="circle size-large opacity-very-low color-purple depth-furthest anim-normal" style="top: 25%; left: 8%;"></div>
-        <div class="circle size-xlarge opacity-low color-green depth-furthest anim-slow" style="top: 45%; left: 2%;"></div>
-        <div class="circle size-large opacity-ultra-low color-orange depth-furthest anim-fast" style="top: 65%; left: 7%;"></div>
-        <div class="circle size-medium opacity-very-low color-red depth-furthest anim-normal" style="top: 85%; left: 4%;"></div>
-        
-        <div class="circle size-medium opacity-ultra-low color-teal depth-furthest anim-slow" style="top: 15%; left: 92%;"></div>
-        <div class="circle size-large opacity-very-low color-blue depth-furthest anim-normal" style="top: 35%; left: 95%;"></div>
-        <div class="circle size-xlarge opacity-low color-purple depth-furthest anim-slow" style="top: 55%; left: 90%;"></div>
-        <div class="circle size-large opacity-ultra-low color-green depth-furthest anim-fast" style="top: 75%; left: 93%;"></div>
-        <div class="circle size-medium opacity-very-low color-orange depth-furthest anim-normal" style="top: 95%; left: 97%;"></div>
-        
-        <!-- Far layer (5 layers deep) - Blurry, medium-sized -->
-        <div class="circle size-small opacity-low color-red depth-far anim-slow" style="top: 10%; left: 15%;"></div>
-        <div class="circle size-medium opacity-medium-low color-teal depth-far anim-normal" style="top: 30%; left: 12%;"></div>
-        <div class="circle size-large opacity-low color-blue depth-far anim-fast" style="top: 50%; left: 18%;"></div>
-        <div class="circle size-medium opacity-medium-low color-purple depth-far anim-slow" style="top: 70%; left: 14%;"></div>
-        <div class="circle size-small opacity-low color-green depth-far anim-normal" style="top: 90%; left: 16%;"></div>
-        
-        <div class="circle size-small opacity-low color-orange depth-far anim-slow" style="top: 10%; left: 82%;"></div>
-        <div class="circle size-medium opacity-medium-low color-red depth-far anim-normal" style="top: 30%; left: 85%;"></div>
-        <div class="circle size-large opacity-low color-teal depth-far anim-fast" style="top: 50%; left: 80%;"></div>
-        <div class="circle size-medium opacity-medium-low color-blue depth-far anim-slow" style="top: 70%; left: 83%;"></div>
-        <div class="circle size-small opacity-low color-purple depth-far anim-normal" style="top: 90%; left: 87%;"></div>
-        
-        <!-- Mid-far layer (4 layers deep) - Moved to sides -->
-        <div class="circle size-tiny opacity-medium color-green depth-mid-far anim-fast" style="top: 8%; left: 12%;"></div>
-        <div class="circle size-small opacity-medium-high color-orange depth-mid-far anim-slow" style="top: 28%; left: 10%;"></div>
-        <div class="circle size-medium opacity-medium color-red depth-mid-far anim-normal" style="top: 48%; left: 14%;"></div>
-        <div class="circle size-small opacity-medium-high color-teal depth-mid-far anim-fast" style="top: 68%; left: 11%;"></div>
-        <div class="circle size-tiny opacity-medium color-blue depth-mid-far anim-slow" style="top: 88%; left: 13%;"></div>
-        
-        <div class="circle size-tiny opacity-medium color-purple depth-mid-far anim-fast" style="top: 8%; left: 88%;"></div>
-        <div class="circle size-small opacity-medium-high color-green depth-mid-far anim-slow" style="top: 28%; left: 85%;"></div>
-        <div class="circle size-medium opacity-medium color-orange depth-mid-far anim-normal" style="top: 48%; left: 87%;"></div>
-        <div class="circle size-small opacity-medium-high color-red depth-mid-far anim-fast" style="top: 68%; left: 86%;"></div>
-        <div class="circle size-tiny opacity-medium color-teal depth-mid-far anim-slow" style="top: 88%; left: 89%;"></div>
-        
-        <!-- Mid layer (3 layers deep) - Moved to sides -->
-        <div class="circle size-micro opacity-medium-high color-blue depth-mid anim-normal" style="top: 5%; left: 5%;"></div>
-        <div class="circle size-tiny opacity-high color-purple depth-mid anim-fast" style="top: 15%; left: 8%;"></div>
-        <div class="circle size-small opacity-medium-high color-green depth-mid anim-slow" style="top: 25%; left: 3%;"></div>
-        <div class="circle size-micro opacity-high color-orange depth-mid anim-normal" style="top: 35%; left: 7%;"></div>
-        <div class="circle size-tiny opacity-medium-high color-red depth-mid anim-fast" style="top: 45%; left: 4%;"></div>
-        <div class="circle size-small opacity-high color-teal depth-mid anim-slow" style="top: 55%; left: 6%;"></div>
-        <div class="circle size-micro opacity-medium-high color-blue depth-mid anim-normal" style="top: 65%; left: 2%;"></div>
-        <div class="circle size-tiny opacity-high color-purple depth-mid anim-fast" style="top: 75%; left: 9%;"></div>
-        <div class="circle size-small opacity-medium-high color-green depth-mid anim-slow" style="top: 85%; left: 5%;"></div>
-        <div class="circle size-micro opacity-high color-orange depth-mid anim-normal" style="top: 95%; left: 7%;"></div>
-        
-        <div class="circle size-micro opacity-medium-high color-red depth-mid anim-normal" style="top: 5%; left: 92%;"></div>
-        <div class="circle size-tiny opacity-high color-teal depth-mid anim-fast" style="top: 15%; left: 95%;"></div>
-        <div class="circle size-small opacity-medium-high color-blue depth-mid anim-slow" style="top: 25%; left: 90%;"></div>
-        <div class="circle size-micro opacity-high color-purple depth-mid anim-normal" style="top: 35%; left: 93%;"></div>
-        <div class="circle size-tiny opacity-medium-high color-green depth-mid anim-fast" style="top: 45%; left: 96%;"></div>
-        <div class="circle size-small opacity-high color-orange depth-mid anim-slow" style="top: 55%; left: 94%;"></div>
-        <div class="circle size-micro opacity-medium-high color-red depth-mid anim-normal" style="top: 65%; left: 91%;"></div>
-        <div class="circle size-tiny opacity-high color-teal depth-mid anim-fast" style="top: 75%; left: 97%;"></div>
-        <div class="circle size-small opacity-medium-high color-blue depth-mid anim-slow" style="top: 85%; left: 95%;"></div>
-        <div class="circle size-micro opacity-high color-purple depth-mid anim-normal" style="top: 95%; left: 92%;"></div>
-        
-        <!-- Mid-close layer (2 layers deep) - Moved to sides -->
-        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-fast" style="top: 7%; left: 18%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-normal" style="top: 17%; left: 16%;"></div>
-        <div class="circle size-tiny opacity-very-high color-red depth-mid-close anim-slow" style="top: 27%; left: 19%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-teal depth-mid-close anim-fast" style="top: 37%; left: 17%;"></div>
-        <div class="circle size-tiny opacity-very-high color-blue depth-mid-close anim-normal" style="top: 47%; left: 20%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-purple depth-mid-close anim-slow" style="top: 57%; left: 18%;"></div>
-        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-fast" style="top: 67%; left: 16%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-normal" style="top: 77%; left: 19%;"></div>
-        <div class="circle size-tiny opacity-very-high color-red depth-mid-close anim-slow" style="top: 87%; left: 17%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-teal depth-mid-close anim-fast" style="top: 97%; left: 20%;"></div>
-        
-        <div class="circle size-tiny opacity-very-high color-blue depth-mid-close anim-fast" style="top: 7%; left: 82%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-purple depth-mid-close anim-normal" style="top: 17%; left: 80%;"></div>
-        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-slow" style="top: 27%; left: 83%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-fast" style="top: 37%; left: 81%;"></div>
-        <div class="circle size-tiny opacity-very-high color-red depth-mid-close anim-normal" style="top: 47%; left: 84%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-teal depth-mid-close anim-slow" style="top: 57%; left: 82%;"></div>
-        <div class="circle size-tiny opacity-very-high color-blue depth-mid-close anim-fast" style="top: 67%; left: 80%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-purple depth-mid-close anim-normal" style="top: 77%; left: 83%;"></div>
-        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-slow" style="top: 87%; left: 81%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-fast" style="top: 97%; left: 84%;"></div>
-        
-        <!-- Front layer (1 layer deep) - Moved to sides -->
-        <div class="circle size-tiny opacity-full color-red depth-front anim-fast" style="top: 3%; left: 2%;"></div>
-        <div class="circle size-tiny opacity-full color-teal depth-front anim-normal" style="top: 13%; left: 4%;"></div>
-        <div class="circle size-tiny opacity-full color-blue depth-front anim-slow" style="top: 23%; left: 1%;"></div>
-        <div class="circle size-tiny opacity-full color-purple depth-front anim-fast" style="top: 33%; left: 3%;"></div>
-        <div class="circle size-tiny opacity-full color-green depth-front anim-normal" style="top: 43%; left: 0%;"></div>
-        <div class="circle size-tiny opacity-full color-orange depth-front anim-slow" style="top: 53%; left: 2%;"></div>
-        <div class="circle size-tiny opacity-full color-red depth-front anim-fast" style="top: 63%; left: 1%;"></div>
-        <div class="circle size-tiny opacity-full color-teal depth-front anim-normal" style="top: 73%; left: 3%;"></div>
-        <div class="circle size-tiny opacity-full color-blue depth-front anim-slow" style="top: 83%; left: 2%;"></div>
-        <div class="circle size-tiny opacity-full color-purple depth-front anim-fast" style="top: 93%; left: 4%;"></div>
-        
-        <div class="circle size-tiny opacity-full color-green depth-front anim-fast" style="top: 3%; left: 98%;"></div>
-        <div class="circle size-tiny opacity-full color-orange depth-front anim-normal" style="top: 13%; left: 96%;"></div>
-        <div class="circle size-tiny opacity-full color-red depth-front anim-slow" style="top: 23%; left: 99%;"></div>
-        <div class="circle size-tiny opacity-full color-teal depth-front anim-fast" style="top: 33%; left: 97%;"></div>
-        <div class="circle size-tiny opacity-full color-blue depth-front anim-normal" style="top: 43%; left: 100%;"></div>
-        <div class="circle size-tiny opacity-full color-purple depth-front anim-slow" style="top: 53%; left: 98%;"></div>
-        <div class="circle size-tiny opacity-full color-green depth-front anim-fast" style="top: 63%; left: 99%;"></div>
-        <div class="circle size-tiny opacity-full color-orange depth-front anim-normal" style="top: 73%; left: 97%;"></div>
-        <div class="circle size-tiny opacity-full color-red depth-front anim-slow" style="top: 83%; left: 98%;"></div>
-        <div class="circle size-tiny opacity-full color-teal depth-front anim-fast" style="top: 93%; left: 96%;"></div>
-        
-        <!-- Closest layer (0 layer deep) - Moved to extreme sides -->
-        <div class="circle size-tiny opacity-full color-blue depth-closest anim-fast" style="top: 5%; left: 0%;"></div>
-        <div class="circle size-tiny opacity-full color-purple depth-closest anim-normal" style="top: 20%; left: -1%;"></div>
-        <div class="circle size-tiny opacity-full color-green depth-closest anim-fast" style="top: 35%; left: 100%;"></div>
-        <div class="circle size-tiny opacity-full color-orange depth-closest anim-normal" style="top: 50%; left: -2%;"></div>
-        <div class="circle size-tiny opacity-full color-red depth-closest anim-fast" style="top: 65%; left: 101%;"></div>
-        <div class="circle size-tiny opacity-full color-teal depth-closest anim-normal" style="top: 80%; left: -1%;"></div>
-        <div class="circle size-tiny opacity-full color-blue depth-closest anim-fast" style="top: 95%; left: 102%;"></div>
-        
+        <!-- Circles will be generated by random-circles.js -->
     </div>
     
-    <button class="theme-toggle" id="themeToggle">�</button>
-    <header>
+    <button class="theme-toggle" id="themeToggle">☀</button>
+    
+    <!-- Main content container with 1200px width -->
+    <div class="main-content">
+        <header>
         <div class="header-container">
             <div class="avatar-container">
                 <picture>
@@ -943,87 +998,251 @@
 
     <div class="section">
         <h2>CURRENT POSITION & RECENT EXPERIENCE</h2>
-        <div class="mermaid">
-timeline
-    section Current Position
-        2023-Present : BIT Student @ Haaga Helia UAS
-        : Personal Assistant Application
-        : Full-stack implementation (React/TS + Spring Boot)
-        : AI & Speech Processing Integration
-        : 50-member team collaboration (microservices)
-        Apr'24-Feb'25 : Intern & Fullstack Developer
-        : HR Management System (Vue.js + Node.js)
-        : Microservices with Spring Boot & Vue.js
-        : Website optimization with Bun
-        : AI team collaboration (React.js + Figma)
-    section Recent Experience
-        2023 : Store Keeper @ Mermaid Maritime Vietnam
-        : Inventory tracking system management
-        : Digital import/export solutions
-        : Automated reporting
-        2020-2023 : Cleaner Worker
-            : Cleaning into 4 towers (250 units each)
-            : Independent responsibility during COVID-19
-        2019-2020 : Warehouse Manager @ TTI Industries
-            : Digital inventory management
-            : KPI dashboards development
-            : Process optimization through data analysis
+        <div class="timeline-container">
+            <div class="timeline-section">
+                <h3 class="timeline-section-title">Current Position</h3>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">BIT Student @ Haaga Helia UAS</div>
+                        <div class="timeline-item-period">2023-Present</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">Personal Assistant Application</div>
+                            <div class="timeline-detail">Full-stack implementation (React/TS + Spring Boot)</div>
+                            <div class="timeline-detail">AI & Speech Processing Integration</div>
+                            <div class="timeline-detail">50-member team collaboration (microservices)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Intern & Fullstack Developer</div>
+                        <div class="timeline-item-period">Apr'24-Feb'25</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">HR Management System (Vue.js + Node.js)</div>
+                            <div class="timeline-detail">Microservices with Spring Boot & Vue.js</div>
+                            <div class="timeline-detail">Website optimization with Bun</div>
+                            <div class="timeline-detail">AI team collaboration (React.js + Figma)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-section">
+                <h3 class="timeline-section-title">Recent Experience</h3>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Store Keeper @ Mermaid Maritime Vietnam</div>
+                        <div class="timeline-item-period">2023</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">Inventory tracking system management</div>
+                            <div class="timeline-detail">Digital import/export solutions</div>
+                            <div class="timeline-detail">Automated reporting</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Cleaner Worker</div>
+                        <div class="timeline-item-period">2020-2023</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">Cleaning into 4 towers (250 units each)</div>
+                            <div class="timeline-detail">Independent responsibility during COVID-19</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Warehouse Manager @ TTI Industries</div>
+                        <div class="timeline-item-period">2019-2020</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">Digital inventory management</div>
+                            <div class="timeline-detail">KPI dashboards development</div>
+                            <div class="timeline-detail">Process optimization through data analysis</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="section">
         <h2>PREVIOUS CAREER JOURNEY</h2>
-        <div class="mermaid">
-timeline
-    section Previous Experience
-        2019 : Warehouse Supervisor @ BLUM Vietnam
-        : SAP & LMS integration
-        : Digital process documentation
-        : Data-driven inventory control
-        2017-2019 : Warehouse Supervisor @ AVERY DENNISON RBIS
-        : Custom inventory tracking (Microsoft Access)
-        : Oracle warehouse management
-        : Automated reporting & analytics
-        2016-2017 : Warehouse Supervisor @ PANASONIC AVC Vietnam
-        : Oracle & Vsoft systems management
-        : KAIZEN process improvements
-        : Automated reporting systems
-    section Early Career
-        2012-2015 : Electrical/Mechanical Engineer @ HALLIBURTON
-        : Technical support across Malaysia, Thailand, China
-        : Digital documentation systems implementation
-        : Equipment testing & calibration
-        2010-2012 : Circuit Design Engineer @ ESILICON Vietnam
-        : Designed Two Ports Read/Write Memory (28nm TSMC)
-        : Developed web-based characterization system
-        : Optimized circuit performance & power consumption
+        <div class="timeline-container">
+            <div class="timeline-section">
+                <h3 class="timeline-section-title">Previous Experience</h3>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Warehouse Supervisor @ BLUM Vietnam</div>
+                        <div class="timeline-item-period">2019</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">SAP & LMS integration</div>
+                            <div class="timeline-detail">Digital process documentation</div>
+                            <div class="timeline-detail">Data-driven inventory control</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Warehouse Supervisor @ AVERY DENNISON RBIS</div>
+                        <div class="timeline-item-period">2017-2019</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">Custom inventory tracking (Microsoft Access)</div>
+                            <div class="timeline-detail">Oracle warehouse management</div>
+                            <div class="timeline-detail">Automated reporting & analytics</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Warehouse Supervisor @ PANASONIC AVC Vietnam</div>
+                        <div class="timeline-item-period">2016-2017</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">Oracle & Vsoft systems management</div>
+                            <div class="timeline-detail">KAIZEN process improvements</div>
+                            <div class="timeline-detail">Automated reporting systems</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-section">
+                <h3 class="timeline-section-title">Early Career</h3>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Electrical/Mechanical Engineer @ HALLIBURTON</div>
+                        <div class="timeline-item-period">2012-2015</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">Technical support across Malaysia, Thailand, China</div>
+                            <div class="timeline-detail">Digital documentation systems implementation</div>
+                            <div class="timeline-detail">Equipment testing & calibration</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Circuit Design Engineer @ ESILICON Vietnam</div>
+                        <div class="timeline-item-period">2010-2012</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">Designed Two Ports Read/Write Memory (28nm TSMC)</div>
+                            <div class="timeline-detail">Developed web-based characterization system</div>
+                            <div class="timeline-detail">Optimized circuit performance & power consumption</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="section">
         <h2>EDUCATION & CERTIFICATIONS</h2>
-        <div class="mermaid">
-timeline
-    section Recent Education
-        2023-Present : Business Information Technology
-        : Haaga Helia University of Applied Sciences
-        : Focus on full-stack development and AI integration
-        2023 : SAT 1300 Score
-        : Demonstrated English proficiency
-    section Certifications
-        2024 : Hygiene Passport (Finland)
-        2023 : Pattern of Excellence (Adam Khoo Education)
-        : SALESPRO Certification
-        : Wealth Academy Investor (1st winner)
-        2018 : International Driving Permit
-        2013 : Oil & Gas Tech 1 Certificate (Singapore)
-        : Overhead Crane Control Certificate
-    section University Education
-        2005-2010 : Bachelor of Electrical & Electronic Engineering
-        : University of Technology HCMC
-        : GPA 7.04
-        : Excellence award scholarship
-        : Nguyen Huu Tho scholarship
+        <div class="timeline-container">
+            <div class="timeline-section">
+                <h3 class="timeline-section-title">Recent Education</h3>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Business Information Technology</div>
+                        <div class="timeline-item-period">2023-Present</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-subtitle">Haaga Helia University of Applied Sciences</div>
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">Focus on full-stack development and AI integration</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">SAT 1300 Score</div>
+                        <div class="timeline-item-period">2023</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">Demonstrated English proficiency</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-section">
+                <h3 class="timeline-section-title">Certifications</h3>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Hygiene Passport (Finland)</div>
+                        <div class="timeline-item-period">2024</div>
+                    </div>
+                    <div class="timeline-item-content">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Pattern of Excellence (Adam Khoo Education)</div>
+                        <div class="timeline-item-period">2023</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">SALESPRO Certification</div>
+                            <div class="timeline-detail">Wealth Academy Investor (1st winner)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">International Driving Permit</div>
+                        <div class="timeline-item-period">2018</div>
+                    </div>
+                    <div class="timeline-item-content">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Oil & Gas Tech 1 Certificate (Singapore)</div>
+                        <div class="timeline-item-period">2013</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">Overhead Crane Control Certificate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-section">
+                <h3 class="timeline-section-title">University Education</h3>
+                <div class="timeline-item">
+                    <div class="timeline-item-header">
+                        <div class="timeline-item-title">Bachelor of Electrical & Electronic Engineering</div>
+                        <div class="timeline-item-period">2005-2010</div>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-item-subtitle">University of Technology HCMC</div>
+                        <div class="timeline-item-details">
+                            <div class="timeline-detail">GPA 7.04</div>
+                            <div class="timeline-detail">Excellence award scholarship</div>
+                            <div class="timeline-detail">Nguyen Huu Tho scholarship</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -2035,6 +2254,7 @@ timeline
     <!-- Load JavaScript with defer to improve page load performance -->
     <script src="cv.js" defer></script>
     <script src="print-layout.js" defer></script>
+    <script src="random-circles.js" defer></script>
     
     <!-- Modal for avatar image -->
     <div class="modal" id="avatarModal">
@@ -2052,6 +2272,7 @@ timeline
             }
         });
     </script>
+    </div> <!-- End of main-content -->
 </body>
 </html>
 
