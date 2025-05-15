@@ -131,7 +131,7 @@
 /* Global Styles */
 html {
     height: 100%;
-    background-color: var(--bg-color);
+    background-color: transparent;
     transition: background-color 0.3s;
 }
 
@@ -142,7 +142,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background-color: var(--bg-color);
+    background-color: transparent;
     transition: background-color 0.3s, color 0.3s;
     zoom: 1.0;
     -ms-zoom: 1.0;
@@ -1049,7 +1049,7 @@ footer::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 0;
+    margin: 0 0 20px 0;
     flex-wrap: wrap;
     gap: 15px;
 }
@@ -1221,7 +1221,7 @@ footer::after {
     html, body {
         width: 210mm;
         height: 297mm;
-        background-color: white !important;
+        background-color: transparent !important;
         color: #000 !important;
         font-size: 12pt !important;
         line-height: 1.5 !important;

@@ -119,12 +119,13 @@
         }
         
         html {
-            background: linear-gradient(135deg, #1a3a5f 0%, #2a5298 100%);
+            background: radial-gradient(ellipse at center, #101010 0%, #050505 100%); /* Darker gradient background to make circles stand out */
         }
         
         body {
             position: relative;
             padding: 0 !important; /* Override padding from cv.css */
+            background-color: transparent !important;
         }
         
         /* Remove padding and margin from header */
@@ -148,19 +149,20 @@
             min-height: 100vh;
             overflow: hidden;
             z-index: -1; /* Behind main content */
-            background: radial-gradient(circle at center, #1e1e1e, #121212);
+            background: transparent; /* Changed to transparent to only show circles */
         }
         
-        /* Circle styles */
+        /* Circle styles - enhanced for dark background */
         .circle {
             position: absolute;
             border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #ffffff, #3498db, #1a3a5f);
             box-shadow: 
-                0 5px 15px rgba(0, 0, 0, 0.4),
-                inset 0 2px 5px rgba(255, 255, 255, 0.3),
-                inset 0 -2px 5px rgba(0, 0, 0, 0.2);
-            opacity: 0.6;
+                0 5px 20px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(52, 152, 219, 0.3),
+                inset 0 2px 5px rgba(255, 255, 255, 0.5),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+            opacity: 0.8; /* Increased opacity */
             animation: float 8s ease-in-out infinite, scale 4s ease-in-out infinite alternate;
             transition: transform 0.3s ease;
             z-index: -1;
@@ -337,13 +339,13 @@
         .opacity-ultra-high { opacity: 0.85; }
         .opacity-full { opacity: 1; }
         
-        /* Enhanced Color variations for better visual effect */
-        .color-blue { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(52, 152, 219, 0.8), rgba(26, 58, 95, 0.8)); }
-        .color-purple { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(142, 68, 173, 0.8), rgba(74, 35, 90, 0.8)); }
-        .color-green { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(39, 174, 96, 0.8), rgba(20, 90, 50, 0.8)); }
-        .color-orange { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(230, 126, 34, 0.8), rgba(120, 66, 18, 0.8)); }
-        .color-red { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(231, 76, 60, 0.8), rgba(120, 40, 31, 0.8)); }
-        .color-teal { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(26, 188, 156, 0.8), rgba(13, 97, 80, 0.8)); }
+        /* Enhanced Color variations for better visual effect - brighter for dark background */
+        .color-blue { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(52, 152, 219, 0.9), rgba(26, 58, 95, 0.8)); }
+        .color-purple { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(142, 68, 173, 0.9), rgba(74, 35, 90, 0.8)); }
+        .color-green { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(39, 174, 96, 0.9), rgba(20, 90, 50, 0.8)); }
+        .color-orange { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(230, 126, 34, 0.9), rgba(120, 66, 18, 0.8)); }
+        .color-red { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(231, 76, 60, 0.9), rgba(120, 40, 31, 0.8)); }
+        .color-teal { background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(26, 188, 156, 0.9), rgba(13, 97, 80, 0.8)); }
         
         /* Animation keyframes for scale effects */
         @keyframes scale {
@@ -607,96 +609,96 @@
         <div class="circle size-medium opacity-medium-low color-blue depth-far anim-slow" style="top: 70%; left: 83%;"></div>
         <div class="circle size-small opacity-low color-purple depth-far anim-normal" style="top: 90%; left: 87%;"></div>
         
-        <!-- Mid-far layer (4 layers deep) - Slightly blurry -->
-        <div class="circle size-tiny opacity-medium color-green depth-mid-far anim-fast" style="top: 8%; left: 25%;"></div>
-        <div class="circle size-small opacity-medium-high color-orange depth-mid-far anim-slow" style="top: 28%; left: 22%;"></div>
-        <div class="circle size-medium opacity-medium color-red depth-mid-far anim-normal" style="top: 48%; left: 28%;"></div>
-        <div class="circle size-small opacity-medium-high color-teal depth-mid-far anim-fast" style="top: 68%; left: 24%;"></div>
-        <div class="circle size-tiny opacity-medium color-blue depth-mid-far anim-slow" style="top: 88%; left: 26%;"></div>
+        <!-- Mid-far layer (4 layers deep) - Moved to sides -->
+        <div class="circle size-tiny opacity-medium color-green depth-mid-far anim-fast" style="top: 8%; left: 12%;"></div>
+        <div class="circle size-small opacity-medium-high color-orange depth-mid-far anim-slow" style="top: 28%; left: 10%;"></div>
+        <div class="circle size-medium opacity-medium color-red depth-mid-far anim-normal" style="top: 48%; left: 14%;"></div>
+        <div class="circle size-small opacity-medium-high color-teal depth-mid-far anim-fast" style="top: 68%; left: 11%;"></div>
+        <div class="circle size-tiny opacity-medium color-blue depth-mid-far anim-slow" style="top: 88%; left: 13%;"></div>
         
-        <div class="circle size-tiny opacity-medium color-purple depth-mid-far anim-fast" style="top: 8%; left: 72%;"></div>
-        <div class="circle size-small opacity-medium-high color-green depth-mid-far anim-slow" style="top: 28%; left: 75%;"></div>
-        <div class="circle size-medium opacity-medium color-orange depth-mid-far anim-normal" style="top: 48%; left: 70%;"></div>
-        <div class="circle size-small opacity-medium-high color-red depth-mid-far anim-fast" style="top: 68%; left: 73%;"></div>
-        <div class="circle size-tiny opacity-medium color-teal depth-mid-far anim-slow" style="top: 88%; left: 76%;"></div>
+        <div class="circle size-tiny opacity-medium color-purple depth-mid-far anim-fast" style="top: 8%; left: 88%;"></div>
+        <div class="circle size-small opacity-medium-high color-green depth-mid-far anim-slow" style="top: 28%; left: 85%;"></div>
+        <div class="circle size-medium opacity-medium color-orange depth-mid-far anim-normal" style="top: 48%; left: 87%;"></div>
+        <div class="circle size-small opacity-medium-high color-red depth-mid-far anim-fast" style="top: 68%; left: 86%;"></div>
+        <div class="circle size-tiny opacity-medium color-teal depth-mid-far anim-slow" style="top: 88%; left: 89%;"></div>
         
-        <!-- Mid layer (3 layers deep) - Slightly clearer -->
-        <div class="circle size-micro opacity-medium-high color-blue depth-mid anim-normal" style="top: 5%; left: 35%;"></div>
-        <div class="circle size-tiny opacity-high color-purple depth-mid anim-fast" style="top: 15%; left: 32%;"></div>
-        <div class="circle size-small opacity-medium-high color-green depth-mid anim-slow" style="top: 25%; left: 38%;"></div>
-        <div class="circle size-micro opacity-high color-orange depth-mid anim-normal" style="top: 35%; left: 34%;"></div>
-        <div class="circle size-tiny opacity-medium-high color-red depth-mid anim-fast" style="top: 45%; left: 36%;"></div>
-        <div class="circle size-small opacity-high color-teal depth-mid anim-slow" style="top: 55%; left: 33%;"></div>
-        <div class="circle size-micro opacity-medium-high color-blue depth-mid anim-normal" style="top: 65%; left: 37%;"></div>
-        <div class="circle size-tiny opacity-high color-purple depth-mid anim-fast" style="top: 75%; left: 35%;"></div>
-        <div class="circle size-small opacity-medium-high color-green depth-mid anim-slow" style="top: 85%; left: 39%;"></div>
-        <div class="circle size-micro opacity-high color-orange depth-mid anim-normal" style="top: 95%; left: 36%;"></div>
+        <!-- Mid layer (3 layers deep) - Moved to sides -->
+        <div class="circle size-micro opacity-medium-high color-blue depth-mid anim-normal" style="top: 5%; left: 5%;"></div>
+        <div class="circle size-tiny opacity-high color-purple depth-mid anim-fast" style="top: 15%; left: 8%;"></div>
+        <div class="circle size-small opacity-medium-high color-green depth-mid anim-slow" style="top: 25%; left: 3%;"></div>
+        <div class="circle size-micro opacity-high color-orange depth-mid anim-normal" style="top: 35%; left: 7%;"></div>
+        <div class="circle size-tiny opacity-medium-high color-red depth-mid anim-fast" style="top: 45%; left: 4%;"></div>
+        <div class="circle size-small opacity-high color-teal depth-mid anim-slow" style="top: 55%; left: 6%;"></div>
+        <div class="circle size-micro opacity-medium-high color-blue depth-mid anim-normal" style="top: 65%; left: 2%;"></div>
+        <div class="circle size-tiny opacity-high color-purple depth-mid anim-fast" style="top: 75%; left: 9%;"></div>
+        <div class="circle size-small opacity-medium-high color-green depth-mid anim-slow" style="top: 85%; left: 5%;"></div>
+        <div class="circle size-micro opacity-high color-orange depth-mid anim-normal" style="top: 95%; left: 7%;"></div>
         
-        <div class="circle size-micro opacity-medium-high color-red depth-mid anim-normal" style="top: 5%; left: 62%;"></div>
-        <div class="circle size-tiny opacity-high color-teal depth-mid anim-fast" style="top: 15%; left: 65%;"></div>
-        <div class="circle size-small opacity-medium-high color-blue depth-mid anim-slow" style="top: 25%; left: 60%;"></div>
-        <div class="circle size-micro opacity-high color-purple depth-mid anim-normal" style="top: 35%; left: 63%;"></div>
-        <div class="circle size-tiny opacity-medium-high color-green depth-mid anim-fast" style="top: 45%; left: 66%;"></div>
-        <div class="circle size-small opacity-high color-orange depth-mid anim-slow" style="top: 55%; left: 64%;"></div>
-        <div class="circle size-micro opacity-medium-high color-red depth-mid anim-normal" style="top: 65%; left: 61%;"></div>
-        <div class="circle size-tiny opacity-high color-teal depth-mid anim-fast" style="top: 75%; left: 67%;"></div>
-        <div class="circle size-small opacity-medium-high color-blue depth-mid anim-slow" style="top: 85%; left: 65%;"></div>
-        <div class="circle size-micro opacity-high color-purple depth-mid anim-normal" style="top: 95%; left: 62%;"></div>
+        <div class="circle size-micro opacity-medium-high color-red depth-mid anim-normal" style="top: 5%; left: 92%;"></div>
+        <div class="circle size-tiny opacity-high color-teal depth-mid anim-fast" style="top: 15%; left: 95%;"></div>
+        <div class="circle size-small opacity-medium-high color-blue depth-mid anim-slow" style="top: 25%; left: 90%;"></div>
+        <div class="circle size-micro opacity-high color-purple depth-mid anim-normal" style="top: 35%; left: 93%;"></div>
+        <div class="circle size-tiny opacity-medium-high color-green depth-mid anim-fast" style="top: 45%; left: 96%;"></div>
+        <div class="circle size-small opacity-high color-orange depth-mid anim-slow" style="top: 55%; left: 94%;"></div>
+        <div class="circle size-micro opacity-medium-high color-red depth-mid anim-normal" style="top: 65%; left: 91%;"></div>
+        <div class="circle size-tiny opacity-high color-teal depth-mid anim-fast" style="top: 75%; left: 97%;"></div>
+        <div class="circle size-small opacity-medium-high color-blue depth-mid anim-slow" style="top: 85%; left: 95%;"></div>
+        <div class="circle size-micro opacity-high color-purple depth-mid anim-normal" style="top: 95%; left: 92%;"></div>
         
-        <!-- Mid-close layer (2 layers deep) - Clearer, more vibrant -->
-        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-fast" style="top: 7%; left: 45%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-normal" style="top: 17%; left: 48%;"></div>
-        <div class="circle size-tiny opacity-very-high color-red depth-mid-close anim-slow" style="top: 27%; left: 43%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-teal depth-mid-close anim-fast" style="top: 37%; left: 47%;"></div>
-        <div class="circle size-tiny opacity-very-high color-blue depth-mid-close anim-normal" style="top: 47%; left: 44%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-purple depth-mid-close anim-slow" style="top: 57%; left: 49%;"></div>
-        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-fast" style="top: 67%; left: 46%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-normal" style="top: 77%; left: 42%;"></div>
-        <div class="circle size-tiny opacity-very-high color-red depth-mid-close anim-slow" style="top: 87%; left: 45%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-teal depth-mid-close anim-fast" style="top: 97%; left: 48%;"></div>
+        <!-- Mid-close layer (2 layers deep) - Moved to sides -->
+        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-fast" style="top: 7%; left: 18%;"></div>
+        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-normal" style="top: 17%; left: 16%;"></div>
+        <div class="circle size-tiny opacity-very-high color-red depth-mid-close anim-slow" style="top: 27%; left: 19%;"></div>
+        <div class="circle size-tiny opacity-ultra-high color-teal depth-mid-close anim-fast" style="top: 37%; left: 17%;"></div>
+        <div class="circle size-tiny opacity-very-high color-blue depth-mid-close anim-normal" style="top: 47%; left: 20%;"></div>
+        <div class="circle size-tiny opacity-ultra-high color-purple depth-mid-close anim-slow" style="top: 57%; left: 18%;"></div>
+        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-fast" style="top: 67%; left: 16%;"></div>
+        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-normal" style="top: 77%; left: 19%;"></div>
+        <div class="circle size-tiny opacity-very-high color-red depth-mid-close anim-slow" style="top: 87%; left: 17%;"></div>
+        <div class="circle size-tiny opacity-ultra-high color-teal depth-mid-close anim-fast" style="top: 97%; left: 20%;"></div>
         
-        <div class="circle size-tiny opacity-very-high color-blue depth-mid-close anim-fast" style="top: 7%; left: 52%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-purple depth-mid-close anim-normal" style="top: 17%; left: 55%;"></div>
-        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-slow" style="top: 27%; left: 53%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-fast" style="top: 37%; left: 56%;"></div>
-        <div class="circle size-tiny opacity-very-high color-red depth-mid-close anim-normal" style="top: 47%; left: 54%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-teal depth-mid-close anim-slow" style="top: 57%; left: 57%;"></div>
-        <div class="circle size-tiny opacity-very-high color-blue depth-mid-close anim-fast" style="top: 67%; left: 55%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-purple depth-mid-close anim-normal" style="top: 77%; left: 58%;"></div>
-        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-slow" style="top: 87%; left: 56%;"></div>
-        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-fast" style="top: 97%; left: 53%;"></div>
+        <div class="circle size-tiny opacity-very-high color-blue depth-mid-close anim-fast" style="top: 7%; left: 82%;"></div>
+        <div class="circle size-tiny opacity-ultra-high color-purple depth-mid-close anim-normal" style="top: 17%; left: 80%;"></div>
+        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-slow" style="top: 27%; left: 83%;"></div>
+        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-fast" style="top: 37%; left: 81%;"></div>
+        <div class="circle size-tiny opacity-very-high color-red depth-mid-close anim-normal" style="top: 47%; left: 84%;"></div>
+        <div class="circle size-tiny opacity-ultra-high color-teal depth-mid-close anim-slow" style="top: 57%; left: 82%;"></div>
+        <div class="circle size-tiny opacity-very-high color-blue depth-mid-close anim-fast" style="top: 67%; left: 80%;"></div>
+        <div class="circle size-tiny opacity-ultra-high color-purple depth-mid-close anim-normal" style="top: 77%; left: 83%;"></div>
+        <div class="circle size-tiny opacity-very-high color-green depth-mid-close anim-slow" style="top: 87%; left: 81%;"></div>
+        <div class="circle size-tiny opacity-ultra-high color-orange depth-mid-close anim-fast" style="top: 97%; left: 84%;"></div>
         
-        <!-- Front layer (1 layer deep) - Clear, vibrant, fast-moving -->
-        <div class="circle size-tiny opacity-full color-red depth-front anim-fast" style="top: 3%; left: 20%;"></div>
-        <div class="circle size-tiny opacity-full color-teal depth-front anim-normal" style="top: 13%; left: 40%;"></div>
-        <div class="circle size-tiny opacity-full color-blue depth-front anim-slow" style="top: 23%; left: 10%;"></div>
-        <div class="circle size-tiny opacity-full color-purple depth-front anim-fast" style="top: 33%; left: 30%;"></div>
-        <div class="circle size-tiny opacity-full color-green depth-front anim-normal" style="top: 43%; left: 5%;"></div>
-        <div class="circle size-tiny opacity-full color-orange depth-front anim-slow" style="top: 53%; left: 25%;"></div>
-        <div class="circle size-tiny opacity-full color-red depth-front anim-fast" style="top: 63%; left: 15%;"></div>
-        <div class="circle size-tiny opacity-full color-teal depth-front anim-normal" style="top: 73%; left: 35%;"></div>
-        <div class="circle size-tiny opacity-full color-blue depth-front anim-slow" style="top: 83%; left: 20%;"></div>
-        <div class="circle size-tiny opacity-full color-purple depth-front anim-fast" style="top: 93%; left: 30%;"></div>
+        <!-- Front layer (1 layer deep) - Moved to sides -->
+        <div class="circle size-tiny opacity-full color-red depth-front anim-fast" style="top: 3%; left: 2%;"></div>
+        <div class="circle size-tiny opacity-full color-teal depth-front anim-normal" style="top: 13%; left: 4%;"></div>
+        <div class="circle size-tiny opacity-full color-blue depth-front anim-slow" style="top: 23%; left: 1%;"></div>
+        <div class="circle size-tiny opacity-full color-purple depth-front anim-fast" style="top: 33%; left: 3%;"></div>
+        <div class="circle size-tiny opacity-full color-green depth-front anim-normal" style="top: 43%; left: 0%;"></div>
+        <div class="circle size-tiny opacity-full color-orange depth-front anim-slow" style="top: 53%; left: 2%;"></div>
+        <div class="circle size-tiny opacity-full color-red depth-front anim-fast" style="top: 63%; left: 1%;"></div>
+        <div class="circle size-tiny opacity-full color-teal depth-front anim-normal" style="top: 73%; left: 3%;"></div>
+        <div class="circle size-tiny opacity-full color-blue depth-front anim-slow" style="top: 83%; left: 2%;"></div>
+        <div class="circle size-tiny opacity-full color-purple depth-front anim-fast" style="top: 93%; left: 4%;"></div>
         
-        <div class="circle size-tiny opacity-full color-green depth-front anim-fast" style="top: 3%; left: 80%;"></div>
-        <div class="circle size-tiny opacity-full color-orange depth-front anim-normal" style="top: 13%; left: 60%;"></div>
-        <div class="circle size-tiny opacity-full color-red depth-front anim-slow" style="top: 23%; left: 90%;"></div>
-        <div class="circle size-tiny opacity-full color-teal depth-front anim-fast" style="top: 33%; left: 70%;"></div>
-        <div class="circle size-tiny opacity-full color-blue depth-front anim-normal" style="top: 43%; left: 95%;"></div>
-        <div class="circle size-tiny opacity-full color-purple depth-front anim-slow" style="top: 53%; left: 75%;"></div>
-        <div class="circle size-tiny opacity-full color-green depth-front anim-fast" style="top: 63%; left: 85%;"></div>
-        <div class="circle size-tiny opacity-full color-orange depth-front anim-normal" style="top: 73%; left: 65%;"></div>
-        <div class="circle size-tiny opacity-full color-red depth-front anim-slow" style="top: 83%; left: 80%;"></div>
-        <div class="circle size-tiny opacity-full color-teal depth-front anim-fast" style="top: 93%; left: 70%;"></div>
+        <div class="circle size-tiny opacity-full color-green depth-front anim-fast" style="top: 3%; left: 98%;"></div>
+        <div class="circle size-tiny opacity-full color-orange depth-front anim-normal" style="top: 13%; left: 96%;"></div>
+        <div class="circle size-tiny opacity-full color-red depth-front anim-slow" style="top: 23%; left: 99%;"></div>
+        <div class="circle size-tiny opacity-full color-teal depth-front anim-fast" style="top: 33%; left: 97%;"></div>
+        <div class="circle size-tiny opacity-full color-blue depth-front anim-normal" style="top: 43%; left: 100%;"></div>
+        <div class="circle size-tiny opacity-full color-purple depth-front anim-slow" style="top: 53%; left: 98%;"></div>
+        <div class="circle size-tiny opacity-full color-green depth-front anim-fast" style="top: 63%; left: 99%;"></div>
+        <div class="circle size-tiny opacity-full color-orange depth-front anim-normal" style="top: 73%; left: 97%;"></div>
+        <div class="circle size-tiny opacity-full color-red depth-front anim-slow" style="top: 83%; left: 98%;"></div>
+        <div class="circle size-tiny opacity-full color-teal depth-front anim-fast" style="top: 93%; left: 96%;"></div>
         
-        <!-- Closest layer (0 layer deep) - Sharpest, most vibrant, fastest-moving -->
-        <div class="circle size-tiny opacity-full color-blue depth-closest anim-fast" style="top: 5%; left: 50%;"></div>
-        <div class="circle size-tiny opacity-full color-purple depth-closest anim-normal" style="top: 20%; left: 30%;"></div>
-        <div class="circle size-tiny opacity-full color-green depth-closest anim-fast" style="top: 35%; left: 70%;"></div>
-        <div class="circle size-tiny opacity-full color-orange depth-closest anim-normal" style="top: 50%; left: 20%;"></div>
-        <div class="circle size-tiny opacity-full color-red depth-closest anim-fast" style="top: 65%; left: 80%;"></div>
-        <div class="circle size-tiny opacity-full color-teal depth-closest anim-normal" style="top: 80%; left: 10%;"></div>
-        <div class="circle size-tiny opacity-full color-blue depth-closest anim-fast" style="top: 95%; left: 60%;"></div>
+        <!-- Closest layer (0 layer deep) - Moved to extreme sides -->
+        <div class="circle size-tiny opacity-full color-blue depth-closest anim-fast" style="top: 5%; left: 0%;"></div>
+        <div class="circle size-tiny opacity-full color-purple depth-closest anim-normal" style="top: 20%; left: -1%;"></div>
+        <div class="circle size-tiny opacity-full color-green depth-closest anim-fast" style="top: 35%; left: 100%;"></div>
+        <div class="circle size-tiny opacity-full color-orange depth-closest anim-normal" style="top: 50%; left: -2%;"></div>
+        <div class="circle size-tiny opacity-full color-red depth-closest anim-fast" style="top: 65%; left: 101%;"></div>
+        <div class="circle size-tiny opacity-full color-teal depth-closest anim-normal" style="top: 80%; left: -1%;"></div>
+        <div class="circle size-tiny opacity-full color-blue depth-closest anim-fast" style="top: 95%; left: 102%;"></div>
         
 
         
