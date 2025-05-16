@@ -60,8 +60,12 @@
         /* Modern Timeline Card Styles */
         .timeline-container {
             position: relative;
-            margin: 20px 0;
+            margin: 20px auto;
             padding: 0;
+            min-height: 100px; /* Ensure minimum height for the timeline */
+            max-width: 1160px; /* Ensure it doesn't get too wide */
+            width: 100%;
+            box-sizing: border-box;
         }
         
         .timeline-container::before {
@@ -76,97 +80,248 @@
             transform: translateX(-50%);
         }
         
-        .timeline-section {
-            margin-bottom: 40px;
-        }
-        
-        .timeline-section-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--accent-color);
-            margin-bottom: 25px;
-            text-align: center;
-            position: relative;
-            padding: 10px 0;
-        }
-        
-        .timeline-section-title::before {
+        /* Add a starting point at the top of the timeline */
+        .timeline-container::before {
             content: '';
             position: absolute;
+            top: 0;
+            bottom: 0;
             left: 50%;
-            top: 100%;
-            transform: translate(-50%, -50%);
-            width: 16px;
-            height: 16px;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--accent-color), rgba(52, 152, 219, 0.3));
+            border-radius: 2px;
+            transform: translateX(-50%);
+        }
+        
+        .timeline-container .timeline-start {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
             background-color: var(--accent-color);
             border-radius: 50%;
             box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3);
             z-index: 1;
         }
         
-        .timeline-section-title::after {
-            content: '';
-            position: absolute;
+        /* Timeline Section Title Styles */
+        .timeline-section-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 40px 0 25px;
+            color: white;
+            position: relative;
+            z-index: 2;
+            width: auto;
+            clear: both;
+            display: inline-block;
+            padding: 6px 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             left: 50%;
-            bottom: 0;
             transform: translateX(-50%);
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            max-width: 350px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.1) !important;
         }
         
+        /* Create a special timeline item for section titles */
+        .timeline-section-container {
+            position: relative;
+            width: 100%;
+            clear: both;
+            height: 60px;
+            margin-bottom: 50px;
+            margin-top: 30px;
+            z-index: 3;
+        }
+        
+        /* Timeline Item Styles */
         .timeline-item {
             position: relative;
             margin-bottom: 30px;
             width: 45%;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            background-color: var(--section-bg);
-            border: 1px solid var(--border-color);
-            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            border-radius: 0 0 8px 8px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
+            box-sizing: border-box;
+            overflow: hidden;
+            will-change: transform, box-shadow;
+        }
+        
+        /* Add shiny line at the top of each card */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                rgba(255, 255, 255, 0.8), 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+            z-index: 1;
+            will-change: transform, opacity;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: -100% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
         }
         
         .timeline-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        .timeline-item::before {
+        /* Enhanced shimmer effect on hover */
+        .timeline-item:hover::before {
+            height: 4px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                rgba(255, 255, 255, 1), 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            animation: shimmer 1.5s infinite linear;
+        }
+        
+        /* Add subtle sparkle effect to the top right corner */
+        .timeline-item::after {
             content: '';
             position: absolute;
-            top: 20px;
-            width: 20px;
-            height: 20px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.2);
-            z-index: 1;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+            border-top-right-radius: 20px;
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
         }
         
-        .timeline-item:nth-child(odd) {
+        /* Add subtle sparkle effect to the top left corner */
+        .timeline-item-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+            border-top-left-radius: 20px;
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+        
+        .timeline-item:hover .timeline-item-header::before {
+            opacity: 0.6;
+            animation: pulse 2s infinite;
+            animation-delay: 0.5s;
+        }
+        
+        .timeline-item:hover::after {
+            opacity: 0.6;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { opacity: 0.3; }
+        }
+        
+        /* Alternate left-right layout for timeline items */
+        .timeline-item:nth-of-type(odd):not(.timeline-section-title) {
             float: left;
             clear: left;
         }
         
-        .timeline-item:nth-child(even) {
+        .timeline-item:nth-of-type(even):not(.timeline-section-title) {
             float: right;
             clear: right;
         }
         
-        .timeline-item:nth-child(odd)::before {
-            right: -60px;
+        /* Job type specific styles */
+        .job-item.dev-job:hover {
+            box-shadow: 0 8px 24px rgba(66, 133, 244, 0.3);
         }
         
-        .timeline-item:nth-child(even)::before {
-            left: -60px;
+        .job-item.warehouse-job:hover {
+            box-shadow: 0 8px 24px rgba(52, 168, 83, 0.3);
+        }
+        
+        .job-item.engineering-job:hover {
+            box-shadow: 0 8px 24px rgba(234, 67, 53, 0.3);
+        }
+        
+        .job-item.design-job:hover {
+            box-shadow: 0 8px 24px rgba(156, 39, 176, 0.3);
+        }
+        
+        .job-item.service-job:hover {
+            box-shadow: 0 8px 24px rgba(251, 188, 5, 0.3);
+        }
+        
+        .education-item:hover {
+            box-shadow: 0 8px 24px rgba(2, 136, 209, 0.3);
+        }
+        
+        .certificate-item:hover {
+            box-shadow: 0 8px 24px rgba(255, 109, 0, 0.3);
         }
         
         .timeline-item-header {
-            background: linear-gradient(135deg, var(--accent-color) 0%, rgba(52, 152, 219, 0.8) 100%);
             color: white;
             padding: 15px 20px;
             position: relative;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            overflow: hidden;
+        }
+        
+        /* Add subtle glow effect to header */
+        .timeline-item-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(255, 255, 255, 0.05) 50%, 
+                transparent 100%);
+            pointer-events: none;
         }
         
         .timeline-item-title {
@@ -174,6 +329,7 @@
             font-size: 1.1rem;
             margin-bottom: 5px;
             color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
         
         .timeline-item-period {
@@ -181,10 +337,12 @@
             font-weight: 500;
             opacity: 0.9;
             color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
         
         .timeline-item-content {
             padding: 15px 20px;
+            color: var(--text-color);
         }
         
         .timeline-item-subtitle {
@@ -206,6 +364,7 @@
             padding-left: 20px;
             margin-bottom: 8px;
             font-size: 0.95rem;
+            color: var(--text-color);
         }
         
         .timeline-detail::before {
@@ -223,27 +382,89 @@
             clear: both;
         }
         
+        /* Add an ending point at the bottom of the timeline */
+        .timeline-container .timeline-end {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3);
+            z-index: 1;
+        }
+        
         /* Responsive adjustments */
+        @media (max-width: 991px) {
+            /* Tablet adjustments */
+            .timeline-container {
+                max-width: 100%;
+            }
+            
+            .timeline-item {
+                width: 48%;
+            }
+            
+            .timeline-section-title {
+                max-width: 80%;
+                font-size: 1rem;
+            }
+            
+            /* Header adjustments for tablet */
+            .header-container {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            
+            .header-right {
+                width: 100% !important;
+                padding-left: 0 !important;
+                flex-direction: row !important;
+                justify-content: center;
+                margin-top: 15px;
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+                padding-top: 15px;
+            }
+            
+            .header-right img {
+                width: 80px !important;
+                height: 80px !important;
+            }
+            
+            .header-info {
+                flex: 1;
+            }
+        }
+        
         @media (max-width: 767px) {
+            /* Mobile adjustments */
             .timeline-container::before {
                 left: 20px;
                 transform: none;
             }
             
-            .timeline-section-title {
-                text-align: left;
-                padding-left: 50px;
-            }
-            
-            .timeline-section-title::before {
+            .timeline-container .timeline-start,
+            .timeline-container .timeline-end {
                 left: 20px;
-                transform: translateY(-50%);
+                transform: none;
             }
             
-            .timeline-section-title::after {
-                left: 70px;
+            .timeline-section-container {
+                height: 50px;
+                margin-bottom: 20px;
+            }
+            
+            .timeline-section-title {
+                text-align: center;
+                margin: 0;
+                left: 0;
                 transform: none;
-                width: 60px;
+                max-width: 90%;
+                font-size: 0.9rem;
+                padding: 5px 12px;
+                position: relative;
             }
             
             .timeline-item {
@@ -251,15 +472,6 @@
                 float: right;
                 clear: both;
                 margin-left: 50px;
-            }
-            
-            .timeline-item::before {
-                left: -40px;
-            }
-            
-            .timeline-item:nth-child(odd)::before,
-            .timeline-item:nth-child(even)::before {
-                left: -40px;
             }
             
             .timeline-item-header {
@@ -270,21 +482,248 @@
                 margin-left: 0;
                 margin-top: 5px;
             }
+            
+            .timeline-item-title {
+                font-size: 1rem;
+            }
+            
+            .timeline-detail {
+                font-size: 0.9rem;
+            }
+            
+            /* Header adjustments for mobile */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .avatar-container {
+                width: 100% !important;
+                margin-bottom: 15px;
+            }
+            
+            .header-info {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .contact-info {
+                justify-content: center;
+            }
+            
+            .contact-item {
+                justify-content: center;
+                margin-bottom: 8px;
+            }
+            
+            .header-right {
+                width: 100% !important;
+                flex-direction: column !important;
+                align-items: center;
+                margin-top: 15px;
+            }
+            
+            /* Strengths section adjustments */
+            .strengths-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .strength-item {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            /* Section adjustments */
+            .section {
+                padding: 15px;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* Small mobile adjustments */
+            .timeline-item {
+                width: calc(100% - 40px);
+                margin-left: 40px;
+                border-top-left-radius: 15px;
+                border-top-right-radius: 15px;
+            }
+            
+            .timeline-item-header {
+                border-top-left-radius: 15px;
+                border-top-right-radius: 15px;
+                padding: 12px 15px;
+            }
+            
+            .timeline-container::before {
+                left: 15px;
+            }
+            
+            .timeline-container .timeline-start,
+            .timeline-container .timeline-end {
+                left: 15px;
+                width: 15px;
+                height: 15px;
+            }
+            
+            .timeline-section-title {
+                font-size: 0.85rem;
+                padding: 4px 10px;
+            }
+            
+            .timeline-item-title {
+                font-size: 0.95rem;
+            }
+            
+            .timeline-detail {
+                font-size: 0.85rem;
+                margin-bottom: 6px;
+            }
+            
+            /* Adjust shimmer effect for mobile */
+            .timeline-item::before {
+                height: 2px;
+            }
+            
+            .timeline-item:hover::before {
+                height: 3px;
+            }
+            
+            /* Adjust corner sparkles for mobile */
+            .timeline-item::after,
+            .timeline-item-header::before {
+                width: 20px;
+                height: 20px;
+            }
+        }
+            
+            /* Header adjustments for small mobile */
+            .avatar {
+                width: 120px !important;
+                height: 120px !important;
+            }
+            
+            h1 {
+                font-size: 1.8rem !important;
+            }
+            
+            .title {
+                font-size: 0.9rem !important;
+            }
+            
+            .contact-item {
+                font-size: 0.9rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .header-right img {
+                width: 70px !important;
+                height: 70px !important;
+            }
+            
+            /* Adjust social links */
+            .header-right div:last-child {
+                gap: 8px !important;
+            }
+            
+            .header-right a {
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 1rem !important;
+            }
+            
+            /* Main content padding */
+            .main-content {
+                padding: 10px !important;
+            }
+            
+            /* Section spacing */
+            .section {
+                margin-bottom: 20px;
+                padding: 10px;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
         }
     </style>
-    <!-- Fix for print preview scrolling -->
+    <!-- Fix for print preview scrolling and horizontal scrolling -->
     <style id="print-preview-fix">
         /* Ensure scrolling always works in print preview */
         @media screen {
-            html, body {
-                overflow: auto !important;
+            html {
+                overflow-x: hidden !important;
                 height: auto !important;
                 min-height: 100% !important;
+                max-width: 100% !important;
+            }
+            body {
+                height: auto !important;
+                min-height: 100% !important;
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+            }
+        }
+        
+        /* Prevent horizontal scrolling on large screens */
+        @media screen and (min-width: 992px) {
+            .main-content {
+                width: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+                box-sizing: border-box;
+                position: relative;
+                z-index: 1;
+            }
+            
+            .timeline-container {
+                width: 100%;
+                box-sizing: border-box;
             }
         }
     </style>
     
     <style>
+        /* Global box-sizing for all elements */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        /* Remove all overflow properties from elements except for timeline-item */
+        .section, .timeline-container,
+        .timeline-item-details, .timeline-detail,
+        .strength-item, .tech-skill, .skill-card {
+            overflow: visible !important;
+        }
+        
+        /* Keep overflow hidden for timeline-item to ensure shimmer effect works */
+        .timeline-item {
+            overflow: hidden !important;
+        }
+        
+        /* Keep overflow hidden for timeline-item-header to ensure glow effect works */
+        .timeline-item-header {
+            overflow: hidden !important;
+        }
+        
+        /* Keep overflow visible for timeline-item-content */
+        .timeline-item-content {
+            overflow: visible !important;
+        }
+        
         /* Remove underline from name */
         h1::after, .name::after {
             display: none !important;
@@ -306,6 +745,8 @@
             position: relative;
             padding: 0 !important; /* Override padding from cv.css */
             background-color: transparent !important;
+            width: 100%;
+            overflow-x: hidden !important;
         }
         
         /* Remove padding and margin from header */
@@ -321,15 +762,15 @@
         }
         
         .background {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
+            width: 100%;
             height: 100%;
             min-height: 100vh;
-            overflow: hidden;
-            z-index: -1; /* Behind main content */
+            z-index: 0; /* Behind main content */
             background: transparent; /* Changed to transparent to only show circles */
+            pointer-events: none; /* Allow clicks to pass through */
         }
         
         /* Circle styles - enhanced for dark background */
@@ -925,7 +1366,7 @@
     
     <button class="theme-toggle" id="themeToggle">☀</button>
     
-    <!-- Main content container with 1200px width -->
+    <!-- Main content container -->
     <div class="main-content">
         <header>
         <div class="header-container">
@@ -997,249 +1438,236 @@
     </div>
 
     <div class="section">
-        <h2>CURRENT POSITION & RECENT EXPERIENCE</h2>
+        <h2>PROFESSIONAL JOURNEY & EDUCATION</h2>
         <div class="timeline-container">
-            <div class="timeline-section">
-                <h3 class="timeline-section-title">Current Position</h3>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">BIT Student @ Haaga Helia UAS</div>
-                        <div class="timeline-item-period">2023-Present</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">Personal Assistant Application</div>
-                            <div class="timeline-detail">Full-stack implementation (React/TS + Spring Boot)</div>
-                            <div class="timeline-detail">AI & Speech Processing Integration</div>
-                            <div class="timeline-detail">50-member team collaboration (microservices)</div>
-                        </div>
-                    </div>
+            <div class="timeline-start"></div>
+            <div class="timeline-end"></div>
+            
+            <!-- JOBS SECTION - Ordered chronologically from newest to oldest -->
+            <div class="timeline-section-container">
+                <h3 class="timeline-section-title" style="background: linear-gradient(135deg, rgba(26, 115, 232, 0.6) 0%, rgba(66, 133, 244, 0.6) 100%);">Professional Experience</h3>
+            </div>
+            
+            <!-- Development Jobs - Blue color scheme -->
+            <div class="timeline-item job-item dev-job">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, rgba(26, 115, 232, 0.7) 0%, rgba(66, 133, 244, 0.7) 100%);">
+                    <div class="timeline-item-title">Intern & Fullstack Developer</div>
+                    <div class="timeline-item-period">Apr'24-Feb'25</div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Intern & Fullstack Developer</div>
-                        <div class="timeline-item-period">Apr'24-Feb'25</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">HR Management System (Vue.js + Node.js)</div>
-                            <div class="timeline-detail">Microservices with Spring Boot & Vue.js</div>
-                            <div class="timeline-detail">Website optimization with Bun</div>
-                            <div class="timeline-detail">AI team collaboration (React.js + Figma)</div>
-                        </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">HR Management System (Vue.js + Node.js)</div>
+                        <div class="timeline-detail">Microservices with Spring Boot & Vue.js</div>
+                        <div class="timeline-detail">Website optimization with Bun</div>
+                        <div class="timeline-detail">AI team collaboration (React.js + Figma)</div>
                     </div>
                 </div>
             </div>
             
-            <div class="timeline-section">
-                <h3 class="timeline-section-title">Recent Experience</h3>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Store Keeper @ Mermaid Maritime Vietnam</div>
-                        <div class="timeline-item-period">2023</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">Inventory tracking system management</div>
-                            <div class="timeline-detail">Digital import/export solutions</div>
-                            <div class="timeline-detail">Automated reporting</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Cleaner Worker</div>
-                        <div class="timeline-item-period">2020-2023</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">Cleaning into 4 towers (250 units each)</div>
-                            <div class="timeline-detail">Independent responsibility during COVID-19</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Warehouse Manager @ TTI Industries</div>
-                        <div class="timeline-item-period">2019-2020</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">Digital inventory management</div>
-                            <div class="timeline-detail">KPI dashboards development</div>
-                            <div class="timeline-detail">Process optimization through data analysis</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            <div class="timeline-item job-item store-job">
 
-    <div class="section">
-        <h2>PREVIOUS CAREER JOURNEY</h2>
-        <div class="timeline-container">
-            <div class="timeline-section">
-                <h3 class="timeline-section-title">Previous Experience</h3>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Warehouse Supervisor @ BLUM Vietnam</div>
-                        <div class="timeline-item-period">2019</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">SAP & LMS integration</div>
-                            <div class="timeline-detail">Digital process documentation</div>
-                            <div class="timeline-detail">Data-driven inventory control</div>
-                        </div>
-                    </div>
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #34a853 0%, #4caf50 100%);">
+                    <div class="timeline-item-title">Store Keeper @ Mermaid Maritime Vietnam</div>
+                    <div class="timeline-item-period">2023</div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Warehouse Supervisor @ AVERY DENNISON RBIS</div>
-                        <div class="timeline-item-period">2017-2019</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">Custom inventory tracking (Microsoft Access)</div>
-                            <div class="timeline-detail">Oracle warehouse management</div>
-                            <div class="timeline-detail">Automated reporting & analytics</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Warehouse Supervisor @ PANASONIC AVC Vietnam</div>
-                        <div class="timeline-item-period">2016-2017</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">Oracle & Vsoft systems management</div>
-                            <div class="timeline-detail">KAIZEN process improvements</div>
-                            <div class="timeline-detail">Automated reporting systems</div>
-                        </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Inventory tracking system management</div>
+                        <div class="timeline-detail">Digital import/export solutions</div>
+                        <div class="timeline-detail">Automated reporting</div>
                     </div>
                 </div>
             </div>
             
-            <div class="timeline-section">
-                <h3 class="timeline-section-title">Early Career</h3>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Electrical/Mechanical Engineer @ HALLIBURTON</div>
-                        <div class="timeline-item-period">2012-2015</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">Technical support across Malaysia, Thailand, China</div>
-                            <div class="timeline-detail">Digital documentation systems implementation</div>
-                            <div class="timeline-detail">Equipment testing & calibration</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Circuit Design Engineer @ ESILICON Vietnam</div>
-                        <div class="timeline-item-period">2010-2012</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">Designed Two Ports Read/Write Memory (28nm TSMC)</div>
-                            <div class="timeline-detail">Developed web-based characterization system</div>
-                            <div class="timeline-detail">Optimized circuit performance & power consumption</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            <div class="timeline-item job-item service-job">
 
-    <div class="section">
-        <h2>EDUCATION & CERTIFICATIONS</h2>
-        <div class="timeline-container">
-            <div class="timeline-section">
-                <h3 class="timeline-section-title">Recent Education</h3>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Business Information Technology</div>
-                        <div class="timeline-item-period">2023-Present</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-subtitle">Haaga Helia University of Applied Sciences</div>
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">Focus on full-stack development and AI integration</div>
-                        </div>
-                    </div>
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #fbbc05 0%, #f9a825 100%);">
+                    <div class="timeline-item-title">Cleaner Worker</div>
+                    <div class="timeline-item-period">2020-2023</div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">SAT 1300 Score</div>
-                        <div class="timeline-item-period">2023</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">Demonstrated English proficiency</div>
-                        </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Cleaning into 4 towers (250 units each)</div>
+                        <div class="timeline-detail">Independent responsibility during COVID-19</div>
                     </div>
                 </div>
             </div>
             
-            <div class="timeline-section">
-                <h3 class="timeline-section-title">Certifications</h3>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Hygiene Passport (Finland)</div>
-                        <div class="timeline-item-period">2024</div>
-                    </div>
-                    <div class="timeline-item-content">
-                    </div>
+            <div class="timeline-item job-item warehouse-job">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #34a853 0%, #4caf50 100%);">
+                    <div class="timeline-item-title">Warehouse Manager @ TTI Industries</div>
+                    <div class="timeline-item-period">2019-2020</div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Pattern of Excellence (Adam Khoo Education)</div>
-                        <div class="timeline-item-period">2023</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">SALESPRO Certification</div>
-                            <div class="timeline-detail">Wealth Academy Investor (1st winner)</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">International Driving Permit</div>
-                        <div class="timeline-item-period">2018</div>
-                    </div>
-                    <div class="timeline-item-content">
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Oil & Gas Tech 1 Certificate (Singapore)</div>
-                        <div class="timeline-item-period">2013</div>
-                    </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">Overhead Crane Control Certificate</div>
-                        </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Digital inventory management</div>
+                        <div class="timeline-detail">KPI dashboards development</div>
+                        <div class="timeline-detail">Process optimization through data analysis</div>
                     </div>
                 </div>
             </div>
             
-            <div class="timeline-section">
-                <h3 class="timeline-section-title">University Education</h3>
-                <div class="timeline-item">
-                    <div class="timeline-item-header">
-                        <div class="timeline-item-title">Bachelor of Electrical & Electronic Engineering</div>
-                        <div class="timeline-item-period">2005-2010</div>
+            <div class="timeline-item job-item warehouse-job">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #34a853 0%, #4caf50 100%);">
+                    <div class="timeline-item-title">Warehouse Supervisor @ BLUM Vietnam</div>
+                    <div class="timeline-item-period">2019</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">SAP & LMS integration</div>
+                        <div class="timeline-detail">Digital process documentation</div>
+                        <div class="timeline-detail">Data-driven inventory control</div>
                     </div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-item-subtitle">University of Technology HCMC</div>
-                        <div class="timeline-item-details">
-                            <div class="timeline-detail">GPA 7.04</div>
-                            <div class="timeline-detail">Excellence award scholarship</div>
-                            <div class="timeline-detail">Nguyen Huu Tho scholarship</div>
-                        </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item job-item warehouse-job">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #34a853 0%, #4caf50 100%);">
+                    <div class="timeline-item-title">Warehouse Supervisor @ AVERY DENNISON RBIS</div>
+                    <div class="timeline-item-period">2017-2019</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Custom inventory tracking (Microsoft Access)</div>
+                        <div class="timeline-detail">Oracle warehouse management</div>
+                        <div class="timeline-detail">Automated reporting & analytics</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item job-item warehouse-job">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #34a853 0%, #4caf50 100%);">
+                    <div class="timeline-item-title">Warehouse Supervisor @ PANASONIC AVC Vietnam</div>
+                    <div class="timeline-item-period">2016-2017</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Oracle & Vsoft systems management</div>
+                        <div class="timeline-detail">KAIZEN process improvements</div>
+                        <div class="timeline-detail">Automated reporting systems</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item job-item engineering-job">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #ea4335 0%, #f44336 100%);">
+                    <div class="timeline-item-title">Electrical TECHNICAL SPECIALIST @ HALLIBURTON</div>
+                    <div class="timeline-item-period">2012-2015</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Technical support across Malaysia, Thailand, China</div>
+                        <div class="timeline-detail">Digital documentation systems implementation</div>
+                        <div class="timeline-detail">Equipment testing & calibration</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item job-item design-job">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);">
+                    <div class="timeline-item-title">Circuit Design Engineer @ ESILICON Vietnam</div>
+                    <div class="timeline-item-period">2010-2012</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Designed Two Ports Read/Write Memory (28nm TSMC)</div>
+                        <div class="timeline-detail">Developed web-based characterization system</div>
+                        <div class="timeline-detail">Optimized circuit performance & power consumption</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- EDUCATION SECTION -->
+            <div class="timeline-section-container">
+                <h3 class="timeline-section-title" style="background: linear-gradient(135deg, rgba(2, 136, 209, 0.6) 0%, rgba(3, 169, 244, 0.6) 100%);">Education</h3>
+            </div>
+            
+            <div class="timeline-item education-item">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #0288d1 0%, #03a9f4 100%);">
+                    <div class="timeline-item-title">BIT Student @ Haaga Helia UAS</div>
+                    <div class="timeline-item-period">2023-Present</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Personal Assistant Application</div>
+                        <div class="timeline-detail">Full-stack implementation (React/TS + Spring Boot)</div>
+                        <div class="timeline-detail">AI & Speech Processing Integration</div>
+                        <div class="timeline-detail">50-member team collaboration (microservices)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item education-item">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #0288d1 0%, #03a9f4 100%);">
+                    <div class="timeline-item-title">Bachelor of Electrical & Electronic Engineering</div>
+                    <div class="timeline-item-period">2005-2010</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-subtitle">University of Technology HCMC</div>
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">GPA 7.04</div>
+                        <div class="timeline-detail">Excellence award scholarship</div>
+                        <div class="timeline-detail">Nguyen Huu Tho scholarship</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CERTIFICATES SECTION -->
+            <div class="timeline-section-container">
+                <h3 class="timeline-section-title" style="background: linear-gradient(135deg, rgba(255, 109, 0, 0.6) 0%, rgba(255, 152, 0, 0.6) 100%);">Certificates & Achievements</h3>
+            </div>
+            
+            <div class="timeline-item certificate-item">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #ff6d00 0%, #ff9800 100%);">
+                    <div class="timeline-item-title">Hygiene Passport (Finland)</div>
+                    <div class="timeline-item-period">2024</div>
+                </div>
+                <div class="timeline-item-content">
+                </div>
+            </div>
+            
+            <div class="timeline-item certificate-item">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #ff6d00 0%, #ff9800 100%);">
+                    <div class="timeline-item-title">SAT 1300 Score</div>
+                    <div class="timeline-item-period">2023</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Demonstrated English proficiency</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item certificate-item">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #ff6d00 0%, #ff9800 100%);">
+                    <div class="timeline-item-title">Pattern of Excellence (Adam Khoo Education)</div>
+                    <div class="timeline-item-period">2015</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">SALESPRO Certification</div>
+                        <div class="timeline-detail">Wealth Academy Investor (1st winner)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item certificate-item">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #ff6d00 0%, #ff9800 100%);">
+                    <div class="timeline-item-title">International Driving Permit</div>
+                    <div class="timeline-item-period">2018</div>
+                </div>
+                <div class="timeline-item-content">
+                </div>
+            </div>
+            
+            <div class="timeline-item certificate-item">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #ff6d00 0%, #ff9800 100%);">
+                    <div class="timeline-item-title">Oil & Gas Tech 1 Certificate (Singapore)</div>
+                    <div class="timeline-item-period">2013</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Overhead Crane Control Certificate</div>
                     </div>
                 </div>
             </div>
