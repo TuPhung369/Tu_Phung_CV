@@ -830,11 +830,7 @@
             padding-top: 0 !important;
         }
         
-        /* Adjust theme toggle button position */
-        .theme-toggle {
-            top: 10px !important;
-            right: 10px !important;
-        }
+        /* Theme toggle button now in header */
         
         .background {
             position: fixed;
@@ -1240,6 +1236,27 @@
                 gap: 15px;
             }
             
+            /* Move header-right to the top */
+            .header-right {
+                order: -1;
+                width: 100% !important;
+                padding-left: 0 !important;
+                margin-bottom: 10px;
+            }
+            
+            /* Center the action icons */
+            .header-actions {
+                justify-content: center;
+                width: 100%;
+                margin-top: 10px;
+                margin-bottom: 5px !important;
+            }
+            
+            /* Hide QR code on mobile to save space */
+            .header-right img, .header-right span:not(.action-tooltip) {
+                display: none;
+            }
+            
             /* Optimize avatar size for mobile */
             .avatar-container {
                 width: 100%;
@@ -1254,76 +1271,44 @@
                 display: block !important;
                 object-fit: cover !important;
                 object-position: center 75% !important;
-                margin-top: 15px !important;
+                margin-top: 5px !important;
             }
             
             /* Simplify header info for mobile */
             .header-info {
                 width: 100%;
             }
-            
-            /* Reduce header right size for mobile */
-            .header-right {
-                width: 100% !important;
-                padding-left: 0 !important;
-            }
         }
     </style>
-    <!-- No JavaScript needed for simple mailto: and tel: links -->
-    <div class="action-buttons">
-        <a href="javascript:void(0)" class="download-btn" onclick="window.open('./resume.html?print=true', '_blank')">
-            <i class="fas fa-print" style="margin-right: 8px; font-size: 1.2em;"></i>
-            Print CV
-        </a>
-        <a href="./resume.html" class="resume-btn" target="_blank">
-            <i class="fas fa-file-alt" style="margin-right: 8px; font-size: 1.2em;"></i>
-            Resume
-        </a>
-    </div>
-    
-    <script>
-        // Print functionality has been moved to resume.html
-        // The Print CV button now redirects to resume.html with print=true parameter
-    </script>
-    
-    <!-- No hidden links or extra JavaScript needed -->
+    <!-- Action buttons moved to header -->
     <style>
-        /* Language selector - Dropdown style */
-        .language-selector {
-            position: fixed;
-            top: 20px;
-            right: 80px;
-            z-index: 1000;
-        }
-        
+        /* Language selector - Dropdown style (now in header) */
         .language-globe {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #1a3a5f 0%, #2a5298 100%);
+            background-color: #1a3a5f;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
         }
         
         .language-globe:hover {
-            background: linear-gradient(135deg, #2a5298 0%, #1a3a5f 100%);
+            background-color: #2a5298;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
         }
         
         .language-dropdown {
             position: absolute;
-            top: 45px;
+            top: 40px;
             right: 0;
             background: white;
             border-radius: 8px;
@@ -1331,12 +1316,11 @@
             overflow: hidden;
             display: none;
             width: 140px;
-            /* Add padding at the top to create a safe zone */
             padding-top: 5px;
-            /* Add a small delay before hiding */
             transition: visibility 0.2s, opacity 0.2s;
             visibility: hidden;
             opacity: 0;
+            z-index: 1000;
         }
         
         .language-option {
@@ -1359,21 +1343,200 @@
             border: 1px solid #eee;
         }
         
-        /* Create a safe zone between the globe and dropdown */
-        .language-selector {
-            padding-bottom: 5px;
-        }
-        
-        /* Show dropdown with transition */
-        .language-selector:hover .language-dropdown {
+        /* Show dropdown with transition - controlled by JavaScript */
+        .language-dropdown.show {
             display: block;
             visibility: visible;
             opacity: 1;
         }
         
+        /* Header actions styling */
+        .header-actions {
+            background-color: transparent;
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        .download-btn, .resume-btn {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+        }
+        
+        .download-btn:hover, .resume-btn:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Theme toggle button (now in header) */
+        .theme-toggle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #1a3a5f;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        
+        .theme-toggle:hover {
+            background-color: #2a5298;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+        
         @media print {
-            .language-selector {
+            .language-selector, .theme-toggle, .download-btn, .resume-btn, .header-actions {
                 display: none !important;
+            }
+        }
+        
+        /* Action icons styling */
+        .action-icon-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .action-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #1a3a5f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+        }
+        
+        .action-icon:hover {
+            background-color: #2a5298;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .action-tooltip {
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            z-index: 9999; /* Increased z-index to ensure tooltips appear above other elements */
+        }
+        
+        /* Special positioning for theme toggle tooltip */
+        .action-icon-container:last-child .action-tooltip {
+            left: auto;
+            right: 0;
+            transform: translateX(0);
+        }
+        
+        .action-icon-container:hover .action-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* All icons have white color */
+        .print-icon,
+        .linkedin-icon,
+        .github-icon,
+        .resume-icon {
+            color: white;
+        }
+        
+        .print-icon:hover,
+        .linkedin-icon:hover,
+        .github-icon:hover,
+        .resume-icon:hover {
+            color: white;
+        }
+        
+        /* Large and extra-large screens - move icons 10px to the left */
+        @media (min-width: 992px) {
+            .header-actions {
+                margin-right: 15px;
+            }
+        }
+        
+        /* Tablet and mobile adjustments for header actions */
+        @media (max-width: 991px) {
+            /* Move header-right to the top */
+            .header-right {
+                order: -1;
+                width: 100% !important;
+                padding-left: 0 !important;
+                margin-bottom: 10px;
+            }
+            
+            /* Center the action icons */
+            .header-actions {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+                padding: 6px;
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                width: 100%;
+            }
+            
+            /* Hide QR code on mobile to save space */
+            .header-right img, .header-right span:not(.action-tooltip) {
+                display: none;
+            }
+            
+            /* Simplify header for mobile */
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        /* Additional adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .action-icon, .language-globe, .theme-toggle {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+            
+            .action-tooltip {
+                display: none; /* Hide tooltips on mobile */
+            }
+            
+            /* Fix language dropdown position on mobile */
+            .language-dropdown {
+                top: 35px;
+                right: 0;
             }
         }
     </style>
@@ -1384,28 +1547,11 @@
 
     </div>
     
-    <button class="theme-toggle" id="themeToggle">☀</button>
-    
-    <!-- Language selector with dropdown -->
-    <div class="language-selector">
-        <div class="language-globe">
-            <i class="fas fa-globe"></i>
-        </div>
-        <div class="language-dropdown">
-            <a href="index.html" class="language-option">
-                <img src="https://flagcdn.com/w20/gb.png" alt="English" loading="lazy"> English
-            </a>
-            <a href="index_fn.html" class="language-option">
-                <img src="https://flagcdn.com/w20/fi.png" alt="Finnish" loading="lazy"> Finnish
-            </a>
-        </div>
-    </div>
-    
     <!-- Main content container -->
     <div class="main-content">
         <header>
         <div class="header-container">
-            <div class="avatar-container">
+            <div class="avatar-container" style="position: relative; z-index: 1;">
                 <picture>
                     <!-- Desktop WebP image -->
                     <source srcset="avatar.webp" type="image/webp">
@@ -1415,7 +1561,7 @@
                 <!-- Modal cho ảnh lớn -->
                 <p class="title" style="font-size: 1.1rem; font-weight: 500; margin-top: 10px; letter-spacing: 1px; text-align: center; color: rgba(255, 255, 255, 0.9); background-color: rgba(255, 255, 255, 0.1); padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); white-space: nowrap;">Fullstack Developer</p>
             </div>
-            <div class="header-info">
+            <div class="header-info" style="position: relative; z-index: 1;">
                 <h1 style="position: relative;">TU PHUNG</h1>
                 <div class="contact-info">
                     <div class="contact-item">
@@ -1432,20 +1578,66 @@
                     </div>
                 </div>
             </div>
-            <div class="header-right" style="display: flex; flex-direction: column; align-items: center; width: 25%; flex-shrink: 0; padding-left: 25px; position: relative; z-index: 1;">
+            <div class="header-right" style="display: flex; flex-direction: column; align-items: center; width: 25%; flex-shrink: 0; padding-left: 25px; position: relative; z-index: 100;">
+                <div class="header-actions" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; background-color: transparent; border: none; box-shadow: none;">
+                    <!-- Resume button as icon with tooltip -->
+                    <div class="action-icon-container">
+                        <a href="./resume.html" class="action-icon resume-icon" target="_blank">
+                            <i class="fas fa-file-alt"></i>
+                        </a>
+                        <span class="action-tooltip">Resume</span>
+                    </div>
+                    
+                    <!-- Print CV button as icon with tooltip -->
+                    <div class="action-icon-container">
+                        <a href="javascript:void(0)" class="action-icon print-icon" onclick="window.open('./resume.html?print=true', '_blank')">
+                            <i class="fas fa-print"></i>
+                        </a>
+                        <span class="action-tooltip">Print CV</span>
+                    </div>
+                    
+                    <!-- LinkedIn icon with tooltip -->
+                    <div class="action-icon-container">
+                        <a href="https://www.linkedin.com/in/tuphung010787" class="action-icon linkedin-icon" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <span class="action-tooltip">LinkedIn</span>
+                    </div>
+                    
+                    <!-- GitHub icon with tooltip -->
+                    <div class="action-icon-container">
+                        <a href="https://github.com/TuPhung369" class="action-icon github-icon" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <span class="action-tooltip">GitHub</span>
+                    </div>
+                    
+                    <!-- Language selector with dropdown -->
+                    <div class="language-selector" style="position: relative; top: 0; right: 0; padding-bottom: 0;">
+                        <div class="language-globe" id="languageGlobe">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="language-dropdown" id="languageDropdown">
+                            <a href="index.html" class="language-option">
+                                <img src="https://flagcdn.com/w20/gb.png" alt="English" loading="lazy"> English
+                            </a>
+                            <a href="index_fn.html" class="language-option">
+                                <img src="https://flagcdn.com/w20/fi.png" alt="Finnish" loading="lazy"> Finnish
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Theme toggle button with tooltip -->
+                    <div class="action-icon-container">
+                        <button class="theme-toggle" id="themeToggle" style="position: relative; top: 0; right: 0;">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <span class="action-tooltip theme-tooltip">Dark Mode</span>
+                    </div>
+                </div>
+                
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://tuphung369.github.io/Haaga_Backend_Programming/" style="width: 100px; height: 100px; margin-bottom: 10px; border: 3px solid white; border-radius: 8px; background-color: white; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); padding: 4px; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;" alt="Project QR Code" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 8px 20px rgba(0, 0, 0, 0.4)';" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 5px 15px rgba(0, 0, 0, 0.3)';" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">
                 <span style="font-size: 0.85rem; margin-bottom: 10px; text-align: center; background-color: rgba(255, 255, 255, 0.1); padding: 4px 12px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.25)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">My Project</span>
-                <div style="display: flex; gap: 12px; margin-top: 5px;">
-                    <a href="https://www.linkedin.com/in/tuphung010787" target="_blank" style="width: 38px; height: 38px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.15); color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; font-size: 1.2rem; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);" onmouseover="this.style.transform='translateY(-3px)';this.style.backgroundColor='rgba(255, 255, 255, 0.25)';this.style.boxShadow='0 5px 12px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='translateY(0)';this.style.backgroundColor='rgba(255, 255, 255, 0.15)';this.style.boxShadow='0 3px 8px rgba(0, 0, 0, 0.2)';">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="https://tuphung369.github.io/Tu_Phung_CV/resume.html" target="_blank" style="width: 38px; height: 38px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.15); color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; font-size: 1.2rem; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);" onmouseover="this.style.transform='translateY(-3px)';this.style.backgroundColor='rgba(255, 255, 255, 0.25)';this.style.boxShadow='0 5px 12px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='translateY(0)';this.style.backgroundColor='rgba(255, 255, 255, 0.15)';this.style.boxShadow='0 3px 8px rgba(0, 0, 0, 0.2)';">
-                        <i class="fas fa-file-alt"></i>
-                    </a>
-                    <a href="https://github.com/TuPhung369" target="_blank" style="width: 38px; height: 38px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.15); color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; font-size: 1.2rem; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);" onmouseover="this.style.transform='translateY(-3px)';this.style.backgroundColor='rgba(255, 255, 255, 0.25)';this.style.boxShadow='0 5px 12px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='translateY(0)';this.style.backgroundColor='rgba(255, 255, 255, 0.15)';this.style.boxShadow='0 3px 8px rgba(0, 0, 0, 0.2)';">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </div>
             </div>
         </div>
     </header>
@@ -2663,15 +2855,15 @@
             <div class="footer-content">
                 <div class="footer-contact">
                     <p>
-                        <i class="fas fa-envelope"></i>
+                        <i class="fas fa-envelope" style="color: white; background: none; box-shadow: none; width: auto; height: auto; margin-right: 15px;"></i>
                         <a href="mailto:tuphung010787@gmail.com" class="contact-text-link">tuphung010787@gmail.com</a>
                     </p>
                     <p>
-                        <i class="fas fa-phone"></i>
+                        <i class="fas fa-phone" style="color: white; background: none; box-shadow: none; width: auto; height: auto; margin-right: 15px;"></i>
                         <a href="tel:+358452349495" class="contact-text-link">+358 45 234 9495</a>
                     </p>
                     <p>
-                        <i class="fas fa-map-marker-alt"></i>
+                        <i class="fas fa-map-marker-alt" style="color: white; background: none; box-shadow: none; width: auto; height: auto; margin-right: 15px;"></i>
                         <span>Helsinki, Finland</span>
                     </p>
                 </div>
@@ -2727,6 +2919,57 @@
     
     <!-- Keyboard shortcut for printing has been removed as printing is now handled by resume.html -->
     </div> <!-- End of main-content -->
+    
+    <!-- Language dropdown control script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageGlobe = document.getElementById('languageGlobe');
+            const languageDropdown = document.getElementById('languageDropdown');
+            let isDropdownOpen = false;
+            let timeoutId;
+            
+            // Toggle dropdown when clicking on the globe
+            languageGlobe.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isDropdownOpen) {
+                    closeDropdown();
+                } else {
+                    openDropdown();
+                }
+            });
+            
+            // Open dropdown on hover
+            languageGlobe.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+                openDropdown();
+            });
+            
+            // Close dropdown when mouse leaves the selector area
+            document.querySelector('.language-selector').addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(closeDropdown, 300);
+            });
+            
+            // Keep dropdown open when hovering over it
+            languageDropdown.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                closeDropdown();
+            });
+            
+            function openDropdown() {
+                languageDropdown.classList.add('show');
+                isDropdownOpen = true;
+            }
+            
+            function closeDropdown() {
+                languageDropdown.classList.remove('show');
+                isDropdownOpen = false;
+            }
+        });
+    </script>
 </body>
 </html>
 

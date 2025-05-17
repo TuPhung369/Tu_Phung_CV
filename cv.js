@@ -63,23 +63,43 @@ document.addEventListener("DOMContentLoaded", function () {
 // Initialize theme based on saved preference
 function initializeTheme() {
   const themeToggle = document.getElementById("themeToggle");
+  const themeTooltip = document.querySelector(".theme-tooltip");
   if (!themeToggle) return;
 
   // Check for saved theme preference or use dark mode as default
   const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "light") {
+  const isLight = savedTheme === "light";
+
+  if (isLight) {
     document.body.classList.add("light-mode");
     themeToggle.textContent = "🌞"; // Sun emoji for light mode
   } else {
     // Dark mode is default (no class needed as it's in :root)
     themeToggle.textContent = "🌙"; // Moon emoji for dark mode
   }
+
+  // Update tooltip text
+  if (themeTooltip) {
+    themeTooltip.textContent = isLight ? "Dark Mode" : "Light Mode";
+  }
 }
 
 // Set up theme toggle button
 function setupThemeToggle() {
   const themeToggle = document.getElementById("themeToggle");
+  const themeTooltip = document.querySelector(".theme-tooltip");
   if (!themeToggle) return;
+
+  // Update tooltip text based on current theme
+  const updateTooltip = (isLight) => {
+    if (themeTooltip) {
+      themeTooltip.textContent = isLight ? "Dark Mode" : "Light Mode";
+    }
+  };
+
+  // Initialize tooltip text
+  const isLight = document.body.classList.contains("light-mode");
+  updateTooltip(isLight);
 
   themeToggle.addEventListener("click", function () {
     // Toggle theme class
@@ -94,6 +114,9 @@ function setupThemeToggle() {
       localStorage.setItem("theme", "dark");
       themeToggle.textContent = "🌙"; // Moon emoji for dark mode
     }
+
+    // Update tooltip text
+    updateTooltip(isLight);
 
     // Re-render Mermaid diagrams with new theme
     setTimeout(function () {
