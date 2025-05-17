@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="cv.css">
     <link rel="stylesheet" href="print-new.css" media="print">
     <link rel="stylesheet" href="background-circles.css">
+    <link rel="stylesheet" href="section-backgrounds.css">
     
     <!-- Load only essential Font Awesome icons to reduce CSS size -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" media="print" onload="this.media='all'">
@@ -55,6 +56,632 @@
         });
     </script>
     
+    <!-- Section and Card Background Styles -->
+    <style>
+        /* Section Background Styles */
+        .section {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: rgba(26, 58, 95, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        /* Section background decorative elements */
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 0% 0%, rgba(52, 152, 219, 0.15), transparent 70%);
+            z-index: -1;
+            opacity: 0.8;
+            transition: opacity 0.5s ease;
+        }
+
+        .section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 100% 100%, rgba(155, 89, 182, 0.15), transparent 70%);
+            z-index: -1;
+            opacity: 0.8;
+            transition: opacity 0.5s ease;
+        }
+
+        .section:hover::before {
+            opacity: 1;
+        }
+
+        .section:hover::after {
+            opacity: 1;
+        }
+
+        /* Section background style - single color matching header */
+        .section {
+            background-color: rgba(26, 58, 95, 0.4);
+        }
+
+        /* Card Background Styles */
+        .strength-item, .skill-item, .project-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .strength-item:hover, .skill-item:hover, .project-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Card background decorative elements */
+        .strength-item, .skill-item, .project-item {
+            border-top: 4px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Card type-specific top border colors */
+        .skill-item {
+            border-top-color: rgba(52, 152, 219, 0.7);
+        }
+        
+        .strength-item {
+            border-top-color: rgba(155, 89, 182, 0.7);
+        }
+        
+        .project-item {
+            border-top-color: rgba(26, 188, 156, 0.7);
+        }
+        
+        /* Enhanced hover effect */
+        .strength-item:hover, .skill-item:hover, .project-item:hover {
+            border-top-width: 4px;
+        }
+
+        /* Card type-specific background styles */
+        .skill-item {
+            background-image: linear-gradient(135deg, rgba(52, 152, 219, 0.2) 0%, rgba(41, 128, 185, 0.2) 100%);
+        }
+
+        .strength-item {
+            background-image: linear-gradient(135deg, rgba(155, 89, 182, 0.2) 0%, rgba(142, 68, 173, 0.2) 100%);
+        }
+
+        .project-item {
+            background-image: linear-gradient(135deg, rgba(26, 188, 156, 0.2) 0%, rgba(22, 160, 133, 0.2) 100%);
+        }
+
+        /* Enhanced professional section title effects */
+        .section h2 {
+            position: relative;
+            display: inline-block;
+            padding: 12px 25px;
+            margin-bottom: 30px;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(26, 58, 95, 0.9) 0%, rgba(41, 128, 185, 0.9) 100%);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-left: 5px solid #3498db;
+            border-right: 5px solid #3498db;
+            transform: perspective(500px) rotateX(0deg);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+        }
+
+        .section h2::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.3), transparent);
+            z-index: -1;
+            border-radius: 8px;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                #2980b9, 
+                #3498db, 
+                #2ecc71, 
+                #3498db, 
+                #2980b9);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
+            border-radius: 3px;
+        }
+        
+        .section h2:hover {
+            transform: perspective(500px) rotateX(5deg) translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Enhanced strength item styles */
+        .strength-icon {
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        .strength-item:hover .strength-icon {
+            transform: scale(1.2);
+        }
+
+        /* Enhanced shimmer animations */
+        @keyframes shimmer {
+            0% {
+                background-position: -100% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        /* Timeline Item Enhanced Backgrounds */
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            width: 45%;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            border-radius: 0 0 8px 8px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            overflow: hidden;
+            will-change: transform, box-shadow;
+        }
+        
+        /* Add shiny line at the top of each card */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                rgba(255, 255, 255, 0.8), 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+            z-index: 1;
+            will-change: transform, opacity;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        
+        /* Enhanced shimmer effect on hover */
+        .timeline-item:hover::before {
+            height: 4px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                rgba(255, 255, 255, 1), 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            animation: shimmer 1.5s infinite linear;
+        }
+        
+        /* Different shimmer colors for different job types */
+        .job-item.dev-job::before {
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(66, 133, 244, 0.2), 
+                rgba(66, 133, 244, 0.8), 
+                rgba(66, 133, 244, 0.2), 
+                transparent);
+        }
+        
+        .job-item.warehouse-job::before, .job-item.store-job::before {
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(74, 175, 85, 0.2), 
+                rgba(74, 175, 85, 0.8), 
+                rgba(74, 175, 85, 0.2), 
+                transparent);
+        }
+        
+        .job-item.service-job::before {
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(251, 188, 5, 0.2), 
+                rgba(251, 188, 5, 0.8), 
+                rgba(251, 188, 5, 0.2), 
+                transparent);
+        }
+        
+        .job-item.navy-engineering-job::before {
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(111, 57, 183, 0.2), 
+                rgba(111, 57, 183, 0.8), 
+                rgba(111, 57, 183, 0.2), 
+                transparent);
+        }
+        
+        .education-item::before {
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(3, 169, 244, 0.2), 
+                rgba(3, 169, 244, 0.8), 
+                rgba(3, 169, 244, 0.2), 
+                transparent);
+        }
+        
+        .certificate-item::before {
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 109, 0, 0.2), 
+                rgba(255, 109, 0, 0.8), 
+                rgba(255, 109, 0, 0.2), 
+                transparent);
+        }
+
+        /* Job type specific enhanced backgrounds */
+        .job-item.dev-job {
+            background-image: linear-gradient(135deg, rgba(66, 133, 244, 0.2) 0%, rgba(52, 120, 235, 0.2) 100%);
+        }
+
+        .job-item.warehouse-job {
+            background-image: linear-gradient(135deg, rgba(52, 168, 83, 0.2) 0%, rgba(39, 155, 70, 0.2) 100%);
+        }
+
+        .job-item.engineering-job {
+            background-image: linear-gradient(135deg, rgba(234, 67, 53, 0.2) 0%, rgba(221, 54, 40, 0.2) 100%);
+        }
+
+        .job-item.design-job {
+            background-image: linear-gradient(135deg, rgba(156, 39, 176, 0.2) 0%, rgba(142, 25, 162, 0.2) 100%);
+        }
+
+        .job-item.service-job {
+            background-image: linear-gradient(135deg, rgba(251, 188, 5, 0.2) 0%, rgba(238, 175, 0, 0.2) 100%);
+        }
+        
+        .job-item.store-job {
+            background-image: linear-gradient(135deg, rgba(52, 168, 83, 0.2) 0%, rgba(39, 155, 70, 0.2) 100%);
+        }
+        
+        .job-item.navy-engineering-job {
+            background-image: linear-gradient(135deg, rgba(111, 57, 183, 0.2) 0%, rgba(126, 87, 194, 0.2) 100%);
+        }
+
+        .education-item {
+            background-image: linear-gradient(135deg, rgba(2, 136, 209, 0.2) 0%, rgba(0, 123, 196, 0.2) 100%);
+        }
+
+        .certificate-item {
+            background-image: linear-gradient(135deg, rgba(255, 109, 0, 0.2) 0%, rgba(242, 96, 0, 0.2) 100%);
+        }
+
+        /* Timeline Item Header Enhanced Backgrounds */
+        .job-item.dev-job .timeline-item-header {
+            background-image: linear-gradient(135deg, rgba(66, 133, 244, 0.4) 0%, rgba(52, 120, 235, 0.4) 100%) !important;
+            color: black !important;
+        }
+
+        .job-item.warehouse-job .timeline-item-header {
+            background-color: #4AAF55 !important;
+            background-image: none !important;
+            color: black !important;
+        }
+
+        .job-item.engineering-job .timeline-item-header {
+            background-image: linear-gradient(135deg, rgba(234, 67, 53, 0.4) 0%, rgba(221, 54, 40, 0.4) 100%) !important;
+        }
+
+        .job-item.service-job .timeline-item-header {
+            background-image: linear-gradient(135deg, rgba(251, 188, 5, 0.4) 0%, rgba(238, 175, 0, 0.4) 100%) !important;
+        }
+        
+        .job-item.store-job .timeline-item-header {
+            background-color: #4AAF55 !important;
+            background-image: none !important;
+            color: black !important;
+        }
+        
+        .job-item.navy-engineering-job .timeline-item-header {
+            background-image: linear-gradient(135deg, rgba(111, 57, 183, 0.4) 0%, rgba(126, 87, 194, 0.4) 100%) !important;
+        }
+
+        .education-item .timeline-item-header {
+            background-image: linear-gradient(135deg, rgba(2, 136, 209, 0.4) 0%, rgba(0, 123, 196, 0.4) 100%) !important;
+        }
+
+        .certificate-item .timeline-item-header {
+            background-image: linear-gradient(135deg, rgba(255, 109, 0, 0.4) 0%, rgba(242, 96, 0, 0.4) 100%) !important;
+        }
+
+        /* Timeline Section Title Enhanced Background */
+        .timeline-section-title.experience-title {
+            background: linear-gradient(135deg, rgba(66, 133, 244, 0.5), rgba(52, 120, 235, 0.5)) !important;
+        }
+
+        .timeline-section-title.education-title {
+            background: linear-gradient(135deg, rgba(2, 136, 209, 0.5), rgba(0, 123, 196, 0.5)) !important;
+        }
+
+        .timeline-section-title.certificates-title {
+            background: linear-gradient(135deg, rgba(255, 109, 0, 0.5), rgba(242, 96, 0, 0.5)) !important;
+        }
+
+        /* Light mode adjustments */
+        .light-mode .section {
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Light mode section title adjustments */
+        .light-mode .section h2 {
+            background: linear-gradient(135deg, rgba(25, 118, 210, 0.9) 0%, rgba(30, 136, 229, 0.9) 100%);
+            color: white;
+            border-left: 5px solid #1565C0;
+            border-right: 5px solid #1565C0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .light-mode .section h2::after {
+            background: linear-gradient(90deg, 
+                #1565C0, 
+                #1976D2, 
+                #2196F3, 
+                #1976D2, 
+                #1565C0);
+        }
+
+        /* Improved card backgrounds for light mode - matching timeline cards */
+        .light-mode .skill-item {
+            background-image: none;
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid rgba(52, 152, 219, 0.7);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .light-mode .strength-item {
+            background-image: none;
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid rgba(155, 89, 182, 0.7);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .light-mode .project-item {
+            background-image: none;
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid rgba(26, 188, 156, 0.7);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .light-mode .timeline-item {
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Improved timeline backgrounds for light mode - border on top instead of left */
+        /* First, set a common base style for all timeline items */
+        .light-mode .timeline-item {
+            background-image: none !important;
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            border-left: none !important;
+            border-top: 4px solid rgba(0, 0, 0, 0.3) !important;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05) !important;
+        }
+        
+        /* Then apply specific border colors */
+        .light-mode .job-item.dev-job {
+            border-top-color: rgba(66, 133, 244, 0.7) !important;
+        }
+        
+        .light-mode .job-item.warehouse-job, .light-mode .job-item.store-job {
+            border-top-color: rgba(52, 168, 83, 0.7) !important;
+        }
+        
+        .light-mode .job-item.service-job {
+            border-top-color: rgba(251, 188, 5, 0.7) !important;
+        }
+        
+        .light-mode .job-item.navy-engineering-job {
+            border-top-color: rgba(111, 57, 183, 0.7) !important;
+        }
+        
+        /* Sky blue for education items in light mode */
+        .light-mode .education-item {
+            border-top-color: rgba(3, 169, 244, 0.7) !important;
+        }
+        
+        /* Dark orange for certificate items in light mode */
+        .light-mode .certificate-item {
+            border-top-color: rgba(255, 109, 0, 0.7) !important;
+        }
+        
+        /* Light mode shimmer styles - keep shimmer effect but make it subtle */
+        .light-mode .timeline-item::before {
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                rgba(255, 255, 255, 0.7), 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            height: 2px;
+            top: -2px;
+        }
+        
+        .light-mode .timeline-item:hover::before {
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.4), 
+                rgba(255, 255, 255, 0.9), 
+                rgba(255, 255, 255, 0.4), 
+                transparent);
+            height: 3px;
+            top: -3px;
+        }
+        
+        /* Timeline headers in light mode - clean and readable */
+        .light-mode .timeline-item-header {
+            background-image: none !important;
+            background-color: transparent !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+            padding: 15px 20px !important;
+        }
+        
+        /* Preserve background colors for education items in light mode */
+        .light-mode .education-item .timeline-item-header {
+            background-image: linear-gradient(135deg, #03a9f4 0%, #2196f3 100%) !important;
+            background-color: initial !important;
+            color: white !important;
+        }
+        
+        /* Preserve background colors for certificate items in light mode */
+        .light-mode .certificate-item .timeline-item-header {
+            background-image: linear-gradient(135deg, #1b5e20 0%, #388e3c 100%) !important;
+            background-color: initial !important;
+            color: white !important;
+        }
+        
+        /* Preserve purple background for HALLIBURTON and ESILICON in light mode */
+        .light-mode .job-item.navy-engineering-job .timeline-item-header {
+            background-image: linear-gradient(135deg, #6F39B7 0%, #7E57C2 100%) !important;
+            background-color: initial !important;
+            color: white !important;
+        }
+        
+        /* Preserve backgrounds and set black text in light mode */
+        .light-mode .job-item.store-job .timeline-item-header,
+        .light-mode .job-item.warehouse-job .timeline-item-header {
+            background-color: #4AAF55 !important;
+            background-image: none !important;
+            color: black !important;
+        }
+        
+        .light-mode .job-item.dev-job .timeline-item-header {
+            background-image: linear-gradient(135deg, rgba(66, 133, 244, 0.7) 0%, rgba(52, 120, 235, 0.7) 100%) !important;
+            color: black !important;
+        }
+        
+        .light-mode .job-item.service-job .timeline-item-header {
+            background-image: linear-gradient(135deg, #fbbc05 0%, #f9a825 100%) !important;
+        }
+        
+        /* Ensure text is white on colored backgrounds in light mode */
+        .light-mode .education-item .timeline-item-header .timeline-item-title,
+        .light-mode .education-item .timeline-item-header .timeline-item-period,
+        .light-mode .certificate-item .timeline-item-header .timeline-item-title,
+        .light-mode .certificate-item .timeline-item-header .timeline-item-period,
+        .light-mode .job-item.navy-engineering-job .timeline-item-header .timeline-item-title,
+        .light-mode .job-item.navy-engineering-job .timeline-item-header .timeline-item-period {
+            color: white !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Ensure text is black on colored backgrounds in light mode */
+        .light-mode .job-item.store-job .timeline-item-header .timeline-item-title,
+        .light-mode .job-item.store-job .timeline-item-header .timeline-item-period,
+        .light-mode .job-item.warehouse-job .timeline-item-header .timeline-item-title,
+        .light-mode .job-item.warehouse-job .timeline-item-header .timeline-item-period,
+        .light-mode .job-item.dev-job .timeline-item-header .timeline-item-title,
+        .light-mode .job-item.dev-job .timeline-item-header .timeline-item-period,
+        .light-mode .job-item.service-job .timeline-item-header .timeline-item-title,
+        .light-mode .job-item.service-job .timeline-item-header .timeline-item-period {
+            color: black !important;
+            text-shadow: none;
+        }
+
+        /* Print mode adjustments */
+        @media print {
+            .section, .strength-item, .skill-item, .project-item, .timeline-item {
+                box-shadow: none !important;
+                background-image: none !important;
+                background-color: white !important;
+                border: 1px solid #ddd !important;
+            }
+            
+            .section h2::after {
+                background: #333 !important;
+                animation: none !important;
+            }
+            
+            .strength-item::before, .skill-item::before, .project-item::before, .section::before, .section::after {
+                display: none !important;
+            }
+            
+            /* Keep the bracket effect in print mode but with subtle styling */
+            .timeline-item::before {
+                animation: none !important;
+                background: none !important;
+                border-top: 3px solid rgba(0, 0, 0, 0.3) !important;
+                height: 0 !important;
+            }
+            
+            /* Job type specific border colors in print mode */
+            .job-item.dev-job::before {
+                border-top-color: rgba(66, 133, 244, 0.5) !important;
+            }
+            
+            .job-item.warehouse-job::before, .job-item.store-job::before {
+                border-top-color: rgba(74, 175, 85, 0.5) !important;
+            }
+            
+            .job-item.service-job::before {
+                border-top-color: rgba(251, 188, 5, 0.5) !important;
+            }
+            
+            .job-item.navy-engineering-job::before {
+                border-top-color: rgba(111, 57, 183, 0.5) !important;
+            }
+            
+            .education-item::before {
+                border-top-color: rgba(3, 169, 244, 0.5) !important;
+            }
+            
+            .certificate-item::before {
+                border-top-color: rgba(255, 109, 0, 0.5) !important;
+            }
+        }
+    </style>
+
     <!-- Timeline styles -->
     <style>
         /* Modern Timeline Card Styles */
@@ -357,6 +984,25 @@
         
         .job-item.design-job:hover {
             box-shadow: 0 8px 24px rgba(156, 39, 176, 0.3);
+        }
+        
+        /* Purple styling for engineering jobs at HALLIBURTON and ESILICON */
+        .job-item.navy-engineering-job {
+            background-image: linear-gradient(135deg, rgba(111, 57, 183, 0.2) 0%, rgba(126, 87, 194, 0.2) 100%);
+        }
+        
+        .job-item.navy-engineering-job .timeline-item-header {
+            background-image: linear-gradient(135deg, rgba(111, 57, 183, 0.4) 0%, rgba(126, 87, 194, 0.4) 100%) !important;
+        }
+        
+        .job-item.navy-engineering-job:hover {
+            box-shadow: 0 8px 24px rgba(111, 57, 183, 0.3);
+        }
+        
+        /* Ensure HALLIBURTON and ESILICON have the same purple color */
+        .light-mode .timeline-item[data-company="HALLIBURTON"],
+        .light-mode .timeline-item[data-company="ESILICON Vietnam"] {
+            border-top-color: rgba(111, 57, 183, 0.7) !important;
         }
         
         .job-item.service-job:hover {
@@ -727,9 +1373,14 @@
                 padding: 10px;
             }
             
-            h2 {
+            .section h2 {
                 font-size: 1.2rem;
-                margin-bottom: 15px;
+                margin-bottom: 20px;
+                padding: 10px 15px;
+                width: 100%;
+                text-align: center;
+                border-left-width: 3px;
+                border-right-width: 3px;
             }
         }
     </style>
@@ -1670,28 +2321,12 @@
             
             <!-- JOBS SECTION - Ordered chronologically from newest to oldest -->
             <div class="timeline-section-container">
-                <h3 class="timeline-section-title" style="background: linear-gradient(135deg, rgba(26, 115, 232, 0.75) 0%, rgba(66, 133, 244, 0.75) 100%) !important;">Työkokemus</h3>
+                <h3 class="timeline-section-title" style="background: linear-gradient(135deg, #6F39B7 0%, #7E57C2 100%) !important;">Työkokemus</h3>
             </div>
             
-            <!-- Development Jobs - Blue color scheme -->
-            <div class="timeline-item job-item dev-job">
-                <div class="timeline-item-header" style="background: linear-gradient(135deg, rgba(26, 115, 232, 0.7) 0%, rgba(66, 133, 244, 0.7) 100%);">
-                    <div class="timeline-item-title">Harjoittelija & Fullstack-kehittäjä</div>
-                    <div class="timeline-item-period">Apr 24-Feb 25</div>
-                </div>
-                <div class="timeline-item-content">
-                    <div class="timeline-item-details">
-                        <div class="timeline-detail">HR-hallintajärjestelmä (Vue.js + Node.js)</div>
-                        <div class="timeline-detail">Mikropalvelut Spring Boot & Vue.js -teknologioilla</div>
-                        <div class="timeline-detail">Verkkosivujen optimointi Bun-teknologialla</div>
-                        <div class="timeline-detail">AI-tiimin yhteistyö (React.js + Figma)</div>
-                    </div>
-                </div>
-            </div>
-            
+            <!-- Warehouse Jobs (Left Side - Odd Positions) -->
             <div class="timeline-item job-item store-job">
-
-                <div class="timeline-item-header" style="background: linear-gradient(135deg, #34a853 0%, #4caf50 100%);">
+                <div class="timeline-item-header" style="background-color: #4AAF55; color: black;">
                     <div class="timeline-item-title">Varastonhoitaja @ Mermaid Maritime Vietnam</div>
                     <div class="timeline-item-period">2023</div>
                 </div>
@@ -1704,22 +2339,25 @@
                 </div>
             </div>
             
-            <div class="timeline-item job-item service-job">
-
-                <div class="timeline-item-header" style="background: linear-gradient(135deg, #fbbc05 0%, #f9a825 100%);">
-                    <div class="timeline-item-title">Siivooja</div>
-                    <div class="timeline-item-period">2020-2023</div>
+            <!-- Other Jobs (Right Side - Even Positions) -->
+            <div class="timeline-item job-item navy-engineering-job" data-company="LTV">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #6F39B7 0%, #7E57C2 100%)">
+                    <div class="timeline-item-title">Harjoittelija & Fullstack-kehittäjä @ LTV</div>
+                    <div class="timeline-item-period">Apr 24-Feb 25</div>
                 </div>
                 <div class="timeline-item-content">
                     <div class="timeline-item-details">
-                        <div class="timeline-detail">Siivous neljässä tornitalossa (250 asuntoa kussakin)</div>
-                        <div class="timeline-detail">Itsenäinen vastuu COVID-19-pandemian aikana</div>
+                        <div class="timeline-detail">HR-hallintajärjestelmä (Vue.js + Node.js)</div>
+                        <div class="timeline-detail">Mikropalvelut Spring Boot & Vue.js -teknologioilla</div>
+                        <div class="timeline-detail">Verkkosivujen optimointi Bun-teknologialla</div>
+                        <div class="timeline-detail">AI-tiimin yhteistyö (React.js + Figma)</div>
                     </div>
                 </div>
             </div>
             
+            <!-- Warehouse Jobs (Left Side - Odd Positions) -->
             <div class="timeline-item job-item warehouse-job">
-                <div class="timeline-item-header" style="background: linear-gradient(135deg, #34a853 0%, #4caf50 100%);">
+                <div class="timeline-item-header" style="background-color: #4AAF55; color: black;">
                     <div class="timeline-item-title">Varastopäällikkö @ TTI Industries</div>
                     <div class="timeline-item-period">2019-2020</div>
                 </div>
@@ -1732,8 +2370,23 @@
                 </div>
             </div>
             
+            <!-- Other Jobs (Right Side - Even Positions) -->
+            <div class="timeline-item job-item service-job">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #fbbc05 0%, #f9a825 100%);">
+                    <div class="timeline-item-title">Siivooja @ Toiminimi</div>
+                    <div class="timeline-item-period">2020-2023</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Siivous neljässä tornitalossa (250 asuntoa kussakin)</div>
+                        <div class="timeline-detail">Itsenäinen vastuu COVID-19-pandemian aikana</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Warehouse Jobs (Left Side - Odd Positions) -->
             <div class="timeline-item job-item warehouse-job">
-                <div class="timeline-item-header" style="background: linear-gradient(135deg, #34a853 0%, #4caf50 100%);">
+                <div class="timeline-item-header" style="background-color: #4AAF55; color: black;">
                     <div class="timeline-item-title">Varastopäällikkö @ BLUM Vietnam</div>
                     <div class="timeline-item-period">2019</div>
                 </div>
@@ -1746,36 +2399,9 @@
                 </div>
             </div>
             
-            <div class="timeline-item job-item warehouse-job">
-                <div class="timeline-item-header" style="background: linear-gradient(135deg, #34a853 0%, #4caf50 100%);">
-                    <div class="timeline-item-title">Varastopäällikkö @ AVERY DENNISON RBIS</div>
-                    <div class="timeline-item-period">2017-2019</div>
-                </div>
-                <div class="timeline-item-content">
-                    <div class="timeline-item-details">
-                        <div class="timeline-detail">Mukautettu varastonseuranta (Microsoft Access)</div>
-                        <div class="timeline-detail">Oracle-varastonhallinta</div>
-                        <div class="timeline-detail">Automatisoitu raportointi & analytiikka</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="timeline-item job-item warehouse-job">
-                <div class="timeline-item-header" style="background: linear-gradient(135deg, #34a853 0%, #4caf50 100%);">
-                    <div class="timeline-item-title">Varastopäällikkö @ PANASONIC AVC Vietnam</div>
-                    <div class="timeline-item-period">2016-2017</div>
-                </div>
-                <div class="timeline-item-content">
-                    <div class="timeline-item-details">
-                        <div class="timeline-detail">Oracle & Vsoft järjestelmien hallinta</div>
-                        <div class="timeline-detail">KAIZEN prosessiparannukset</div>
-                        <div class="timeline-detail">Automatisoidut raportointijärjestelmät</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="timeline-item job-item engineering-job">
-                <div class="timeline-item-header" style="background: linear-gradient(135deg, #ea4335 0%, #f44336 100%);">
+            <!-- Other Jobs (Right Side - Even Positions) -->
+            <div class="timeline-item job-item navy-engineering-job" data-company="HALLIBURTON">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #6F39B7 0%, #7E57C2 100%)">
                     <div class="timeline-item-title">Sähkötekninen Asiantuntija @ HALLIBURTON</div>
                     <div class="timeline-item-period">2012-2015</div>
                 </div>
@@ -1788,8 +2414,24 @@
                 </div>
             </div>
             
-            <div class="timeline-item job-item design-job">
-                <div class="timeline-item-header" style="background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);">
+            <!-- Warehouse Jobs (Left Side - Odd Positions) -->
+            <div class="timeline-item job-item warehouse-job">
+                <div class="timeline-item-header" style="background-color: #4AAF55; color: black;">
+                    <div class="timeline-item-title">Varastopäällikkö @ AVERY DENNISON RBIS</div>
+                    <div class="timeline-item-period">2017-2019</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Mukautettu varastonseuranta (Microsoft Access)</div>
+                        <div class="timeline-detail">Oracle-varastonhallinta</div>
+                        <div class="timeline-detail">Automatisoitu raportointi & analytiikka</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Other Jobs (Right Side - Even Positions) -->
+            <div class="timeline-item job-item navy-engineering-job" data-company="ESILICON Vietnam">
+                <div class="timeline-item-header" style="background: linear-gradient(135deg, #6F39B7 0%, #7E57C2 100%)">
                     <div class="timeline-item-title">Piirisuunnitteluinsinööri @ ESILICON Vietnam</div>
                     <div class="timeline-item-period">2010-2012</div>
                 </div>
@@ -1798,6 +2440,21 @@
                         <div class="timeline-detail">Suunnittelin kaksiporttisen luku/kirjoitusmuistin (28nm TSMC)</div>
                         <div class="timeline-detail">Kehitin verkkopohjaisen karakterisointijärjestelmän</div>
                         <div class="timeline-detail">Optimoin piirin suorituskyvyn & virrankulutuksen</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Warehouse Jobs (Left Side - Odd Positions) -->
+            <div class="timeline-item job-item warehouse-job">
+                <div class="timeline-item-header" style="background-color: #4AAF55; color: black;">
+                    <div class="timeline-item-title">Varastopäällikkö @ PANASONIC AVC Vietnam</div>
+                    <div class="timeline-item-period">2016-2017</div>
+                </div>
+                <div class="timeline-item-content">
+                    <div class="timeline-item-details">
+                        <div class="timeline-detail">Oracle & Vsoft järjestelmien hallinta</div>
+                        <div class="timeline-detail">KAIZEN prosessiparannukset</div>
+                        <div class="timeline-detail">Automatisoidut raportointijärjestelmät</div>
                     </div>
                 </div>
             </div>
@@ -2835,10 +3492,10 @@
                         <div class="skill-item">
                             <div class="skill-name-container">
                                 <div class="skill-name">Finnish (Basic)</div>
-                                <div class="skill-percent">20%</div>
+                                <div class="skill-percent">40%</div>
                             </div>
                             <div class="progress-container">
-                                <div class="progress" style="width: 20%;"></div>
+                                <div class="progress" style="width: 40%;"></div>
                             </div>
                         </div>
                     </div>
@@ -2968,6 +3625,55 @@
             }
         });
     </script>
+
+    <!-- Section and Card Animation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation to elements when they come into view
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.section, .strength-item, .skill-item, .project-item, .timeline-item');
+                
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementBottom = element.getBoundingClientRect().bottom;
+                    const isVisible = elementTop < window.innerHeight && elementBottom > 0;
+                    
+                    if (isVisible) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial styles for animation
+            const elementsToAnimate = document.querySelectorAll('.section, .strength-item, .skill-item, .project-item, .timeline-item');
+            elementsToAnimate.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            // Run animation on load and scroll
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on page load
+            
+            // Add specific classes to timeline section titles
+            const timelineSectionTitles = document.querySelectorAll('.timeline-section-title');
+            
+            timelineSectionTitles.forEach(title => {
+                const titleText = title.textContent.toLowerCase();
+                
+                if (titleText.includes('experience')) {
+                    title.classList.add('experience-title');
+                } else if (titleText.includes('education')) {
+                    title.classList.add('education-title');
+                } else if (titleText.includes('certificates')) {
+                    title.classList.add('certificates-title');
+                }
+            });
+        });
+    </script>
+    <script src="fix-background.js"></script>
 </body>
 </html>
 

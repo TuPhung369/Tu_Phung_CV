@@ -2,17 +2,19 @@
 
 /* Main background container */
 .background {
-    position: fixed !important;
+    position: absolute !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    bottom: 0 !important;
     width: 100% !important;
-    height: 100% !important;
+    min-height: 100vh !important;
     z-index: -1 !important; /* Ensure it's behind content */
     pointer-events: none !important; /* Don't interfere with clicks */
     overflow: hidden !important;
     transform: translateZ(0) !important; /* Force hardware acceleration */
+    will-change: transform !important; /* Optimize for animations */
+    transition: transform 0.05s linear !important; /* Smooth transition for parallax effect */
+    background: radial-gradient(circle at center, #1e1e1e, #121212) !important; /* Nền tối để làm nổi bật hình tròn */
 }
 
 /* Ensure circles are properly positioned */
