@@ -42,15 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const circle = document.createElement("div");
 
       // Random size with more variety
-      const sizes = [
-        "nano",
-        "micro",
-        "tiny",
-        "small",
-        "medium",
-        "large",
-        "xlarge",
-      ];
+      const sizes = ["nano", "micro", "tiny", "small", "medium"];
       const size = sizes[Math.floor(Math.random() * sizes.length)];
 
       // Random color from our galaxy colors
