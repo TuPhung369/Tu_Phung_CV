@@ -373,6 +373,93 @@
             color: #fff;
             text-decoration: underline;
         }
+        
+        /* Language selector - Dropdown style */
+        .language-selector {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+        }
+        
+        .language-globe {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a3a5f 0%, #2a5298 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-globe:hover {
+            background: linear-gradient(135deg, #2a5298 0%, #1a3a5f 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: none;
+            width: 140px;
+            /* Add padding at the top to create a safe zone */
+            padding-top: 5px;
+            /* Add a small delay before hiding */
+            transition: visibility 0.2s, opacity 0.2s;
+            visibility: hidden;
+            opacity: 0;
+        }
+        
+        .language-option {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        
+        .language-option:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .language-option img {
+            width: 20px;
+            height: 15px;
+            margin-right: 10px;
+            border: 1px solid #eee;
+        }
+        
+        /* Create a safe zone between the globe and dropdown */
+        .language-selector {
+            padding-bottom: 5px;
+        }
+        
+        /* Show dropdown with transition */
+        .language-selector:hover .language-dropdown {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        @media print {
+            .language-selector {
+                display: none !important;
+            }
+        }
 
         /* Main content */
         .content {
@@ -1253,6 +1340,19 @@
 
     <div class="a4-page">
         <header class="header">
+            <div class="language-selector no-print">
+                <div class="language-globe">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="language-dropdown">
+                    <a href="resume.html" class="language-option">
+                        <img src="https://flagcdn.com/w20/gb.png" alt="English" loading="lazy"> Englanti
+                    </a>
+                    <a href="resume_fn.html" class="language-option">
+                        <img src="https://flagcdn.com/w20/fi.png" alt="Finnish" loading="lazy"> Suomi
+                    </a>
+                </div>
+            </div>
             <div class="profile-section">
                 <div class="profile-img-container">
                     <img src="avatar.webp" alt="Tu Phung" class="profile-img" loading="lazy">
@@ -1510,7 +1610,7 @@
                         <ul>
                             <li>Kehitin ja ylläpidin puolijohteiden suunnittelujärjestelmiä</li>
                             <li>Tein yhteistyötä monialaisten tiimien kanssa sirusuunnitteluprojekteissa</li>
-                            <li>Toteutin laadunvalvontaprosesseja valmistusta varten</li>
+                            <li>Toteutin laadunvalvontaa tuotannossa"</li>
                         </ul>
                     </div>
 
@@ -1673,6 +1773,15 @@
             const modalImg = document.querySelector('.modal-img');
             if (modalImg) {
                 modalImg.loading = 'lazy';
+            }
+            
+            // Check if URL has print=true parameter and trigger print if it does
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('print') === 'true') {
+                // Wait a bit for the page to fully render before printing
+                setTimeout(() => {
+                    printResume();
+                }, 1000);
             }
         });
         
