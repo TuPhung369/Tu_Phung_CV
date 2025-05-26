@@ -212,6 +212,7 @@
             margin-bottom: 15px;
             flex-shrink: 0;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
         
         .profile-img-container:hover {
@@ -220,10 +221,14 @@
         }
 
         .profile-img {
-            width: 100%;
-            height: 100%;
+            width: 130%; /* Make image larger than container */
+            height: 130%; /* Make image larger than container */
             object-fit: cover;
             cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the enlarged image */
         }
 
         .header-info {
@@ -565,22 +570,35 @@
             opacity: 1;
         }
         
-        .modal-img {
-            max-width: 90%;
-            max-height: 90%;
+        .modal-img-container {
+            position: relative;
+            width: 80vmin;
+            height: 80vmin;
+            max-width: 600px;
+            max-height: 600px;
+            overflow: hidden;
             border-radius: 10px;
             border: 5px solid white;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             transform: scale(0.7);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             opacity: 0;
-            position: relative;
             z-index: 100000;
         }
         
-        .modal.show .modal-img {
+        .modal.show .modal-img-container {
             transform: scale(1);
             opacity: 1;
+        }
+        
+        .modal-img {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            object-fit: cover;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         
         .modal-close {
@@ -750,6 +768,23 @@
         .print-btn:active {
             transform: translateY(-1px);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Compressed PDF button styles */
+        .compressed-btn {
+            bottom: 85px; /* Position below the print button */
+            background-color: #2c6e49; /* Different color to distinguish */
+        }
+        
+        .compressed-btn:hover {
+            background-color: #3a8a5f;
+        }
+        
+        @media screen and (min-width: 1200px) {
+            .compressed-btn {
+                top: 80px; /* Position below the print button on desktop */
+                bottom: auto;
+            }
         }
 
         /* Background styles */
@@ -1250,6 +1285,9 @@
     <button class="print-btn no-print" onclick="printResume()">
         <i class="fas fa-print"></i> Tulosta Ansioluettelo
     </button>
+    <button class="print-btn no-print compressed-btn" onclick="saveCompressedPDF()">
+        <i class="fas fa-file-pdf"></i> Optimoitu PDF (< 2MB)
+    </button>
 
     <div class="a4-page">
         <header class="header">
@@ -1534,14 +1572,14 @@
 
     <script>
         // Funktio A4-kokoisen ansioluettelon tulostamiseen
-        function printResume() {
+        function printResume(isCompressed = false) {
             // Create a style element for print settings
             const printStyle = document.createElement('style');
             printStyle.setAttribute('type', 'text/css');
             printStyle.setAttribute('media', 'print');
             
             // Set A4 page size and other print settings with optimized page break handling
-            printStyle.innerHTML = `
+            let printStyles = `
                 @page {
                     size: A4;
                     margin: 0;
@@ -1587,6 +1625,32 @@
                 }
             `;
             
+            // Add compression settings if requested
+            if (isCompressed) {
+                printStyles += `
+                    /* Fix avatar alignment for print */
+                    .profile-img-container {
+                        position: relative !important;
+                        width: 130px !important;
+                        height: 130px !important;
+                        overflow: hidden !important;
+                    }
+                    
+                    .profile-img {
+                        width: 100% !important;
+                        height: 100% !important;
+                        position: relative !important;
+                        top: 0 !important;
+                        left: 0 !important;
+                        transform: none !important;
+                        object-fit: cover !important;
+                        object-position: center 30% !important; /* Focus on the face */
+                    }
+                `;
+            }
+            
+            printStyle.innerHTML = printStyles;
+            
             // Add the style to the document
             document.head.appendChild(printStyle);
             
@@ -1597,6 +1661,229 @@
             setTimeout(() => {
                 document.head.removeChild(printStyle);
             }, 1000);
+        }
+        
+        // Function to save as compressed PDF with extreme image optimization
+        function saveCompressedPDF() {
+            // Check if file size might be too large
+            let useHighQualityAvatar = true;
+            
+            // First, find all images in the document
+            const allImages = document.querySelectorAll('img');
+            const originalSources = [];
+            
+            // Create a promise to handle image compression
+            const compressAllImages = new Promise((resolve) => {
+                let imagesProcessed = 0;
+                
+                // Process each image
+                allImages.forEach((img, index) => {
+                    // Save original source
+                    originalSources[index] = img.src;
+                    
+                    // Skip processing if image is already a data URL (to avoid double compression)
+                    if (img.src.startsWith('data:')) {
+                        imagesProcessed++;
+                        if (imagesProcessed === allImages.length) resolve();
+                        return;
+                    }
+                    
+                    // Create canvas for compression
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Set dimensions based on image type
+                    // Keep avatar larger for better quality
+                    let canvasWidth, canvasHeight;
+                    
+                    if (img.classList.contains('profile-img')) {
+                        // Higher resolution for avatar (500x500 pixels)
+                        canvasWidth = 500;
+                        canvasHeight = 500;
+                    } else if (img.classList.contains('header-qr-code')) {
+                        canvasWidth = 60;
+                        canvasHeight = 60;
+                    } else {
+                        canvasWidth = 80;
+                        canvasHeight = 80;
+                    }
+                    
+                    canvas.width = canvasWidth;
+                    canvas.height = canvasHeight;
+                    
+                    // Create temp image
+                    const tempImg = new Image();
+                    tempImg.crossOrigin = "Anonymous";
+                    
+                    // When loaded, compress and replace
+                    tempImg.onload = function() {
+                        // Special handling for avatar to zoom in on face
+                        if (img.classList.contains('profile-img')) {
+                            // Calculate crop dimensions to zoom in on face
+                            const sourceWidth = tempImg.width * 0.75;  // Use 75% of width
+                            const sourceHeight = tempImg.height * 0.75; // Use 75% of height
+                            const sourceX = (tempImg.width - sourceWidth) / 2; // Center horizontally
+                            const sourceY = (tempImg.height - sourceHeight) / 3.5; // Position vertically to focus on face (better centered)
+                            
+                            // Draw zoomed in image
+                            ctx.drawImage(
+                                tempImg,
+                                sourceX, sourceY, sourceWidth, sourceHeight, // Source rectangle
+                                0, 0, canvasWidth, canvasHeight // Destination rectangle
+                            );
+                        } else {
+                            // For other images, just fill with white background
+                            ctx.fillStyle = '#FFFFFF';
+                            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+                            
+                            // Draw image normally
+                            ctx.drawImage(tempImg, 0, 0, canvasWidth, canvasHeight);
+                            
+                            // For QR code, convert to pure black and white
+                            if (img.classList.contains('header-qr-code')) {
+                                const imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
+                                const data = imageData.data;
+                                
+                                for (let i = 0; i < data.length; i += 4) {
+                                    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                                    const val = avg > 128 ? 255 : 0;
+                                    data[i] = data[i + 1] = data[i + 2] = val;
+                                }
+                                
+                                ctx.putImageData(imageData, 0, 0);
+                            }
+                        }
+                        
+                        try {
+                            // For avatar, use high quality if enabled
+                            if (img.classList.contains('profile-img')) {
+                                if (useHighQualityAvatar) {
+                                    // Use PNG for avatar to maintain quality
+                                    const croppedSrc = canvas.toDataURL('image/png');
+                                    
+                                    // Check if the data URL is too large (>1MB)
+                                    if (croppedSrc.length > 1000000) {
+                                        // If too large, fall back to JPEG with good quality
+                                        const jpegSrc = canvas.toDataURL('image/jpeg', 0.9);
+                                        img.src = jpegSrc;
+                                    } else {
+                                        img.src = croppedSrc;
+                                    }
+                                } else {
+                                    // Use high quality JPEG as fallback
+                                    const compressedSrc = canvas.toDataURL('image/jpeg', 0.8);
+                                    img.src = compressedSrc;
+                                }
+                            } else {
+                                // Use low quality JPEG for other images
+                                const quality = 0.3;
+                                const compressedSrc = canvas.toDataURL('image/jpeg', quality);
+                                img.src = compressedSrc;
+                            }
+                            
+                            // Count processed images
+                            imagesProcessed++;
+                            if (imagesProcessed === allImages.length) resolve();
+                        } catch(e) {
+                            console.error("Could not compress image:", e);
+                            imagesProcessed++;
+                            if (imagesProcessed === allImages.length) resolve();
+                        }
+                    };
+                    
+                    // Handle errors
+                    tempImg.onerror = function() {
+                        console.error("Error loading image for compression");
+                        imagesProcessed++;
+                        if (imagesProcessed === allImages.length) resolve();
+                    };
+                    
+                    // Start loading the image
+                    tempImg.src = img.src;
+                });
+                
+                // If no images, resolve immediately
+                if (allImages.length === 0) resolve();
+            });
+            
+            // When all images are compressed, trigger print
+            compressAllImages.then(() => {
+                // Apply additional optimizations
+                const style = document.createElement('style');
+                style.id = 'extreme-compression-style';
+                style.innerHTML = `
+                    /* Remove all decorative elements */
+                    .circle, .background, .header::before, .header::after {
+                        display: none !important;
+                    }
+                    
+                    /* Simplify all shadows */
+                    * {
+                        box-shadow: none !important;
+                        text-shadow: none !important;
+                    }
+                    
+                    /* Simplify backgrounds */
+                    .header, html {
+                        background: #1a3a5f !important;
+                        background-image: none !important;
+                    }
+                    
+                    /* Optimize avatar positioning */
+                    .profile-img-container {
+                        width: 150px !important;
+                        height: 150px !important;
+                        position: relative !important;
+                        overflow: hidden !important;
+                    }
+                    
+                    /* Make sure avatar is properly positioned */
+                    .profile-img {
+                        width: 100% !important;
+                        height: 100% !important;
+                        object-fit: cover !important;
+                        position: relative !important;
+                        top: auto !important;
+                        left: auto !important;
+                        transform: none !important;
+                    }
+                    
+                    /* Hide modal */
+                    .modal, #profileModal {
+                        display: none !important;
+                    }
+                    
+                    /* Optimize other images */
+                    .header-qr-code {
+                        width: 80px !important;
+                        height: 80px !important;
+                    }
+                    
+                    /* Simplify borders */
+                    .profile-img-container, .header-qr-code {
+                        border-width: 2px !important;
+                    }
+                `;
+                
+                document.head.appendChild(style);
+                
+                // Print with compression
+                printResume(true);
+                
+                // Restore original images after printing
+                setTimeout(() => {
+                    // Remove compression style
+                    const compressionStyle = document.getElementById('extreme-compression-style');
+                    if (compressionStyle) document.head.removeChild(compressionStyle);
+                    
+                    // Restore original image sources
+                    allImages.forEach((img, index) => {
+                        if (originalSources[index]) {
+                            img.src = originalSources[index];
+                        }
+                    });
+                }, 2000);
+            });
         }
         
         // Print functionality is handled by the print button
@@ -1612,7 +1899,9 @@
     <!-- Modal for profile image -->
     <div class="modal" id="profileModal">
         <button class="modal-close" id="closeModal">&times;</button>
-        <img src="avatar.webp" alt="Tu Phung" class="modal-img" loading="lazy">
+        <div class="modal-img-container">
+            <img src="avatar.webp" alt="Tu Phung" class="modal-img" loading="lazy">
+        </div>
     </div>
     
     <script>
