@@ -2092,6 +2092,7 @@
             color: #333;
             text-decoration: none;
             transition: background-color 0.2s;
+            white-space: nowrap;
         }
         
         .language-option:hover {
@@ -2101,8 +2102,89 @@
         .language-option img {
             width: 20px;
             height: 15px;
-            margin-right: 10px;
+            margin-right: 8px;
             border: 1px solid #eee;
+            flex-shrink: 0;
+        }
+        
+        /* Responsive text display */
+        .lang-text-full {
+            display: inline;
+        }
+        
+        .lang-text-short {
+            display: none;
+        }
+        
+        /* Medium screens: show short version (EN, FI) */
+        @media (max-width: 1200px) {
+            .lang-text-full {
+                display: none;
+            }
+            
+            .lang-text-short {
+                display: inline;
+            }
+            
+            .language-dropdown {
+                width: 100px;
+            }
+        }
+        
+        /* Small screens: only show flag */
+        @media (max-width: 991px) {
+            .lang-text-full,
+            .lang-text-short {
+                display: none !important;
+            }
+            
+            .language-option {
+                padding: 10px 15px;
+                justify-content: center;
+                min-width: 50px;
+                min-height: 40px;
+                color: white !important;
+                display: flex;
+                align-items: center;
+            }
+            
+            .language-option img {
+                margin-right: 0 !important;
+                width: 28px !important;
+                height: 21px !important;
+                display: block !important;
+                border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            }
+            
+            .language-dropdown {
+                width: auto;
+                min-width: 70px;
+                padding: 5px 0;
+                background: rgba(26, 58, 95, 0.95) !important;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                overflow: visible !important;
+            }
+            
+            .language-option:hover {
+                background-color: rgba(255, 255, 255, 0.15) !important;
+            }
+        }
+        
+        /* Extra small screens: smaller flags */
+        @media (max-width: 768px) {
+            .language-option img {
+                width: 24px !important;
+                height: 18px !important;
+            }
+            
+            .language-option {
+                padding: 8px 12px;
+                min-height: 36px;
+            }
+            
+            .language-dropdown {
+                min-width: 60px;
+            }
         }
         
         /* Create a safe zone between the globe and dropdown */
@@ -2263,10 +2345,14 @@
                         </div>
                         <div class="language-dropdown" id="languageDropdown">
                             <a href="index.html" class="language-option">
-                                <img src="https://flagcdn.com/w20/gb.png" alt="English" loading="lazy"> Englanti
+                                <img src="https://flagcdn.com/w20/gb.png" alt="English" loading="lazy">
+                                <span class="lang-text-full">Englanti</span>
+                                <span class="lang-text-short">EN</span>
                             </a>
                             <a href="index_fn.html" class="language-option">
-                                <img src="https://flagcdn.com/w20/fi.png" alt="Finnish" loading="lazy"> Suomi
+                                <img src="https://flagcdn.com/w20/fi.png" alt="Finnish" loading="lazy">
+                                <span class="lang-text-full">Suomi</span>
+                                <span class="lang-text-short">FI</span>
                             </a>
                         </div>
                     </div>
@@ -3166,4 +3252,127 @@
                             <i class="fas fa-brain"></i>
                         </div>
                         <div class="tech-skill-content">
-                            <div class="tech-skill-name">Tekoälyn int
+                            <div class="tech-skill-name">Tekoälyn integrointi</div>
+                            <div class="tech-skill-details">N8N-työnkulku, SpeechBrain, NLP-käsittely</div>
+                            <div class="tech-skill-level">
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-skill">
+                        <div class="tech-skill-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="tech-skill-content">
+                            <div class="tech-skill-name">Turvallisuustoteutus</div>
+                            <div class="tech-skill-details">OAuth2, JWT-autentikointi, Sosiaalinen kirjautuminen</div>
+                            <div class="tech-skill-level">
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-category">
+                <h3><i class="fas fa-users-cog"></i> HR-hallintajärjestelmä</h3>
+                <div class="tech-skills">
+                    <div class="tech-skill">
+                        <div class="tech-skill-icon">
+                            <i class="fab fa-vuejs"></i>
+                        </div>
+                        <div class="tech-skill-content">
+                            <div class="tech-skill-name">Vue.js Frontend</div>
+                            <div class="tech-skill-details">Vue-komponentit, Vuex-tilanhallinta, Vue Router</div>
+                            <div class="tech-skill-level">
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-skill">
+                        <div class="tech-skill-icon">
+                            <i class="fab fa-node-js"></i>
+                        </div>
+                        <div class="tech-skill-content">
+                            <div class="tech-skill-name">Node.js Backend</div>
+                            <div class="tech-skill-details">Express.js, Tietokanta-integraatio, Autentikointi</div>
+                            <div class="tech-skill-level">
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot filled"></span>
+                                <span class="level-dot"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Selector Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageGlobe = document.getElementById('languageGlobe');
+            const languageDropdown = document.getElementById('languageDropdown');
+            
+            if (languageGlobe && languageDropdown) {
+                // Show dropdown on hover
+                languageGlobe.addEventListener('mouseenter', function() {
+                    languageDropdown.classList.add('show');
+                });
+                
+                // Keep dropdown visible when hovering over it
+                languageDropdown.addEventListener('mouseenter', function() {
+                    languageDropdown.classList.add('show');
+                });
+                
+                // Hide when mouse leaves both globe and dropdown
+                languageGlobe.addEventListener('mouseleave', function() {
+                    setTimeout(function() {
+                        if (!languageDropdown.matches(':hover') && !languageGlobe.matches(':hover')) {
+                            languageDropdown.classList.remove('show');
+                        }
+                    }, 100);
+                });
+                
+                languageDropdown.addEventListener('mouseleave', function() {
+                    setTimeout(function() {
+                        if (!languageDropdown.matches(':hover') && !languageGlobe.matches(':hover')) {
+                            languageDropdown.classList.remove('show');
+                        }
+                    }, 100);
+                });
+                
+                // Toggle on click
+                languageGlobe.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    languageDropdown.classList.toggle('show');
+                });
+                
+                // Close when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!languageGlobe.contains(e.target) && !languageDropdown.contains(e.target)) {
+                        languageDropdown.classList.remove('show');
+                    }
+                });
+            }
+        });
+    </script>
+    
+    <!-- Load cv.js for other functionalities -->
+    <script src="cv.js"></script>
+</body>
+</html>

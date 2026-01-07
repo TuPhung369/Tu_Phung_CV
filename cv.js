@@ -118,11 +118,14 @@ function setupThemeToggle() {
     // Update tooltip text
     updateTooltip(isLight);
 
-    // Re-render Mermaid diagrams with new theme
+    // Re-render Mermaid diagrams with new theme (only if Mermaid is loaded)
     setTimeout(function () {
       try {
-        // Simply call our renderMermaidDiagrams function which will use the stored original content
-        renderMermaidDiagrams();
+        // Check if Mermaid is loaded
+        if (typeof mermaid !== "undefined") {
+          // Simply call our renderMermaidDiagrams function which will use the stored original content
+          renderMermaidDiagrams();
+        }
 
         // Reapply grid layout
         applyDynamicGridLayout();
@@ -135,6 +138,12 @@ function setupThemeToggle() {
 
 // Render all Mermaid diagrams - simplified and optimized
 function renderMermaidDiagrams() {
+  // Check if Mermaid library is loaded
+  if (typeof mermaid === "undefined") {
+    console.log("Mermaid library not loaded, skipping diagram rendering");
+    return;
+  }
+  
   try {
     // Get current theme
     const isLight = document.body.classList.contains("light-mode");
@@ -187,34 +196,34 @@ function renderMermaidDiagrams() {
 // Apply dynamic grid layout to tech-skills sections
 function applyDynamicGridLayout() {
   try {
-    // Don't apply on mobile devices
-    if (window.innerWidth <= 768) return;
-
     // Target all tech-skills containers
     const techSkillsContainers = document.querySelectorAll(".tech-skills");
 
     techSkillsContainers.forEach(function (container) {
       const items = container.querySelectorAll(".tech-skill");
       const itemCount = items.length;
+      const windowWidth = window.innerWidth;
 
-      // Apply grid layout based on number of items
-      if (itemCount >= 3 && itemCount % 2 === 1) {
-        // If 3 or more items and odd number, use 3 columns
-        container.style.gridTemplateColumns = "repeat(3, 1fr)";
-
-        // Adjust item width for better fit in 3-column layout
-        items.forEach(function (item) {
-          item.style.width = "100%";
-        });
-      } else {
-        // Otherwise use 2 columns
-        container.style.gridTemplateColumns = "repeat(2, 1fr)";
-
-        // Reset item width for 2-column layout
-        items.forEach(function (item) {
-          item.style.width = "100%";
-        });
+      // Clear inline styles first to let CSS media queries work
+      container.style.gridTemplateColumns = "";
+      
+      // Only apply custom grid on larger screens where CSS doesn't handle it well
+      if (windowWidth > 1200) {
+        // Apply grid layout based on number of items
+        if (itemCount >= 3 && itemCount % 2 === 1) {
+          // If 3 or more items and odd number, use 3 columns
+          container.style.gridTemplateColumns = "repeat(3, 1fr)";
+        } else if (itemCount >= 2) {
+          // Otherwise use 2 columns for 2+ items
+          container.style.gridTemplateColumns = "repeat(2, 1fr)";
+        }
       }
+      // For smaller screens (<=1200px), let CSS media queries handle it
+      
+      // Reset item width to let CSS handle it
+      items.forEach(function (item) {
+        item.style.width = "";
+      });
     });
   } catch (error) {
     console.error("Error applying grid layout:", error);
@@ -259,6 +268,57 @@ function setupEventListeners() {
 
   // Setup lazy loading for QR codes
   setupLazyLoadQRCodes();
+
+  // Language selector dropdown toggle - SIMPLIFIED VERSION
+  const languageGlobe = document.getElementById("languageGlobe");
+  const languageDropdown = document.getElementById("languageDropdown");
+  
+  
+  if (languageGlobe && languageDropdown) {
+    
+    // Show dropdown on hover
+    languageGlobe.addEventListener("mouseenter", function() {
+      languageDropdown.classList.add("show");
+    });
+    
+    // Keep dropdown visible when hovering over it
+    languageDropdown.addEventListener("mouseenter", function() {
+      languageDropdown.classList.add("show");
+    });
+    
+    // Hide when mouse leaves both globe and dropdown
+    languageGlobe.addEventListener("mouseleave", function(e) {
+      // Use setTimeout to allow moving to dropdown
+      setTimeout(function() {
+        if (!languageDropdown.matches(':hover') && !languageGlobe.matches(':hover')) {
+          languageDropdown.classList.remove("show");
+        }
+      }, 100);
+    });
+    
+    languageDropdown.addEventListener("mouseleave", function() {
+      setTimeout(function() {
+        if (!languageDropdown.matches(':hover') && !languageGlobe.matches(':hover')) {
+          languageDropdown.classList.remove("show");
+        }
+      }, 100);
+    });
+    
+    // Toggle on click
+    languageGlobe.addEventListener("click", function(e) {
+      e.stopPropagation();
+      languageDropdown.classList.toggle("show");
+    });
+    
+    // Close when clicking outside
+    document.addEventListener("click", function(e) {
+      if (!languageGlobe.contains(e.target) && !languageDropdown.contains(e.target)) {
+        languageDropdown.classList.remove("show");
+      }
+    });
+  } else {
+    console.log("Language selector elements NOT found!"); // Debug
+  }
 
   // processing for the avatar image
   const avatar = document.getElementById("avatar");

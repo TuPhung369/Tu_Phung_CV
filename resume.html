@@ -286,12 +286,38 @@
             transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
             font-size: 1.2rem;
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
         
         .header-social-link:hover {
             transform: translateY(-3px);
             background-color: rgba(255, 255, 255, 0.25);
             box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Tooltip for social icons */
+        .header-social-link::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .header-social-link:hover::after {
+            opacity: 1;
+            visibility: visible;
         }
 
         .name {
@@ -441,8 +467,89 @@
         .language-option img {
             width: 20px;
             height: 15px;
-            margin-right: 10px;
+            margin-right: 8px;
             border: 1px solid #eee;
+            flex-shrink: 0;
+        }
+        
+        /* Responsive text display */
+        .lang-text-full {
+            display: inline;
+        }
+        
+        .lang-text-short {
+            display: none;
+        }
+        
+        /* Medium screens: show short version (EN, FI) */
+        @media (max-width: 1200px) {
+            .lang-text-full {
+                display: none;
+            }
+            
+            .lang-text-short {
+                display: inline;
+            }
+            
+            .language-dropdown {
+                width: 100px;
+            }
+        }
+        
+        /* Small screens: only show flag */
+        @media (max-width: 991px) {
+            .lang-text-full,
+            .lang-text-short {
+                display: none !important;
+            }
+            
+            .language-option {
+                padding: 10px 15px;
+                justify-content: center;
+                min-width: 50px;
+                min-height: 40px;
+                color: white !important;
+                display: flex;
+                align-items: center;
+            }
+            
+            .language-option img {
+                margin-right: 0 !important;
+                width: 28px !important;
+                height: 21px !important;
+                display: block !important;
+                border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            }
+            
+            .language-dropdown {
+                width: auto;
+                min-width: 70px;
+                padding: 5px 0;
+                background: rgba(26, 58, 95, 0.95) !important;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                overflow: visible !important;
+            }
+            
+            .language-option:hover {
+                background-color: rgba(255, 255, 255, 0.15) !important;
+            }
+        }
+        
+        /* Extra small screens: smaller flags */
+        @media (max-width: 768px) {
+            .language-option img {
+                width: 24px !important;
+                height: 18px !important;
+            }
+            
+            .language-option {
+                padding: 8px 12px;
+                min-height: 36px;
+            }
+            
+            .language-dropdown {
+                min-width: 60px;
+            }
         }
         
         /* Create a safe zone between the globe and dropdown */
@@ -1348,10 +1455,14 @@
                 </div>
                 <div class="language-dropdown">
                     <a href="resume.html" class="language-option">
-                        <img src="https://flagcdn.com/w20/gb.png" alt="English" loading="lazy"> English
+                        <img src="https://flagcdn.com/w20/gb.png" alt="English" loading="lazy">
+                        <span class="lang-text-full">English</span>
+                        <span class="lang-text-short">EN</span>
                     </a>
                     <a href="resume_fn.html" class="language-option">
-                        <img src="https://flagcdn.com/w20/fi.png" alt="Finnish" loading="lazy"> Finnish
+                        <img src="https://flagcdn.com/w20/fi.png" alt="Finnish" loading="lazy">
+                        <span class="lang-text-full">Finnish</span>
+                        <span class="lang-text-short">FI</span>
                     </a>
                 </div>
             </div>
@@ -1382,13 +1493,13 @@
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://tuphung369.github.io/Haaga_Backend_Programming/" class="header-qr-code" alt="Project QR Code" style="cursor: pointer;" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')" loading="lazy">
                 <span style="font-size: 0.85rem; margin-bottom: 10px; text-align: center; background-color: rgba(255, 255, 255, 0.1); padding: 4px 12px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.25)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';" onclick="window.open('https://tuphung369.github.io/Haaga_Backend_Programming/', '_blank')">My Project</span>
                 <div class="header-social-links">
-                    <a href="https://www.linkedin.com/in/tuphung010787" target="_blank" class="header-social-link">
+                    <a href="https://www.linkedin.com/in/tuphung010787" target="_blank" class="header-social-link" data-tooltip="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="https://tuphung369.github.io/Tu_Phung_CV/" target="_blank" class="header-social-link">
+                    <a href="https://tuphung369.github.io/Tu_Phung_CV/" target="_blank" class="header-social-link" data-tooltip="CV">
                         <i class="fas fa-file-alt"></i>
                     </a>
-                    <a href="https://github.com/TuPhung369" target="_blank" class="header-social-link">
+                    <a href="https://github.com/TuPhung369" target="_blank" class="header-social-link" data-tooltip="GitHub">
                         <i class="fab fa-github"></i>
                     </a>
                 </div>
