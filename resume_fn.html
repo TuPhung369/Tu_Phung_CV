@@ -80,11 +80,10 @@
 
             .a4-page {
                 width: 210mm;
-                min-height: 297mm;
+                min-height: auto;
                 box-shadow: none;
                 margin: 0;
                 padding: 0;
-                page-break-after: always;
             }
 
             .no-print {
@@ -149,6 +148,42 @@
             .right-column .section:first-child p {
                 page-break-inside: avoid;
                 page-break-after: avoid;
+            }
+
+            /* Compress spacing to fit content into 2 pages */
+            .header {
+                padding: 16px 30px !important;
+            }
+            .left-column,
+            .right-column {
+                padding: 14px 20px !important;
+            }
+            .section {
+                margin-bottom: 12px !important;
+            }
+            .section-title {
+                font-size: 1.1rem !important;
+                margin-bottom: 6px !important;
+                padding-bottom: 4px !important;
+            }
+            .experience-item {
+                margin-bottom: 9px !important;
+            }
+            .experience-item ul {
+                margin: 3px 0 !important;
+            }
+            .experience-item li,
+            .project-description li {
+                font-size: 0.85rem !important;
+                margin-bottom: 2px !important;
+            }
+            .right-column .section:first-child p {
+                font-size: 0.9rem !important;
+                line-height: 1.4 !important;
+            }
+            .education-item,
+            .project-item {
+                margin-bottom: 8px !important;
             }
         }
 
@@ -1794,6 +1829,15 @@
                 /* Ensure proper column layout */
                 .left-column, .right-column {
                     height: auto !important;
+                }
+
+                /* Prevent forced blank page and compress to 2 pages */
+                .a4-page {
+                    min-height: auto !important;
+                    page-break-after: auto !important;
+                }
+                .header {
+                    padding: 16px 30px !important;
                 }
             `;
             
