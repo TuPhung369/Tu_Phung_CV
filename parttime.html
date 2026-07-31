@@ -185,6 +185,13 @@
             .project-item {
                 margin-bottom: 8px !important;
             }
+
+            /* Keep PDF small: drop effects that force heavy rasterization */
+            *, *::before, *::after {
+                box-shadow: none !important;
+                text-shadow: none !important;
+                filter: none !important;
+            }
         }
 
         /* Header section */
@@ -1868,10 +1875,23 @@
                         text-shadow: none !important;
                     }
                     
-                    /* Simplify backgrounds */
+                    /* White header (no background) to reduce PDF size */
                     .header, html {
-                        background: #1a3a5f !important;
+                        background: white !important;
                         background-image: none !important;
+                    }
+                    .header, .name {
+                        color: #1a3a5f !important;
+                    }
+                    .title, .contact-text-link, .contact-item span {
+                        color: #333 !important;
+                    }
+                    .contact-item i {
+                        color: #1a3a5f !important;
+                    }
+                    .header-social-link {
+                        background-color: #f0f0f0 !important;
+                        color: #333 !important;
                     }
                     
                     /* Optimize avatar positioning */
